@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author mjy
  * @create 2020-03-07-18:33
  */
-//test
 @RestController
 @RequestMapping("/user")
 public class UserCon {
