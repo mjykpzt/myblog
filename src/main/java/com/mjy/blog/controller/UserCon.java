@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserCon {
     @Autowired
     private UserService userService;
-    @RequestMapping
+    @RequestMapping()
     public ResponseBean findAll(){
         return userService.findAll();
     }
@@ -40,6 +40,11 @@ public class UserCon {
     @RequestMapping("/changeUserStatus")
     public ResponseBean changeUserStatus(@RequestParam(required = true) Integer userid,@RequestParam(required = true) Integer userstatus){
         return userService.changeUserStatus(userstatus, userid);
+    }
+
+    @RequestMapping("/searchUser/{str}")
+    public ResponseBean searchUser(@PathVariable String str){
+        return userService.searchUser(str);
     }
 
 

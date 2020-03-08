@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBean findByName(String username) {
-        User user = userDao.findUserByName(username);
-        if (user != null){
-            return ResponseBean.getSuccessResponse("查询成功",user);
+        List<User> userList = userDao.findUserByName(username, false);
+        if (userList != null){
+            return ResponseBean.getSuccessResponse("查询成功",userList);
         }
 
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
@@ -60,5 +60,16 @@ public class UserServiceImpl implements UserService {
             return ResponseBean.getSuccessResponse("改变用户账号状态成功");
         }
         return ResponseBean.getFailResponse("改变用户账号状态失败");
+    }
+
+    @Override
+    public ResponseBean searchUser(String username) {
+        String name = "%"+username+"%";
+        List<User> userList = userDao.findUserByName(name, true);
+        if (userList != null){
+            return ResponseBean.getSuccessResponse("查询成功",userList);
+        }
+
+        return ResponseBean.getFailResponse("查询失败或未查询到数据");
     }
 }

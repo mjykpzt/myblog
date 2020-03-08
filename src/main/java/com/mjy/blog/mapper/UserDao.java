@@ -16,13 +16,20 @@ public interface UserDao {
     List<User> findAll();
 
     //通过用户名查找用户
-    @Select("select * from user where username=#{username}")
+    @Select("<script>"+"select * from user where 1=1 " +
+            "<if test='!flag'> " +
+            "and username=#{username} " +
+            "</if> " +
+            "<if test='flag'> " +
+            "and username like #{username} " +
+            "</if> " +
+            "</script>")
     @Results(id="t1",value = {
             @Result(column = "id",property = "roles",javaType = java.util.List.class,
                     many = @Many(select="com.mjy.blog.mapper.RoleDao.findRoleNameByUid")
             )
     })
-    User findUserByName(String username);
+    List<User> findUserByName(@Param("username") String username,@Param("flag")Boolean flag);
 
     //添加用户
     @Insert("insert into user " +

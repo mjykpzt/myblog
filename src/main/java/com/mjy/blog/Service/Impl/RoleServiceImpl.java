@@ -5,12 +5,14 @@ import com.mjy.blog.Service.RoleService;
 import com.mjy.blog.mapper.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author mjy
  * @create 2020-03-08-0:29
  */
 @Service
+@Transactional
 public class RoleServiceImpl  implements RoleService {
     @Autowired
     private RoleDao roleDao;

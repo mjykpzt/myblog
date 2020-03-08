@@ -15,4 +15,6 @@ public interface UserService {
     ResponseBean addUser(User user);
 
     ResponseBean changeUserStatus(Integer status,Integer uid);
+
+    ResponseBean searchUser(String username);
 }
