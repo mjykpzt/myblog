@@ -50,5 +50,15 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
     }
 
-
+    @Override
+    public ResponseBean changeUserStatus(Integer status, Integer uid) {
+        if (status!= 1 && status != 0){
+            return ResponseBean.getFailResponse("状态码错误");
+        }
+        int i = userDao.changeUserStatus(status, uid);
+        if (i>0){
+            return ResponseBean.getSuccessResponse("改变用户账号状态成功");
+        }
+        return ResponseBean.getFailResponse("改变用户账号状态失败");
+    }
 }

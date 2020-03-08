@@ -13,4 +13,6 @@ public interface UserService {
     ResponseBean findByName(String username);
 
     ResponseBean addUser(User user);
+
+    ResponseBean changeUserStatus(Integer status,Integer uid);
 }

@@ -4,10 +4,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author mjy
@@ -18,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserCon {
     @Autowired
     private UserService userService;
-    @RequestMapping("/findall")
+    @RequestMapping
     public ResponseBean findAll(){
         return userService.findAll();
     }
 
-    @RequestMapping("/findbyname")
-    public ResponseBean findByName(@RequestParam(required = true)String username){
+    @RequestMapping("/{username}")
+    public ResponseBean findByName(@PathVariable String username){
         return userService.findByName(username);
     }
 
@@ -39,6 +36,12 @@ public class UserCon {
         user.setEmail(email);
         return userService.addUser(user);
     }
+
+    @RequestMapping("/changeUserStatus")
+    public ResponseBean changeUserStatus(@RequestParam(required = true) Integer userid,@RequestParam(required = true) Integer userstatus){
+        return userService.changeUserStatus(userstatus, userid);
+    }
+
 
 
 }

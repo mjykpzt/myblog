@@ -194,3 +194,182 @@
 2020-03-08 00:40:01,852 8129   [p-nio-80-exec-1] DEBUG jy.blog.mapper.RoleDao.addRole  - ==> Parameters: ROLE_ADMIN(String), 管理员(String)
 2020-03-08 00:40:01,884 8161   [p-nio-80-exec-1] DEBUG jy.blog.mapper.RoleDao.addRole  - <==    Updates: 1
 2020-03-08 00:40:01,884 8161   [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4b019b63]
+2020-03-08 15:37:20,069 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:37:20,101 32     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:37:23,139 3070   [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:37:35,353 15284  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:37:35,358 15289  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@229e6858]
+2020-03-08 15:37:35,364 15295  [p-nio-80-exec-2] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65442b82] will be managed by Spring
+2020-03-08 15:37:35,381 15312  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.findAll  - ==>  Preparing: select * from user 
+2020-03-08 15:37:35,415 15346  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.findAll  - ==> Parameters: 
+2020-03-08 15:37:35,431 15362  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:37:35,431 15362  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 1(Integer)
+2020-03-08 15:37:35,436 15367  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:37:35,436 15367  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:37:35,437 15368  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 2(Integer)
+2020-03-08 15:37:35,439 15370  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:37:35,440 15371  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:37:35,440 15371  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 7(Integer)
+2020-03-08 15:37:35,442 15373  [p-nio-80-exec-2] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:37:35,442 15373  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.findAll  - <==      Total: 3
+2020-03-08 15:37:35,443 15374  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@229e6858]
+2020-03-08 15:37:35,443 15374  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@229e6858]
+2020-03-08 15:37:35,443 15374  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@229e6858]
+2020-03-08 15:37:35,444 15375  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@229e6858]
+2020-03-08 15:38:02,213 42144  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:38:02,213 42144  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@92ad3a5]
+2020-03-08 15:38:02,213 42144  [p-nio-80-exec-3] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65442b82] will be managed by Spring
+2020-03-08 15:38:02,214 42145  [p-nio-80-exec-3] DEBUG jy.blog.mapper.UserDao.findAll  - ==>  Preparing: select * from user 
+2020-03-08 15:38:02,214 42145  [p-nio-80-exec-3] DEBUG jy.blog.mapper.UserDao.findAll  - ==> Parameters: 
+2020-03-08 15:38:02,216 42147  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:38:02,217 42148  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 1(Integer)
+2020-03-08 15:38:02,220 42151  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:38:02,220 42151  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:38:02,220 42151  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 2(Integer)
+2020-03-08 15:38:02,222 42153  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:38:02,223 42154  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:38:02,223 42154  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 7(Integer)
+2020-03-08 15:38:02,225 42156  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:38:02,225 42156  [p-nio-80-exec-3] DEBUG jy.blog.mapper.UserDao.findAll  - <==      Total: 3
+2020-03-08 15:38:02,226 42157  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@92ad3a5]
+2020-03-08 15:38:02,226 42157  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@92ad3a5]
+2020-03-08 15:38:02,226 42157  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@92ad3a5]
+2020-03-08 15:38:02,226 42157  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@92ad3a5]
+2020-03-08 15:38:12,667 52598  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:38:12,667 52598  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65a45d66]
+2020-03-08 15:38:12,667 52598  [p-nio-80-exec-4] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65442b82] will be managed by Spring
+2020-03-08 15:38:12,667 52598  [p-nio-80-exec-4] DEBUG .mapper.UserDao.findUserByName  - ==>  Preparing: select * from user where username=? 
+2020-03-08 15:38:12,668 52599  [p-nio-80-exec-4] DEBUG .mapper.UserDao.findUserByName  - ==> Parameters: mjy(String)
+2020-03-08 15:38:12,670 52601  [p-nio-80-exec-4] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:38:12,670 52601  [p-nio-80-exec-4] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 1(Integer)
+2020-03-08 15:38:12,671 52602  [p-nio-80-exec-4] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:38:12,672 52603  [p-nio-80-exec-4] DEBUG .mapper.UserDao.findUserByName  - <==      Total: 1
+2020-03-08 15:38:12,672 52603  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65a45d66]
+2020-03-08 15:38:12,672 52603  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65a45d66]
+2020-03-08 15:38:12,672 52603  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65a45d66]
+2020-03-08 15:38:12,672 52603  [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65a45d66]
+2020-03-08 15:39:38,088 138019 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:39:38,088 138019 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c043e41]
+2020-03-08 15:39:38,088 138019 [p-nio-80-exec-7] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65442b82] will be managed by Spring
+2020-03-08 15:39:38,088 138019 [p-nio-80-exec-7] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:39:38,088 138019 [p-nio-80-exec-7] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 0(Integer), 1(Integer)
+2020-03-08 15:39:38,094 138025 [p-nio-80-exec-7] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:39:38,094 138025 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c043e41]
+2020-03-08 15:39:38,094 138025 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c043e41]
+2020-03-08 15:39:38,094 138025 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c043e41]
+2020-03-08 15:39:38,094 138025 [p-nio-80-exec-7] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c043e41]
+2020-03-08 15:41:02,903 222834 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:41:02,903 222834 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47244c2f]
+2020-03-08 15:41:02,903 222834 [p-nio-80-exec-1] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65442b82] will be managed by Spring
+2020-03-08 15:41:02,903 222834 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:41:02,903 222834 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 1(Integer), 1(Integer)
+2020-03-08 15:41:02,905 222836 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:41:02,906 222837 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47244c2f]
+2020-03-08 15:41:02,906 222837 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47244c2f]
+2020-03-08 15:41:02,906 222837 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47244c2f]
+2020-03-08 15:41:02,906 222837 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47244c2f]
+2020-03-08 15:42:52,484 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:42:52,504 20     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:42:53,774 1290   [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:43:47,128 54644  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:43:47,130 54646  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:43:47,135 54651  [p-nio-80-exec-2] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@4f3d7249] will be managed by Spring
+2020-03-08 15:43:47,141 54657  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.addUser  - ==>  Preparing: insert into user set username=?,password=?,email=?,creat_time=now() 
+2020-03-08 15:43:47,159 54675  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.addUser  - ==> Parameters: testRestful(String), 1234(String), 11@qq.com(String)
+2020-03-08 15:43:47,163 54679  [p-nio-80-exec-2] DEBUG jy.blog.mapper.UserDao.addUser  - <==    Updates: 1
+2020-03-08 15:43:47,164 54680  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:43:47,165 54681  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3] from current transaction
+2020-03-08 15:43:47,165 54681  [p-nio-80-exec-2] DEBUG og.mapper.UserDao.setUserRoles  - ==>  Preparing: insert into role_and_user set uid=?,rid=? 
+2020-03-08 15:43:47,166 54682  [p-nio-80-exec-2] DEBUG og.mapper.UserDao.setUserRoles  - ==> Parameters: 8(Integer), 1(Integer)
+2020-03-08 15:43:47,217 54733  [p-nio-80-exec-2] DEBUG og.mapper.UserDao.setUserRoles  - <==    Updates: 1
+2020-03-08 15:43:47,217 54733  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:43:47,218 54734  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:43:47,218 54734  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:43:47,218 54734  [p-nio-80-exec-2] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@11daaa3]
+2020-03-08 15:45:36,130 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:45:36,149 19     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:45:36,974 844    [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:47:48,868 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:47:48,891 23     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:47:49,995 1127   [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:49:20,770 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:49:20,789 19     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:49:22,039 1269   [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:49:32,262 11492  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:49:32,268 11498  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49b4993b]
+2020-03-08 15:49:32,274 11504  [p-nio-80-exec-1] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@3f0c6825] will be managed by Spring
+2020-03-08 15:49:32,277 11507  [p-nio-80-exec-1] DEBUG jy.blog.mapper.UserDao.findAll  - ==>  Preparing: select * from user 
+2020-03-08 15:49:32,293 11523  [p-nio-80-exec-1] DEBUG jy.blog.mapper.UserDao.findAll  - ==> Parameters: 
+2020-03-08 15:49:32,306 11536  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:49:32,306 11536  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 1(Integer)
+2020-03-08 15:49:32,308 11538  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:49:32,309 11539  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:49:32,309 11539  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 2(Integer)
+2020-03-08 15:49:32,310 11540  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:49:32,311 11541  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:49:32,311 11541  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 7(Integer)
+2020-03-08 15:49:32,312 11542  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:49:32,314 11544  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:49:32,315 11545  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 8(Integer)
+2020-03-08 15:49:32,316 11546  [p-nio-80-exec-1] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:49:32,316 11546  [p-nio-80-exec-1] DEBUG jy.blog.mapper.UserDao.findAll  - <==      Total: 4
+2020-03-08 15:49:32,317 11547  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49b4993b]
+2020-03-08 15:49:32,317 11547  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49b4993b]
+2020-03-08 15:49:32,317 11547  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49b4993b]
+2020-03-08 15:49:32,317 11547  [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49b4993b]
+2020-03-08 15:49:42,328 21558  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:49:42,328 21558  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@59a014b0]
+2020-03-08 15:49:42,328 21558  [p-nio-80-exec-3] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@3f0c6825] will be managed by Spring
+2020-03-08 15:49:42,329 21559  [p-nio-80-exec-3] DEBUG .mapper.UserDao.findUserByName  - ==>  Preparing: select * from user where username=? 
+2020-03-08 15:49:42,330 21560  [p-nio-80-exec-3] DEBUG .mapper.UserDao.findUserByName  - ==> Parameters: test1(String)
+2020-03-08 15:49:42,332 21562  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====>  Preparing: select r.id,r.role_name,r.role_des from role_and_user ru,role r where ru.uid=? and r.id=ru.rid 
+2020-03-08 15:49:42,333 21563  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - ====> Parameters: 2(Integer)
+2020-03-08 15:49:42,335 21565  [p-nio-80-exec-3] DEBUG pper.RoleDao.findRoleNameByUid  - <====      Total: 1
+2020-03-08 15:49:42,335 21565  [p-nio-80-exec-3] DEBUG .mapper.UserDao.findUserByName  - <==      Total: 1
+2020-03-08 15:49:42,335 21565  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@59a014b0]
+2020-03-08 15:49:42,335 21565  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@59a014b0]
+2020-03-08 15:49:42,336 21566  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@59a014b0]
+2020-03-08 15:49:42,336 21566  [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@59a014b0]
+2020-03-08 15:53:12,440 0      [           main] DEBUG ache.ibatis.logging.LogFactory  - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+2020-03-08 15:53:12,471 31     [           main] DEBUG s.spring.SqlSessionFactoryBean  - Property 'mapperLocations' was not specified or no matching resources found
+2020-03-08 15:53:13,801 1361   [)-192.168.197.1] INFO  aba.druid.pool.DruidDataSource  - {dataSource-1} inited
+2020-03-08 15:55:07,102 114662 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:55:07,105 114665 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e0a256]
+2020-03-08 15:55:07,110 114670 [p-nio-80-exec-1] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@435d8f1d] will be managed by Spring
+2020-03-08 15:55:07,113 114673 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:55:07,130 114690 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 0(Integer), 1(Integer)
+2020-03-08 15:55:07,133 114693 [p-nio-80-exec-1] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:55:07,133 114693 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e0a256]
+2020-03-08 15:55:07,133 114693 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e0a256]
+2020-03-08 15:55:07,133 114693 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e0a256]
+2020-03-08 15:55:07,133 114693 [p-nio-80-exec-1] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e0a256]
+2020-03-08 15:55:22,408 129968 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:55:22,408 129968 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18c0969e]
+2020-03-08 15:55:22,408 129968 [p-nio-80-exec-3] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@435d8f1d] will be managed by Spring
+2020-03-08 15:55:22,409 129969 [p-nio-80-exec-3] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:55:22,409 129969 [p-nio-80-exec-3] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 0(Integer), 2(Integer)
+2020-03-08 15:55:22,411 129971 [p-nio-80-exec-3] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:55:22,411 129971 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18c0969e]
+2020-03-08 15:55:22,411 129971 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18c0969e]
+2020-03-08 15:55:22,411 129971 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18c0969e]
+2020-03-08 15:55:22,411 129971 [p-nio-80-exec-3] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18c0969e]
+2020-03-08 15:55:30,464 138024 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:55:30,464 138024 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c7f1764]
+2020-03-08 15:55:30,464 138024 [p-nio-80-exec-4] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@435d8f1d] will be managed by Spring
+2020-03-08 15:55:30,464 138024 [p-nio-80-exec-4] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:55:30,464 138024 [p-nio-80-exec-4] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 1(Integer), 2(Integer)
+2020-03-08 15:55:30,468 138028 [p-nio-80-exec-4] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:55:30,468 138028 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c7f1764]
+2020-03-08 15:55:30,468 138028 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c7f1764]
+2020-03-08 15:55:30,468 138028 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c7f1764]
+2020-03-08 15:55:30,468 138028 [p-nio-80-exec-4] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c7f1764]
+2020-03-08 15:55:33,559 141119 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Creating a new SqlSession
+2020-03-08 15:55:33,559 141119 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35efc8f7]
+2020-03-08 15:55:33,560 141120 [p-nio-80-exec-5] DEBUG ction.SpringManagedTransaction  - JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@435d8f1d] will be managed by Spring
+2020-03-08 15:55:33,560 141120 [p-nio-80-exec-5] DEBUG apper.UserDao.changeUserStatus  - ==>  Preparing: update user set status =? where id=? 
+2020-03-08 15:55:33,560 141120 [p-nio-80-exec-5] DEBUG apper.UserDao.changeUserStatus  - ==> Parameters: 1(Integer), 1(Integer)
+2020-03-08 15:55:33,562 141122 [p-nio-80-exec-5] DEBUG apper.UserDao.changeUserStatus  - <==    Updates: 1
+2020-03-08 15:55:33,562 141122 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35efc8f7]
+2020-03-08 15:55:33,562 141122 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35efc8f7]
+2020-03-08 15:55:33,562 141122 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35efc8f7]
+2020-03-08 15:55:33,562 141122 [p-nio-80-exec-5] DEBUG mybatis.spring.SqlSessionUtils  - Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35efc8f7]

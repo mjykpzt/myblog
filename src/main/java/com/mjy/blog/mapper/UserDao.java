@@ -36,4 +36,8 @@ public interface UserDao {
     int setUserRoles(@Param("uid") Integer uid,@Param("rid") Integer rid);
 
 
+    //改变用户账号状态
+    @Update("update user set status =#{status} where id=#{uid}")
+    int changeUserStatus(@Param("status")Integer status,@Param("uid")Integer uid);
+
 }
