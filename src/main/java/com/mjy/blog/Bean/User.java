@@ -16,7 +16,7 @@ public class User {
     private String password;
     private String email;
     private Integer status;
-    private Date creat_time;
+    private Date create_time;
     private List<Role> roles;
 
 }

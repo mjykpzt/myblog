@@ -33,7 +33,7 @@ public interface UserDao {
 
     //添加用户
     @Insert("insert into user " +
-            "set username=#{username},password=#{password},email=#{email},creat_time=now()")
+            "set username=#{username},password=#{password},email=#{email},create_time=now()")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     int addUser(User user);
 

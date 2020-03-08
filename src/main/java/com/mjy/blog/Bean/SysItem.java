@@ -8,5 +8,5 @@ import lombok.Data;
  */
 @Data
 public class SysItem extends Item {
-    private String creat_name;
+    private String create_name;
 }

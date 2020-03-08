@@ -46,4 +46,22 @@ public class ItemServiceImpl implements ItemService {
         }
         return ResponseBean.getFailResponse("添加失败");
     }
+
+    @Override
+    public ResponseBean changeStatus(Short status, Integer id) {
+        int i = itemDao.changeItemStatus(status,id);
+        if (i>0){
+            return ResponseBean.getSuccessResponse("改变成功");
+        }
+        return ResponseBean.getFailResponse("改变失败");
+    }
+
+    @Override
+    public ResponseBean changeItem(String name, String des, Integer id) {
+        int i = itemDao.changeItem(name,des,id);
+        if (i>0){
+            return ResponseBean.getSuccessResponse("改变成功");
+        }
+        return ResponseBean.getFailResponse("改变失败");
+    }
 }

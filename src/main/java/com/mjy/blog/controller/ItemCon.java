@@ -30,4 +30,16 @@ public class ItemCon {
         return itemService.addItem(name,des,1);
     }
 
+    @PostMapping("/changeStatus")
+    public ResponseBean changeStatus(@RequestParam(required = true)Short status,
+                                     @RequestParam(required = true)Integer id){
+        return itemService.changeStatus(status,id);
+    }
+
+    @PostMapping("/changeItem")
+    public ResponseBean changeItem(@RequestParam(required = true)String name, @RequestParam(required = true)String des,
+                                   @RequestParam(required = true)Integer id){
+        return itemService.changeItem(name,des,id);
+    }
+
 }

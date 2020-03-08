@@ -12,4 +12,8 @@ public interface ItemService {
     ResponseBean findByUid(Integer uid);
 
     ResponseBean addItem(String name,String des,Integer uid);
+
+    ResponseBean changeStatus(Short status,Integer id);
+
+    ResponseBean changeItem(String name,String des,Integer id);
 }

@@ -6,15 +6,19 @@ import java.util.Date;
 
 /**
  * @author mjy
- * @create 2020-03-08-15:59
+ * @create 2020-03-08-21:20
+ *
  */
+
 @Data
-public class Item {
+public class Articles {
     private Integer id;
-    private String item_name;
-    private String item_des;
+    private Integer item_id;
+    private String title_name;
+    private String text_re;
+    private String text;
+    private Short status;
     private Date create_time;
     private Integer create_user;
-    private Short status;
     private Date change_time;
 }
