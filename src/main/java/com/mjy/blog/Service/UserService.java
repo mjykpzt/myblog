@@ -4,7 +4,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 
 /**
- * @author mjy
+ * @author mj
  * @create 2020-03-07-18:42
  */
 public interface UserService {
