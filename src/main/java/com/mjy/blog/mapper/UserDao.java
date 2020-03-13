@@ -25,6 +25,7 @@ public interface UserDao {
             "</if> " +
             "</script>")
     @Results(id="t1",value = {
+            @Result(id=true,column = "id",property = "id"),
             @Result(column = "id",property = "roles",javaType = java.util.List.class,
                     many = @Many(select="com.mjy.blog.mapper.RoleDao.findRoleNameByUid")
             )
