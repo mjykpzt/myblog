@@ -16,16 +16,16 @@ public class UserCon {
     @Autowired
     private UserService userService;
     @RequestMapping()
-    public ResponseBean findAll(){
-        return userService.findAll();
+    public ResponseBean findAll(@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "5") Integer pageSize){
+        return userService.findAll(pageNum,pageSize);
     }
 
-    @RequestMapping("/{username}")
+    @GetMapping("/{username}")
     public ResponseBean findByName(@PathVariable String username){
         return userService.findByName(username);
     }
 
-    @RequestMapping(value = "/adduser",method = RequestMethod.POST)
+    @PostMapping(value = "/adduser")
     public ResponseBean addUser(@RequestParam(required = true)String username,
                                 @RequestParam(required = true)String password,
                                 @RequestParam(required = true)String email
@@ -37,12 +37,12 @@ public class UserCon {
         return userService.addUser(user);
     }
 
-    @RequestMapping("/changeUserStatus")
+    @PostMapping("/changeUserStatus")
     public ResponseBean changeUserStatus(@RequestParam(required = true) Integer userid,@RequestParam(required = true) Integer userstatus){
         return userService.changeUserStatus(userstatus, userid);
     }
 
-    @RequestMapping("/searchUser/{str}")
+    @GetMapping("/searchUser/{str}")
     public ResponseBean searchUser(@PathVariable String str){
         return userService.searchUser(str);
     }

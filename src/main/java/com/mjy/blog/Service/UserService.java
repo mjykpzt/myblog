@@ -8,7 +8,7 @@ import com.mjy.blog.Bean.User;
  * @create 2020-03-07-18:42
  */
 public interface UserService {
-    ResponseBean findAll();
+    ResponseBean findAll(Integer pageNum,Integer pageSize);
 
     ResponseBean findByName(String username);
 

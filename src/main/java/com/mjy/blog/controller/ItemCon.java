@@ -15,12 +15,12 @@ public class ItemCon {
     @Autowired
     private ItemService itemService;
 
-    @RequestMapping()
+    @GetMapping()
     public ResponseBean findAll(){
         return itemService.findAll();
     }
 
-    @RequestMapping("/{uid}")
+    @GetMapping("/{uid}")
     public ResponseBean findByUid(@PathVariable Integer uid){
         return itemService.findByUid(uid);
     }

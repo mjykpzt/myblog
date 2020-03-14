@@ -16,12 +16,12 @@ public class ArticlesCon {
     @Autowired
     private ArticlesService articlesService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public ResponseBean finaAll() {
         return articlesService.findAll();
     }
 
-    @RequestMapping(value = "/{uid}",method = RequestMethod.GET)
+    @GetMapping(value = "/{uid}")
     public ResponseBean findArticles(@PathVariable Integer uid) {
         return articlesService.findArticles(uid);
     }

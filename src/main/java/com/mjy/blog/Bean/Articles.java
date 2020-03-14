@@ -3,6 +3,7 @@ package com.mjy.blog.Bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 
 @Data
-public class Articles {
+public class Articles implements Serializable {
     private Integer id;
     private Integer item_id;
     private String title_name;

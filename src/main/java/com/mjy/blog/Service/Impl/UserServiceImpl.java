@@ -1,5 +1,7 @@
 package com.mjy.blog.Service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
@@ -20,10 +22,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Override
-    public ResponseBean findAll() {
+    public ResponseBean findAll(Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         List<User> userList = userDao.findAll();
-        if (userList != null){
-            return ResponseBean.getSuccessResponse("查询成功",userList);
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        if (pageInfo != null){
+            return ResponseBean.getSuccessResponse("查询成功",pageInfo);
         }
 
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseBean findByName(String username) {
         List<User> userList = userDao.findUserByName(username, false);
-        if (userList != null){
+        if (userList != null && userList.size()!=0){
             return ResponseBean.getSuccessResponse("查询成功",userList);
         }
 
