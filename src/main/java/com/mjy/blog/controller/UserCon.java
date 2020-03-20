@@ -4,10 +4,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author mjy
@@ -18,21 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserCon {
     @Autowired
     private UserService userService;
-    @RequestMapping("/findall")
-    public ResponseBean findAll(){
-        return userService.findAll();
+
+    @RequestMapping()
+    public ResponseBean findAll(@RequestParam(defaultValue = "1") Integer pageNum,
+                                @RequestParam(defaultValue = "5") Integer pageSize) {
+        return userService.findAll(pageNum, pageSize);
     }
 
-    @RequestMapping("/findbyname")
-    public ResponseBean findByName(@RequestParam(required = true)String username){
-        return userService.findByName(username);
-    }
+//    @GetMapping("/searchname/{username}")
+//    public ResponseBean findByName(@PathVariable String username) {
+//        return userService.findByName(username);
+//    }
 
-    @RequestMapping(value = "/adduser",method = RequestMethod.POST)
-    public ResponseBean addUser(@RequestParam(required = true)String username,
-                                @RequestParam(required = true)String password,
-                                @RequestParam(required = true)String email
-                                ){
+    @PostMapping(value = "/addUser")
+    public ResponseBean addUser(@RequestParam(required = true) String username,
+                                @RequestParam(required = true) String password,
+                                @RequestParam(required = true) String email
+    ) {
         User user = new User();
         user.setPassword(password);
         user.setUsername(username);
@@ -40,5 +39,39 @@ public class UserCon {
         return userService.addUser(user);
     }
 
+    @PostMapping("/changeUserStatus")
+    public ResponseBean changeUserStatus(@RequestParam(required = true) Integer userid,
+                                         @RequestParam(required = true) Integer userstatus) {
+        return userService.changeUserStatus(userstatus, userid);
+    }
 
+    @PostMapping("/searchUser")
+    public ResponseBean searchUser(@RequestParam(required = true) String str, @RequestParam(defaultValue = "1")
+            Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+        return userService.searchUser(str, pageNum, pageSize);
+    }
+
+    @PostMapping("/delUser")
+    public ResponseBean delUser(@RequestParam(required = true) Integer uid) {
+        return userService.delUser(uid);
+    }
+
+    @PostMapping("/updateUser")
+    public ResponseBean updateUser(@RequestParam(required = true) String password,
+                                   @RequestParam(required = true) String email,
+                                   @RequestParam(required = true) Integer uid
+    ) {
+        return userService.updateUser(password, email, uid);
+    }
+
+    @GetMapping("/findById")
+    public ResponseBean findById(@RequestParam(required = true) Integer uid) {
+        return userService.findById(uid);
+    }
+
+    @RequestMapping("/updateRoles")
+    public ResponseBean updateRoles(@RequestParam(required = true) Integer[] roles,@RequestParam(required = true) Integer id) {
+        return userService.updateRoles(id, roles);
+
+    }
 }
