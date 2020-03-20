@@ -8,17 +8,17 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @author mjy
  * @create 2020-03-19-21:35
  */
-@Configuration
-public class WebSocketConfig {
+//@Configuration
+//public class WebSocketConfig {
 
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
+//    @Bean
+//    public ServerEndpointExporter serverEndpointExporter() {
+//        return new ServerEndpointExporter();
+//    }
 
-    @Bean
-    public MyEndpointConfigure newConfigure() {
-        return new MyEndpointConfigure();
-    }
-}
+//    @Bean
+//    public MyEndpointConfigure newConfigure() {
+//        return new MyEndpointConfigure();
+//    }
+//}
 
