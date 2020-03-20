@@ -25,4 +25,12 @@ public interface RoleDao {
     @Insert("insert into role " +
             "set role_name=#{name},role_des=#{decs}")
     int addRole(@Param("name")String name,@Param("decs")String decs);
+
+    @Select("select * from role where id=#{rid}")
+    Role findRoleByRid(Integer rid);
+
+    @Update("update role set role_name=#{name},role_des=#{des}where id=#{rid}")
+    int updateRole(@Param("name")String name,@Param("des")String des,@Param("rid")Integer id);
+
+
 }

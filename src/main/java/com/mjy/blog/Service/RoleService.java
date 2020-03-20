@@ -8,4 +8,12 @@ import com.mjy.blog.Bean.ResponseBean;
  */
 public interface RoleService {
     ResponseBean addRole(String name,String desc);
+
+    ResponseBean findAll();
+
+    ResponseBean findById(Integer uid);
+
+    ResponseBean findByRid(Integer rid);
+
+    ResponseBean updateRole(String name,String des,Integer rid);
 }

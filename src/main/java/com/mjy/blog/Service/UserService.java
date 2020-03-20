@@ -16,6 +16,14 @@ public interface UserService {
 
     ResponseBean changeUserStatus(Integer status,Integer uid);
 
-    ResponseBean searchUser(String username);
+    ResponseBean searchUser(String username,Integer pageNum,Integer pageSize);
+
+    ResponseBean delUser(Integer uid);
+
+    ResponseBean updateUser(String password,String email,Integer uid);
+
+    ResponseBean findById(Integer id);
+
+    ResponseBean updateRoles(Integer uid,Integer[] roles);
 }
 
