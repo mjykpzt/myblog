@@ -7,10 +7,8 @@ import com.mjy.blog.Service.RoleService;
 import com.mjy.blog.mapper.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-
 import java.util.List;
 
 
@@ -19,7 +17,8 @@ import java.util.List;
  * @create 2020-03-08-0:29
  */
 @Service
-@Transactional
+//@Transactional(isolation = Isolation.READ_UNCOMMITTED)
+//@Transactional()
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
@@ -36,9 +35,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ResponseBean findAll() {
+//    @Transactional(readOnly = true)
+    public ResponseBean findAll(){
         List<Role> allRoles = roleDao.findAllRoles();
         if (allRoles != null && allRoles.size() > 0) {
+            System.out.println(allRoles);
             return ResponseBean.getSuccessResponse("查询成功", allRoles);
         }
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
@@ -48,6 +49,7 @@ public class RoleServiceImpl implements RoleService {
     public ResponseBean findById(Integer uid) {
         List<Role> allRoles = roleDao.findRoleNameByUid(uid);
         if (allRoles != null && allRoles.size() > 0) {
+
             return ResponseBean.getSuccessResponse("查询成功", allRoles);
         }
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
@@ -63,12 +65,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseBean updateRole(String name, String des, Integer rid) {
         int i = roleDao.updateRole(name, des, rid);
         if (i > 0) {
             try {
-                ProductWebSocket.sendInfo("flush");
-            } catch (IOException e) {
+                ProductWebSocket.sendInfo("flush");//给前端发送指令，告诉前端数据库有变化，让前端重新请求数据
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return ResponseBean.getSuccessResponse("更新成功");
