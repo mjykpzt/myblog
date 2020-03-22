@@ -3,9 +3,6 @@ package com.mjy.blog.Config;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import javax.websocket.server.ServerEndpointConfig;
 
@@ -13,17 +10,19 @@ import javax.websocket.server.ServerEndpointConfig;
  * @author mjy
  * @create 2020-03-19-21:33
  */
-@Component
+
 public class MyEndpointConfigure extends ServerEndpointConfig.Configurator implements ApplicationContextAware {
-    private ApplicationContext context;
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
+    private static volatile ApplicationContext context;
+
+    @Override
+    public <T> T getEndpointInstance(Class<T> clazz){
+        return context.getBean(clazz);
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context=applicationContext;
+        System.out.println("---------------app 初始化");
+        MyEndpointConfigure.context = applicationContext;
     }
 }
 

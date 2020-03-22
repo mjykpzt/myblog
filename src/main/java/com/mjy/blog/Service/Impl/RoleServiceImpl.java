@@ -36,7 +36,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
 //    @Transactional(readOnly = true)
-    public ResponseBean findAll(){
+    public ResponseBean findAll() {
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         List<Role> allRoles = roleDao.findAllRoles();
         if (allRoles != null && allRoles.size() > 0) {
             System.out.println(allRoles);
@@ -69,11 +74,11 @@ public class RoleServiceImpl implements RoleService {
     public ResponseBean updateRole(String name, String des, Integer rid) {
         int i = roleDao.updateRole(name, des, rid);
         if (i > 0) {
-            try {
-                ProductWebSocket.sendInfo("flush");//给前端发送指令，告诉前端数据库有变化，让前端重新请求数据
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                ProductWebSocket.sendInfo("flush");//给前端发送指令，告诉前端数据库有变化，让前端重新请求数据
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             return ResponseBean.getSuccessResponse("更新成功");
         }
         return ResponseBean.getFailResponse("更新失败");

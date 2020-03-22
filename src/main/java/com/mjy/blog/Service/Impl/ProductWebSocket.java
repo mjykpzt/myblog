@@ -75,7 +75,10 @@ public class ProductWebSocket {
      *            客户端发送过来的消息
      */
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws IOException {
+        if ("ok".equals(message)){
+            sendInfo("flush1");
+        }
         log.info("用户发送过来的消息为："+message);
     }
 
