@@ -8,6 +8,7 @@ import com.mjy.blog.Service.UserService;
 import com.mjy.blog.mapper.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * @create 2020-03-07-18:43
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.READ_COMMITTED)
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;

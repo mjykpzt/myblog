@@ -28,7 +28,7 @@ public class ProductWebSocket {
     private static final AtomicInteger OnlineCount = new AtomicInteger(0);
 
     // concurrent包的线程安全Set，用来存放每个客户端对应的ProductWebSocket对象。
-    private static CopyOnWriteArraySet<ProductWebSocket> webSocketSet = new CopyOnWriteArraySet<ProductWebSocket>();
+    private static CopyOnWriteArraySet<ProductWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     // 与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
@@ -47,12 +47,12 @@ public class ProductWebSocket {
         webSocketSet.add(this); // 加入set中
         addOnlineCount(); // 在线数加1
         if(userId!=null) {
-            List<String> totalPushMsgs = new ArrayList<String>();
+            List<String> totalPushMsgs = new ArrayList<>();
             totalPushMsgs.add(userId+"连接成功-"+"-当前在线人数为："+getOnlineCount());
 
 
-            if(totalPushMsgs != null && !totalPushMsgs.isEmpty()) {
-                totalPushMsgs.forEach(e -> sendMessage(e));
+            if(!totalPushMsgs.isEmpty()) {
+                totalPushMsgs.forEach(this::sendMessage);
             }
         }
 
