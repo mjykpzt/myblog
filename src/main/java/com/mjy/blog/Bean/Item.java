@@ -18,7 +18,7 @@ public class Item implements Serializable {
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date create_time;
     private Integer create_user;
-    private Short status;
+    private boolean status;
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date change_time;
 }

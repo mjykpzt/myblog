@@ -7,6 +7,8 @@ import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.mapper.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,4 +123,8 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("权限修改失败");
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userDao.findUserByName(s,false).get(0);
+    }
 }

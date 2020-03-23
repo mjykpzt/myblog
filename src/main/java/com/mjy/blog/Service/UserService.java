@@ -2,12 +2,13 @@ package com.mjy.blog.Service;
 
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author mjy
  * @create 2020-03-07-18:42
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
     ResponseBean findAll(Integer pageNum,Integer pageSize);
 
     ResponseBean findByName(String username);
