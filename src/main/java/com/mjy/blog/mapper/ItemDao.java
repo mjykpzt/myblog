@@ -1,6 +1,5 @@
 package com.mjy.blog.mapper;
 
-import com.mjy.blog.Bean.Item;
 import com.mjy.blog.Bean.SysItem;
 import org.apache.ibatis.annotations.*;
 
@@ -22,7 +21,7 @@ public interface ItemDao {
             "</if> " +
             "</script>")
     @ResultType(SysItem.class)
-    List<SysItem> findItem(@Param("uid") Integer uid);
+    List<SysItem> findItem(@Param("uid")Integer uid);
 
     //保存条目
     @Insert("insert into items " +

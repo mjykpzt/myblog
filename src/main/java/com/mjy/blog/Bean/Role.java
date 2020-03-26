@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.io.Serializable;
-
 /**
  * @author mjy
  * @create 2020-03-07-22:01

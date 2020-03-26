@@ -9,6 +9,7 @@ import com.mjy.blog.mapper.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,21 +25,22 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public ResponseBean findAll(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<User> userList = userDao.findAll();
         PageInfo<User> pageInfo = new PageInfo<>(userList);
-        if (pageInfo != null) {
-            return ResponseBean.getSuccessResponse("查询成功", pageInfo);
-        }
+        return ResponseBean.getSuccessResponse("查询成功", pageInfo);
 
-        return ResponseBean.getFailResponse("查询失败或未查询到数据");
     }
 
     @Override
     public ResponseBean addUser(User user) {
+        String password = user.getPassword();
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         int i = userDao.addUser(user);
         int id = user.getId();
         Integer[] ids = {1};
@@ -95,7 +97,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBean updateUser(String password, String email, Integer uid) {
-        int statusCode = userDao.updateUser(password, email, uid);
+        String encodePassword = bCryptPasswordEncoder.encode(password);
+        int statusCode = userDao.updateUser(encodePassword, email, uid);
         if (statusCode > 0) {
             return ResponseBean.getSuccessResponse("修改成功");
         }

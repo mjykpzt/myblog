@@ -1,17 +1,8 @@
 package com.mjy.blog.controller;
 
 import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Bean.User;
-import com.mjy.blog.Service.UserService;
-import com.mjy.blog.mapper.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author mjy

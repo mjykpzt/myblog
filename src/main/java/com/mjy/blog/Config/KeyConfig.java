@@ -4,7 +4,7 @@ package com.mjy.blog.Config;
 import com.mjy.blog.Utils.RsaUtils;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.security.PrivateKey;
@@ -14,8 +14,9 @@ import java.security.PublicKey;
  * @author mjy
  * @create 2020-03-05-17:03
  */
-@Configuration
+
 @Data
+@Component
 public class KeyConfig {
 
     @Value("${rsa.key.pukey}")

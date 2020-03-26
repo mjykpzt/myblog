@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/role")
 @RestController
+//@Secured("ROLE_ADMIN")
 public class RoleCon {
     @Autowired
     private RoleService roleService;
@@ -38,7 +39,7 @@ public class RoleCon {
     @PostMapping("/updateRole")
     public  ResponseBean updateRole(@RequestParam(required = true)String role_name,
                                     @RequestParam(required = true)String role_des,
-                                    @RequestParam(required = true)Integer id){
-        return roleService.updateRole(role_name, role_des, id);
+                                    @RequestParam(required = true)Integer rid){
+        return roleService.updateRole(role_name, role_des, rid);
     }
 }

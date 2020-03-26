@@ -3,12 +3,16 @@ package com.mjy.blog.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Bean.User;
+import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.Utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +31,7 @@ import java.util.List;
  * @author mjy
  * @create 2020-03-23-22:15
  */
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
@@ -34,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private KeyConfig keyConfig;
+//    @Autowired
+//    private DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,7 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("USER", "ADMIN", "TEST")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login_page").successHandler(new AuthenticationSuccessHandler() {
+                .addFilter(new TokenFilter(super.authenticationManager(), keyConfig))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().successHandler(new AuthenticationSuccessHandler() {
 
             @Override
             public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
@@ -78,10 +88,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 out.flush();
                 out.close();
             }
-        }).loginProcessingUrl("/login")
-                .usernameParameter("username").passwordParameter("password").permitAll()
-                .and().logout().permitAll()
-                .and().csrf().disable();
+        })
+//                .and().
+//                rememberMe().userDetailsService(userService).
+//                tokenRepository(persistentTokenRepository()).tokenValiditySeconds(120)
+
+                .and()
+                .csrf().disable();
 
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/index.html", "/css/**","/js/**","/fonts/**","/favicon.ico",
+                "/RoleWebSocket/**","/mass","/UserWebSocket/**");
+//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+
+    }
+
+//    @Bean
+//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+//        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
+//        firewall.setAllowUrlEncodedSlash(true);
+//        return firewall;
+//    }
+
+
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+//        tokenRepository.setDataSource(dataSource); // 设置数据源
+////        tokenRepository.setCreateTableOnStartup(true); // 启动创建表，创建成功后注释掉
+//        return tokenRepository;
+//    }
 }

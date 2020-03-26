@@ -2,8 +2,10 @@ package com.mjy.blog.mapper;
 
 import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.SysArticles;
-import com.mjy.blog.Bean.SysItem;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
