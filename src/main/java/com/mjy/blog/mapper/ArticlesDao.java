@@ -37,4 +37,21 @@ public interface ArticlesDao {
     @Insert("insert into articles set text=#{text},text_re=#{text_re},item_id=#{item_id}, " +
             "create_user=#{create_user},title_name=#{title_name},change_time=now(),create_time=now()")
     int addArticles(Articles articles);
+
+    //根据模块ID查询文章
+    @Select("select" +
+            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
+            "u.username create_name,a.status,a.change_time,a.text_re,a.text,i.item_name" +
+            " from `user` u,articles a,items i " +
+            "where u.id=i.create_user and a.item_id=i.id and a.item_id=#{iid}")
+    List<SysArticles> findArticlesByIid(Integer iid);
+
+    //根据文章ID查询文章
+    @Select("select" +
+            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
+            "u.username create_name,a.status,a.change_time,a.text_re,a.text,i.item_name" +
+            " from `user` u,articles a,items i " +
+            "where u.id=i.create_user and a.item_id=i.id and a.id=#{aid}")
+    SysArticles findArticlesByAid(Integer aid);
+
 }

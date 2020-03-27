@@ -36,4 +36,15 @@ public class ArticlesCon {
                                        @RequestParam(required = true) Integer id) {
         return articlesService.changeArticles(text, text_re, id);
     }
+
+    @GetMapping("/findArticlesByIid")
+    public ResponseBean findArticlesByIid(@RequestParam(required = true)Integer iid){
+        return articlesService.findArticlesByIid(iid);
+    }
+
+    @GetMapping("/findArticlesByAid")
+    public ResponseBean findArticlesByAid(@RequestParam(required = true)Integer aid){
+        return articlesService.findArticlesByAid(aid);
+    }
 }
+

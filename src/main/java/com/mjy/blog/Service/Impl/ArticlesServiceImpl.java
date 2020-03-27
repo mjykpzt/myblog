@@ -7,6 +7,7 @@ import com.mjy.blog.Service.ArticlesService;
 import com.mjy.blog.mapper.ArticlesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     private ArticlesDao articlesDao;
 
     @Override
+    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
     public ResponseBean findAll() {
         List<SysArticles> articles = articlesDao.findArticles(null);
         if (articles != null){
@@ -55,5 +57,25 @@ public class ArticlesServiceImpl implements ArticlesService {
             return ResponseBean.getSuccessResponse("改变成功");
         }
         return ResponseBean.getFailResponse("改变失败");
+    }
+
+    @Override
+    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
+    public ResponseBean findArticlesByIid(Integer iid) {
+        List<SysArticles> articles = articlesDao.findArticlesByIid(iid);
+        if (articles != null && articles.size()>0){
+            return ResponseBean.getSuccessResponse("查询成功",articles);
+        }
+        return ResponseBean.getFailResponse("查询失败");
+    }
+
+    @Override
+    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
+    public ResponseBean findArticlesByAid(Integer aid) {
+        SysArticles articles = articlesDao.findArticlesByAid(aid);
+        if (articles != null){
+            return ResponseBean.getSuccessResponse("查询成功",articles);
+        }
+        return ResponseBean.getFailResponse("查询失败");
     }
 }

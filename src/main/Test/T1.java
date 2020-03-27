@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class T1 {
     public static void main(String[] args) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        System.out.println(bCryptPasswordEncoder.encode("0205"));
+        System.out.println(bCryptPasswordEncoder.encode("0"));
         boolean matches = bCryptPasswordEncoder.matches("0205",
                 "$2a$10$wfP9B8o/gQ/ajdQ.ED87kuqZzOfvbxE9gtmP4MwXdhWJ1FB/VIXxy");
         System.out.println(matches);

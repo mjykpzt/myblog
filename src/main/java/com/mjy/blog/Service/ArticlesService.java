@@ -2,6 +2,9 @@ package com.mjy.blog.Service;
 
 import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
+import com.mjy.blog.Bean.SysArticles;
+
+import java.util.List;
 
 
 /**
@@ -16,5 +19,9 @@ public interface ArticlesService {
     ResponseBean addArticles(Articles articles);
 
     ResponseBean findAll();
+
+    ResponseBean findArticlesByIid(Integer iid);
+
+    ResponseBean findArticlesByAid(Integer aid);
 
 }
