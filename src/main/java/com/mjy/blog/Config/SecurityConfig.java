@@ -101,7 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/index.html", "/css/**","/js/**","/fonts/**","/favicon.ico",
-                "/RoleWebSocket/**","/mass","/UserWebSocket/**");
+                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**");
 //        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 
     }

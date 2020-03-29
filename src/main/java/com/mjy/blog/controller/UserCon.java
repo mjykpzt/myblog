@@ -74,4 +74,9 @@ public class UserCon {
         return userService.updateRoles(id, roles);
 
     }
+
+    @GetMapping("/findIsHasName")
+    public ResponseBean findIsHasName(@RequestParam(required = true)String username){
+        return userService.findIsHasName(username);
+    }
 }

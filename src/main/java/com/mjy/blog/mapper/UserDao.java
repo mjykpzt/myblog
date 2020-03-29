@@ -2,6 +2,7 @@ package com.mjy.blog.mapper;
 
 import com.mjy.blog.Bean.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -65,4 +66,8 @@ public interface UserDao {
     //解绑用户与角色
     @Delete("delete from role_and_user where uid=#{uid}")
     int delRolesFromUser(Integer uid);
+
+    //查找是否存在该用户名
+    @Select("select COUNT(*) from user where username=#{name}")
+    int findIsHasName(String name);
 }

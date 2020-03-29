@@ -1,5 +1,6 @@
 package com.mjy.blog.mapper;
 
+import com.mjy.blog.Bean.Item;
 import com.mjy.blog.Bean.SysItem;
 import org.apache.ibatis.annotations.*;
 
@@ -15,9 +16,9 @@ public interface ItemDao {
             "select" +
             " i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name,i.status,i.change_time " +
             "from `user` u,items i " +
-            "where u.id=i.create_user " +
+            "where u.id=i.create_user ORDER BY id" +
             "<if test='uid != null'> " +
-            "and i.create_user=#{uid} " +
+            "and i.create_user=#{uid} ORDER BY id" +
             "</if> " +
             "</script>")
     @ResultType(SysItem.class)
@@ -36,5 +37,11 @@ public interface ItemDao {
     @Update("update items set item_name =#{name},item_des=#{des},change_time=now() where id=#{id}")
     int changeItem(@Param("name")String name,@Param("des")String des,@Param("id")Integer id);
 
+    //查询条目根据条目ID
+    @Select("select id,item_name,item_des from items where id=#{iid}")
+    Item findItemByIid(Integer iid);
+
+    @Select("select COUNT(*) from items where item_name=#{name}")
+    int findIsHasName(String name);
 
 }

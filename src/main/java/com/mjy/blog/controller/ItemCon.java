@@ -26,8 +26,8 @@ public class ItemCon {
     }
 
     @PostMapping("/addItem/add")
-    public ResponseBean addItem(@RequestParam(required = true) String name, @RequestParam(required = true)String des){
-        return itemService.addItem(name,des,1);
+    public ResponseBean addItem(@RequestParam(required = true) String item_name, @RequestParam(required = true)String item_des){
+        return itemService.addItem(item_name,item_des,1);
     }
 
     @PostMapping("/changeStatus")
@@ -37,9 +37,17 @@ public class ItemCon {
     }
 
     @PostMapping("/changeItem")
-    public ResponseBean changeItem(@RequestParam(required = true)String name, @RequestParam(required = true)String des,
+    public ResponseBean changeItem(@RequestParam(required = true)String item_name, @RequestParam(required = true)String item_des,
                                    @RequestParam(required = true)Integer id){
-        return itemService.changeItem(name,des,id);
+        return itemService.changeItem(item_name, item_des, id);
     }
 
+    @GetMapping("/findByIid/{iid}")
+    public ResponseBean findByIid(@PathVariable Integer iid){
+        return itemService.findItemByIid(iid);
+    }
+
+
+    @GetMapping("/item/isHas")
+    public  ResponseBean ishas(String name){return itemService.findIsHasName(name);}
 }

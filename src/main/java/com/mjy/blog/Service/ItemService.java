@@ -16,4 +16,8 @@ public interface ItemService {
     ResponseBean changeStatus(Short status,Integer id);
 
     ResponseBean changeItem(String name,String des,Integer id);
+
+    ResponseBean findItemByIid(Integer iid);
+
+    ResponseBean findIsHasName(String name);
 }

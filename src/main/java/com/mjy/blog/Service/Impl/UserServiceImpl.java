@@ -21,13 +21,14 @@ import java.util.List;
  * @create 2020-03-07-18:43
  */
 @Service
-@Transactional(isolation = Isolation.READ_COMMITTED)
+//@Transactional(isolation = Isolation.READ_COMMITTED)
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseBean findAll(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -38,19 +39,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseBean addUser(User user) {
-        String password = user.getPassword();
-        user.setPassword(bCryptPasswordEncoder.encode(password));
-        int i = userDao.addUser(user);
-        int id = user.getId();
-        Integer[] ids = {1};
-        int i1 = userDao.setUserRoles(id, ids);
-        if (i > 0 && i1 > 0) {
-            return ResponseBean.getSuccessResponse("添加成功");
+        int isHas = userDao.findIsHasName(user.getUsername());
+        if ( isHas== 0) {
+            synchronized (this) {
+                int isHasName = userDao.findIsHasName(user.getUsername());
+                if (isHasName == 0) {
+                    String password = user.getPassword();
+                    user.setPassword(bCryptPasswordEncoder.encode(password));
+                    int i = userDao.addUser(user);
+                    int id = user.getId();
+                    Integer[] ids = {1};
+                    int i1 = userDao.setUserRoles(id, ids);
+                    if (i > 0 && i1 > 0) {
+                        return ResponseBean.getSuccessResponse("添加成功");
+                    }
+                    return ResponseBean.getFailResponse("添加失败");
+                } else {
+                    return ResponseBean.getFailResponse("名称重复");
+                }
+            }
         }
-        return ResponseBean.getFailResponse("添加失败");
+        return ResponseBean.getFailResponse("名称重复");
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseBean findByName(String username) {
         List<User> userList = userDao.findUserByName(username, false);
@@ -105,6 +119,7 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("修改失败");
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseBean findById(Integer id) {
         User user = userDao.findById(id);
@@ -126,8 +141,19 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("权限修改失败");
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userDao.findUserByName(s,false).get(0);
+        return userDao.findUserByName(s, false).get(0);
+    }
+
+
+    @Override
+    public ResponseBean findIsHasName(String name) {
+        int isHas = userDao.findIsHasName(name);
+        if (isHas > 0) {
+            return ResponseBean.getFailResponse("名称重复");
+        }
+        return ResponseBean.getSuccessResponse("ok");
     }
 }

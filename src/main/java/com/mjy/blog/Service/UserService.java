@@ -26,5 +26,7 @@ public interface UserService extends UserDetailsService {
     ResponseBean findById(Integer id);
 
     ResponseBean updateRoles(Integer uid,Integer[] roles);
+
+    ResponseBean findIsHasName(String name);
 }
 
