@@ -41,10 +41,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseBean addUser(User user) {
-        int isHas = userDao.findIsHasName(user.getUsername());
+        int isHas = userDao.findIsHasName(user.getUsername(),Math.random());
         if ( isHas== 0) {
             synchronized (this) {
-                int isHasName = userDao.findIsHasName(user.getUsername());
+                int isHasName = userDao.findIsHasName(user.getUsername(),Math.random());
                 if (isHasName == 0) {
                     String password = user.getPassword();
                     user.setPassword(bCryptPasswordEncoder.encode(password));
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBean findIsHasName(String name) {
-        int isHas = userDao.findIsHasName(name);
+        int isHas = userDao.findIsHasName(name,Math.random());
         if (isHas > 0) {
             return ResponseBean.getFailResponse("名称重复");
         }

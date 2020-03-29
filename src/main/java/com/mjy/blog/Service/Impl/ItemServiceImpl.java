@@ -43,10 +43,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean addItem(String name, String des, Integer uid) {
-        int isHas = itemDao.findIsHasName(name);//Math.random()生成随机数，避免使用一级缓存
+        int isHas = itemDao.findIsHasName(name,Math.random());//Math.random()生成随机数，避免使用一级缓存
         if (isHas == 0) {
             synchronized (this) {
-                int isHasName = itemDao.findIsHasName(name);
+                int isHasName = itemDao.findIsHasName(name,Math.random());
                 if (isHasName == 0) {
                     int i = itemDao.addItem(name, des, uid);
                     if (i > 0) {
@@ -72,10 +72,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean changeItem(String name, String des, Integer id) {
-        int isHas = itemDao.findIsHasName(name);
+        int isHas = itemDao.findIsHasName(name,Math.random());
         if (isHas == 0) {
             synchronized (this) {
-                int isHasName = itemDao.findIsHasName(name);
+                int isHasName = itemDao.findIsHasName(name,Math.random());
                 if (isHasName == 0) {
                     int i = itemDao.changeItem(name, des, id);
                     if (i > 0) {
@@ -101,7 +101,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean findIsHasName(String name) {
-        int isHas = itemDao.findIsHasName(name);
+        int isHas = itemDao.findIsHasName(name,Math.random());
         System.out.println("这是查询结果："+isHas);
         if (isHas > 0) {
             return ResponseBean.getFailResponse("名称重复");

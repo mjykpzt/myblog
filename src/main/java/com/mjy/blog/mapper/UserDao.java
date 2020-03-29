@@ -68,6 +68,6 @@ public interface UserDao {
     int delRolesFromUser(Integer uid);
 
     //查找是否存在该用户名
-    @Select("select COUNT(*) from user where username=#{name}")
-    int findIsHasName(String name);
+    @Select("select COUNT(*) from user where username=#{name} and #{random}=#{random}")
+    int findIsHasName(String name,double random);
 }

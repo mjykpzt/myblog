@@ -41,7 +41,7 @@ public interface ItemDao {
     @Select("select id,item_name,item_des from items where id=#{iid}")
     Item findItemByIid(Integer iid);
 
-    @Select("select COUNT(*) from items where item_name=#{name}")
-    int findIsHasName(String name);
+    @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random}")
+    int findIsHasName(String name,double random);
 
 }
