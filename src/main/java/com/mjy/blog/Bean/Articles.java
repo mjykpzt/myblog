@@ -17,8 +17,9 @@ public class Articles implements Serializable {
     private Integer id;
     private Integer item_id;
     private String title_name;
-    private String text_re;
-    private String text;
+    private String md_text;
+    private String source_text;
+    private String html_text;
     private Short status;
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date create_time;

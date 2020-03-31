@@ -14,7 +14,7 @@ import java.util.List;
 public interface ArticlesService {
     ResponseBean findArticles(Integer uid);
 
-    ResponseBean changeArticles(String text, String text_re,Integer id);
+    ResponseBean changeArticles(Articles articles);
 
     ResponseBean addArticles(Articles articles);
 
@@ -23,5 +23,8 @@ public interface ArticlesService {
     ResponseBean findArticlesByIid(Integer iid);
 
     ResponseBean findArticlesByAid(Integer aid);
+
+    ResponseBean delArticle(Integer id);
+
 
 }

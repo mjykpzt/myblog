@@ -64,11 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 HttpServletResponse httpServletResponse,
                                                 Authentication authentication) throws IOException, ServletException {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
+                User principal = (User) authentication.getPrincipal();
                 User user = new User();
-                user.setUsername(authentication.getName());
-                user.setRoles((List<Role>) authentication.getAuthorities());
+                user.setUsername(principal.getUsername());
+                user.setRoles(principal.getRoles());
+                user.setId(principal.getId());
                 String token = JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 24 * 60);
                 httpServletResponse.addHeader("Authorization", "Bearer " + token);
+
                 PrintWriter out = httpServletResponse.getWriter();
                 HashMap map = new HashMap<>();
                 map.put("status", "1");

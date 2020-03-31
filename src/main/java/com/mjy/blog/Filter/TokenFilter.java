@@ -40,7 +40,9 @@ public class TokenFilter extends BasicAuthenticationFilter {
             String token = authorization.replace("Bearer ", "");
             Payload<User> infoFromToken = JwtUtils.getInfoFromToken(token, keyConfig.getPublicKey(), User.class);
             User user = infoFromToken.getUserInfo();
+
             if (user != null) {
+                request.setAttribute("uid",user.getId());
                 UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authResult);
                 chain.doFilter(request, response);

@@ -5,6 +5,8 @@ import com.mjy.blog.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author mjy
  * @create 2020-03-08-16:21
@@ -26,8 +28,8 @@ public class ItemCon {
     }
 
     @PostMapping("/addItem/add")
-    public ResponseBean addItem(@RequestParam(required = true) String item_name, @RequestParam(required = true)String item_des){
-        return itemService.addItem(item_name,item_des,1);
+    public ResponseBean addItem(HttpServletRequest request, @RequestParam(required = true) String item_name, @RequestParam(required = true)String item_des){
+        return itemService.addItem(item_name,item_des,(Integer) request.getAttribute("uid"));
     }
 
     @PostMapping("/changeStatus")

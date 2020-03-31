@@ -6,6 +6,8 @@ import com.mjy.blog.Service.ArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author mjy
  * @create 2020-03-08-23:15
@@ -27,24 +29,30 @@ public class ArticlesCon {
     }
 
     @PostMapping("/addArticles")
-    public ResponseBean addArticles(Articles articles) {
+    public ResponseBean addArticles(HttpServletRequest request,Articles articles) {
+        articles.setCreate_user((Integer)request.getAttribute("uid"));
         return articlesService.addArticles(articles);
     }
 
     @PostMapping("/changeArticles")
-    public ResponseBean changeArticles(@RequestParam(required = true) String text, @RequestParam(required = true) String text_re,
-                                       @RequestParam(required = true) Integer id) {
-        return articlesService.changeArticles(text, text_re, id);
+    public ResponseBean changeArticles(Articles articles) {
+        return articlesService.changeArticles(articles);
     }
 
     @GetMapping("/findArticlesByIid")
-    public ResponseBean findArticlesByIid(@RequestParam(required = true)Integer iid){
+    public ResponseBean findArticlesByIid(@RequestParam(required = true) Integer iid) {
+
         return articlesService.findArticlesByIid(iid);
     }
 
     @GetMapping("/findArticlesByAid")
-    public ResponseBean findArticlesByAid(@RequestParam(required = true)Integer aid){
+    public ResponseBean findArticlesByAid(@RequestParam(required = true) Integer aid) {
         return articlesService.findArticlesByAid(aid);
+    }
+
+    @PostMapping("/delArticle")
+    public ResponseBean delArticle(@RequestParam(required = true)Integer id){
+        return articlesService.delArticle(id);
     }
 }
 
