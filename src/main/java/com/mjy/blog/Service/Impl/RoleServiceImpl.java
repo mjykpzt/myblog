@@ -35,7 +35,6 @@ public class RoleServiceImpl implements RoleService {
     public ResponseBean findAll() {
         List<Role> allRoles = roleDao.findAllRoles();
         if (allRoles != null && allRoles.size() > 0) {
-            System.out.println(allRoles);
             return ResponseBean.getSuccessResponse("查询成功", allRoles);
         }
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
