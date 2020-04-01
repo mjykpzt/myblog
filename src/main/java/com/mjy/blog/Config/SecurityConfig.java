@@ -1,7 +1,6 @@
 package com.mjy.blog.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author mjy
@@ -50,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+//                .antMatchers("/**").permitAll()
                 .antMatchers("/**")
                 .hasAnyRole("USER", "ADMIN", "TEST")
                 .anyRequest().authenticated()
@@ -104,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/index.html", "/css/**","/js/**","/fonts/**","/favicon.ico",
-                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**");
+                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","web/**");
 //        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 
     }
@@ -125,3 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return tokenRepository;
 //    }
 }
+
+
+
+

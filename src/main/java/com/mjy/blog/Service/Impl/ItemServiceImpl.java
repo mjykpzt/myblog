@@ -43,10 +43,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean addItem(String name, String des, Integer uid) {
-        int isHas = itemDao.findIsHasName(name,Math.random());//Math.random()生成随机数，避免使用一级缓存
+        int isHas = itemDao.findIsHasName(name, Math.random());//Math.random()生成随机数，避免使用一级缓存
         if (isHas == 0) {
             synchronized (this) {
-                int isHasName = itemDao.findIsHasName(name,Math.random());
+                int isHasName = itemDao.findIsHasName(name, Math.random());
                 if (isHasName == 0) {
                     int i = itemDao.addItem(name, des, uid);
                     if (i > 0) {
@@ -72,20 +72,33 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean changeItem(String name, String des, Integer id) {
-        int isHas = itemDao.findIsHasName(name,Math.random());
-        if (isHas == 0) {
-            synchronized (this) {
-                int isHasName = itemDao.findIsHasName(name,Math.random());
-                if (isHasName == 0) {
-                    int i = itemDao.changeItem(name, des, id);
-                    if (i > 0) {
-                        return ResponseBean.getSuccessResponse("添加成功");
+        int isHas = itemDao.findIsHasName(name, Math.random());
+        switch (isHas) {
+            case 0:
+                synchronized (this) {
+                    int isHasName = itemDao.findIsHasName(name, Math.random());
+                    if (isHasName == 0) {
+                       return updateItem(name, des, id);
+                    } else {
+                        return ResponseBean.getFailResponse("名称重复");
                     }
-                    return ResponseBean.getFailResponse("添加失败");
-                } else {
-                    return ResponseBean.getFailResponse("名称重复");
                 }
-            }
+            case 1:
+                synchronized (this) {
+                    int isHasName = itemDao.findIsHasName(name, Math.random());
+                    switch (isHasName) {
+                        case 0:
+                            updateItem(name, des, id);
+                        case 1:
+                            int nameId = itemDao.findIdByName(name);
+                            if (nameId == id) {
+                               return updateItem(name, des, id);
+                            } else {
+                                return ResponseBean.getFailResponse("名称重复");
+                            }
+                    }
+                }
+
         }
         return ResponseBean.getFailResponse("名称重复");
     }
@@ -101,11 +114,18 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ResponseBean findIsHasName(String name) {
-        int isHas = itemDao.findIsHasName(name,Math.random());
-        System.out.println("这是查询结果："+isHas);
-        if (isHas > 0) {
+        int isHas = itemDao.findIsHasName(name, Math.random());
+        if (isHas > 1) {
             return ResponseBean.getFailResponse("名称重复");
         }
         return ResponseBean.getSuccessResponse("ok");
+    }
+
+    private ResponseBean updateItem(String name, String des, Integer id) {
+        int i = itemDao.changeItem(name, des, id);
+        if (i > 0) {
+            return ResponseBean.getSuccessResponse("添加成功");
+        }
+        return ResponseBean.getFailResponse("添加失败");
     }
 }

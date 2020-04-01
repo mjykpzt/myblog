@@ -50,7 +50,6 @@ public class TokenFilter extends BasicAuthenticationFilter {
                 FailMsg(request, response, chain, "token无效");
             }
         } else {
-
             FailMsg(request, response, chain, "请登录");
         }
     }

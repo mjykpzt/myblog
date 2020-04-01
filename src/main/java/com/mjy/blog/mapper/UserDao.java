@@ -2,7 +2,6 @@ package com.mjy.blog.mapper;
 
 import com.mjy.blog.Bean.User;
 import org.apache.ibatis.annotations.*;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 

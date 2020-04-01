@@ -2,9 +2,6 @@ package com.mjy.blog.Service;
 
 import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Bean.SysArticles;
-
-import java.util.List;
 
 
 /**
