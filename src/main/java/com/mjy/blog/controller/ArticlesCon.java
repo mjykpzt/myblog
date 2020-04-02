@@ -51,8 +51,10 @@ public class ArticlesCon {
     }
 
     @PostMapping("/delArticle")
-    public ResponseBean delArticle(@RequestParam(required = true)Integer id){
-        return articlesService.delArticle(id);
+    public ResponseBean delArticle(@RequestParam(required = true)Integer aid,@RequestParam(required = true)Integer iid){
+        return articlesService.delArticle(aid,iid);
     }
+
+
 }
 

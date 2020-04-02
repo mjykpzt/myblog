@@ -14,7 +14,8 @@ public interface ItemDao {
     //查询所有条目，或根据用户查询条目
     @Select("<script> " +
             "select" +
-            " i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name,i.status,i.change_time " +
+            " i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
+            "i.status,i.change_time,i.articles_number " +
             "from `user` u,items i " +
             "where u.id=i.create_user ORDER BY id" +
             "<if test='uid != null'> " +
@@ -41,10 +42,32 @@ public interface ItemDao {
     @Select("select id,item_name,item_des from items where id=#{iid}")
     Item findItemByIid(Integer iid);
 
+    //查询是否存在相同的名字
     @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random}")
     int findIsHasName(String name,double random);
 
+    //根据名字查询id
     @Select("select id from items where item_name=#{name}")
     int findIdByName(String name);
+
+    //判断条目是否可用
+    @Select("select status from items where id=#{iid}")
+    Boolean isCanUse(Integer iid);
+
+    //删除条目
+    @Delete("delete from items where id=#{iid}")
+    int delItem(Integer iid);
+
+    //文章数加一
+    @Update("update items set articles_number=articles_number+1 where id=#{iid}")
+    int addNumber(Integer iid);
+
+    //文章数减一
+    @Update("update items set articles_number=articles_number-1 where id=#{iid}")
+    int subNumber(Integer iid);
+
+    //查询条目下文章数目
+    @Select("select articles_number from items where id=#{iid}")
+    int findArticleNumber(Integer iid);
 
 }

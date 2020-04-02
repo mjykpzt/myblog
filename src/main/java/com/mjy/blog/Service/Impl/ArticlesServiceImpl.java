@@ -5,6 +5,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.SysArticles;
 import com.mjy.blog.Service.ArticlesService;
 import com.mjy.blog.mapper.ArticlesDao;
+import com.mjy.blog.mapper.ItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ArticlesServiceImpl implements ArticlesService {
     @Autowired
     private ArticlesDao articlesDao;
+
+    @Autowired
+    private ItemDao itemDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -44,7 +48,9 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public ResponseBean changeArticles(Articles articles) {
-//        article.setSummary(stripHtml.substring(0, stripHtml.length() > 50 ? 50 : stripHtml.length()));
+        if (!itemDao.isCanUse(articles.getItem_id())){
+            return ResponseBean.getFailResponse("该条目已被禁用");
+        }
         String s = stripHtml(articles.getHtml_text());
         articles.setSource_text(s.substring(0, s.length() > 50 ? 50 : s.length()));
 
@@ -57,10 +63,14 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public ResponseBean addArticles(Articles articles) {
+        if (!itemDao.isCanUse(articles.getItem_id())){
+            return ResponseBean.getFailResponse("该条目已被禁用");
+        }
         String s = stripHtml(articles.getHtml_text());
         articles.setSource_text(s.substring(0, s.length() > 50 ? 50 : s.length()));
-
         int i = articlesDao.addArticles(articles);
+        Integer id = articles.getItem_id();
+        itemDao.addNumber(id);
         if (i>0){
             return ResponseBean.getSuccessResponse("添加文章成功");
         }
@@ -88,8 +98,9 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public ResponseBean delArticle(Integer id) {
-        int i = articlesDao.delArticle(id);
+    public ResponseBean delArticle(Integer aid,Integer iid) {
+        int i = articlesDao.delArticle(aid);
+        itemDao.subNumber(iid);
         if (i>0){
             return ResponseBean.getSuccessResponse("删除成功");
         }

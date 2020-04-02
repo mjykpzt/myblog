@@ -21,4 +21,5 @@ public class Item implements Serializable {
     private boolean status;
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date change_time;
+    private Integer articles_number;
 }

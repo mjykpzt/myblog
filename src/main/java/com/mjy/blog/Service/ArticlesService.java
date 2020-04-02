@@ -21,7 +21,7 @@ public interface ArticlesService {
 
     ResponseBean findArticlesByAid(Integer aid);
 
-    ResponseBean delArticle(Integer id);
+    ResponseBean delArticle(Integer aid,Integer iid);
 
 
 }

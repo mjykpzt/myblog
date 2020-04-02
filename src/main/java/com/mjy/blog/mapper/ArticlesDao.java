@@ -19,7 +19,7 @@ public interface ArticlesDao {
             " a.id,a.item_id,a.title_name,a.create_time,a.create_user,u.username create_name, " +
             "a.status,a.change_time,a.md_text,a.source_text,i.item_name,a.html_text " +
             "from `user` u,articles a,items i " +
-            "where u.id=i.create_user and a.item_id=i.id" +
+            "where u.id=a.create_user and a.item_id=i.id" +
             "<if test='uid != null'> " +
             "and a.create_user=#{uid} " +
             "</if> " +
@@ -34,6 +34,7 @@ public interface ArticlesDao {
     //保存文章
     @Insert("insert into articles set md_text=#{md_text},source_text=#{source_text},html_text=#{html_text},item_id=#{item_id}, " +
             "create_user=#{create_user},title_name=#{title_name},change_time=now(),create_time=now()")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int addArticles(Articles articles);
 
     //根据模块ID查询文章
@@ -52,8 +53,8 @@ public interface ArticlesDao {
             "where u.id=i.create_user and a.item_id=i.id and a.id=#{aid}")
     SysArticles findArticlesByAid(Integer aid);
 
-    @Delete("delete from articles where id=#{id}")
-    int delArticle(Integer id);
+    @Delete("delete from articles where id=#{aid}")
+    int delArticle(Integer aid);
 
 
 }

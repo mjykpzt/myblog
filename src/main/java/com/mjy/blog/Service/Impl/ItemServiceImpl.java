@@ -128,4 +128,19 @@ public class ItemServiceImpl implements ItemService {
         }
         return ResponseBean.getFailResponse("添加失败");
     }
+
+    @Override
+    public ResponseBean delItem(Integer iid) {
+        int articleNumber = itemDao.findArticleNumber(iid);
+        if (articleNumber!=0){
+            return ResponseBean.getFailResponse("删除失败，请删除条目下文章再试");
+        }else {
+            int i = itemDao.delItem(iid);
+            if (i>0){
+                return ResponseBean.getSuccessResponse("删除成功");
+            }else {
+                return ResponseBean.getFailResponse("删除失败");
+            }
+        }
+    }
 }

@@ -52,4 +52,7 @@ public class ItemCon {
 
     @GetMapping("/item/isHas")
     public  ResponseBean ishas(String name){return itemService.findIsHasName(name);}
+
+    @PostMapping("/delItem")
+    public  ResponseBean delItem(Integer iid){return itemService.delItem(iid);}
 }

@@ -20,4 +20,6 @@ public interface ItemService {
     ResponseBean findItemByIid(Integer iid);
 
     ResponseBean findIsHasName(String name);
+
+    ResponseBean delItem(Integer iid);
 }
