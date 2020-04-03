@@ -18,7 +18,7 @@ public class RoleWebSocket{
 
     @MessageMapping("/massRequest/role")
     //SendTo 发送至 Broker 下的指定订阅路径
-    @SendTo("/mass/role/getResponse")
+    @SendTo("/admin/role/getResponse")
     public String mass(String msg){
         return "flush";
     }

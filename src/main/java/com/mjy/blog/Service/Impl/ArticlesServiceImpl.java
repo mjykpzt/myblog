@@ -2,15 +2,18 @@ package com.mjy.blog.Service.Impl;
 
 import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
+import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Bean.SysArticles;
 import com.mjy.blog.Service.ArticlesService;
 import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -113,4 +116,6 @@ public class ArticlesServiceImpl implements ArticlesService {
         content = content.replaceAll("\\<.*?>", "");
         return content;
     }
+
+
 }

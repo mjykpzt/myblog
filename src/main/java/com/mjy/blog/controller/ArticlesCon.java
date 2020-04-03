@@ -2,11 +2,13 @@ package com.mjy.blog.controller;
 
 import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
+import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.ArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author mjy
@@ -19,8 +21,14 @@ public class ArticlesCon {
     private ArticlesService articlesService;
 
     @GetMapping()
-    public ResponseBean finaAll() {
-        return articlesService.findAll();
+    public ResponseBean finaAll(HttpServletRequest request) {
+        List<Role> roles = (List<Role>) request.getAttribute("role");
+        if (IsHasRole(roles)){
+            return articlesService.findAll();
+        }else {
+            return articlesService.findArticles((Integer)request.getAttribute("uid"));
+        }
+
     }
 
     @GetMapping(value = "/{uid}")
@@ -29,8 +37,8 @@ public class ArticlesCon {
     }
 
     @PostMapping("/addArticles")
-    public ResponseBean addArticles(HttpServletRequest request,Articles articles) {
-        articles.setCreate_user((Integer)request.getAttribute("uid"));
+    public ResponseBean addArticles(HttpServletRequest request, Articles articles) {
+        articles.setCreate_user((Integer) request.getAttribute("uid"));
         return articlesService.addArticles(articles);
     }
 
@@ -51,10 +59,18 @@ public class ArticlesCon {
     }
 
     @PostMapping("/delArticle")
-    public ResponseBean delArticle(@RequestParam(required = true)Integer aid,@RequestParam(required = true)Integer iid){
-        return articlesService.delArticle(aid,iid);
+    public ResponseBean delArticle(@RequestParam(required = true) Integer aid, @RequestParam(required = true) Integer iid) {
+        return articlesService.delArticle(aid, iid);
     }
 
-
+    private <T extends List<? extends Role>>Boolean IsHasRole(T t) {
+        for (Role r : t){
+            String role_name = r.getRole_name();
+            if (role_name.contains("ROLE_ADMIN")){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

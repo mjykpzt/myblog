@@ -2,10 +2,12 @@ package com.mjy.blog.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjy.blog.Bean.User;
+import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.Utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -75,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 HashMap map = new HashMap<>();
                 map.put("status", "1");
                 map.put("msg", "登录成功");
+                map.put("username",user.getUsername());
                 out.write(new ObjectMapper().writeValueAsString(map));
                 out.flush();
                 out.close();
@@ -96,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                tokenRepository(persistentTokenRepository()).tokenValiditySeconds(120)
 
                 .and()
-                .csrf().disable();
+                .csrf().disable().exceptionHandling().accessDeniedHandler(MyAccessHandler());
 
     }
 
@@ -114,6 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        firewall.setAllowUrlEncodedSlash(true);
 //        return firewall;
 //    }
+    @Bean
+    public AuthenticationAccessDeniedHandler MyAccessHandler(){return  new AuthenticationAccessDeniedHandler();}
 
 
 //    @Bean

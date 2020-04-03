@@ -3,6 +3,7 @@ package com.mjy.blog.controller;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/role")
 @RestController
-//@Secured("ROLE_ADMIN")
+@Secured("ROLE_ADMIN")
 public class RoleCon {
     @Autowired
     private RoleService roleService;

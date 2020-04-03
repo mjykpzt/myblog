@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemWebSocket {
     @MessageMapping("/massRequest/item")
     //SendTo 发送至 Broker 下的指定订阅路径
-    @SendTo("/mass/item/getResponse")
+    @SendTo("/user/item/getResponse")
     public String mass(String msg){
         return "flush";
     }

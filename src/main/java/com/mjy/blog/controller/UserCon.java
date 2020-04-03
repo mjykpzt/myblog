@@ -4,6 +4,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
+@Secured("ROLE_ADMIN")
 public class UserCon {
     @Autowired
     private UserService userService;
