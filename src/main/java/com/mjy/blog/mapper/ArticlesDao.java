@@ -28,7 +28,7 @@ public interface ArticlesDao {
 
     //更新文章内容
     @Update("update articles set md_text=#{md_text},source_text=#{source_text}," +
-            "item_id=#{item_id},html_text=#{html_text},change_time=now() where id=#{id}")
+            "item_id=#{item_id},html_text=#{html_text},title_name=#{title_name},change_time=now() where id=#{id}")
     int changeArticles(Articles articles);
 
     //保存文章

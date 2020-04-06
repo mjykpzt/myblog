@@ -39,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private KeyConfig keyConfig;
-//    @Autowired
-//    private DataSource dataSource;
+    @Autowired
+    private AuthenticationAccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -99,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                tokenRepository(persistentTokenRepository()).tokenValiditySeconds(120)
 
                 .and()
-                .csrf().disable().exceptionHandling().accessDeniedHandler(MyAccessHandler());
+                .csrf().disable().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
     }
 
@@ -117,8 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        firewall.setAllowUrlEncodedSlash(true);
 //        return firewall;
 //    }
-    @Bean
-    public AuthenticationAccessDeniedHandler MyAccessHandler(){return  new AuthenticationAccessDeniedHandler();}
+//    @Bean
+//    public AuthenticationAccessDeniedHandler MyAccessHandler(){return  new AuthenticationAccessDeniedHandler();}
 
 
 //    @Bean
