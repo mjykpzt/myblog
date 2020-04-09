@@ -44,6 +44,7 @@ public class TokenFilter extends BasicAuthenticationFilter {
             if (user != null) {
                 request.setAttribute("uid",user.getId());
                 request.setAttribute("role",user.getAuthorities());
+                request.setAttribute("username",user.getUsername());
                 UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authResult);
                 chain.doFilter(request, response);

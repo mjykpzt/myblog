@@ -26,9 +26,11 @@ public interface RoleDao {
             "set role_name=#{name},role_des=#{decs}")
     int addRole(@Param("name")String name,@Param("decs")String decs);
 
+    //通过角色id查询角色
     @Select("select * from role where id=#{rid}")
     Role findRoleByRid(Integer rid);
 
+    //更新角色
     @Update("update role set role_name=#{name},role_des=#{des} where id=#{rid}")
     int updateRole(@Param("name")String name,@Param("des")String des,@Param("rid")Integer id);
 

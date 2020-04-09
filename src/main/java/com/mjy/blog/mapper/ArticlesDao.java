@@ -53,8 +53,14 @@ public interface ArticlesDao {
             "where u.id=i.create_user and a.item_id=i.id and a.id=#{aid}")
     SysArticles findArticlesByAid(Integer aid);
 
+    //删除文章
     @Delete("delete from articles where id=#{aid}")
     int delArticle(Integer aid);
+
+    //记录图片链接
+    @Insert("insert into img_url set url=#{url},uid=#{uid},date=now()")
+    int addImUrl(@Param("url") String url,@Param("uid") Integer uid);
+
 
 
 }

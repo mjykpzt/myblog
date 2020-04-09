@@ -7,7 +7,6 @@ import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.Utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -105,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/css/**","/js/**","/fonts/**","/favicon.ico",
+        web.ignoring().antMatchers("/imgsave/**",
                 "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","web/**");
 //        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 
