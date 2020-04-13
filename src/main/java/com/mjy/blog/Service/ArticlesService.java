@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2020-03-08-22:30
  */
 public interface ArticlesService {
-    ResponseBean findArticles(Integer uid,Integer pageNum,Integer pageSize);
+    ResponseBean findArticles(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize);
 
     ResponseBean changeArticles(Articles articles);
 
     ResponseBean addArticles(Articles articles);
 
-    ResponseBean findAll(Integer pageNum,Integer pageSize);
+//    ResponseBean findAll(Integer pageNum,Integer pageSize);
 
-    ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize);
+//    ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize);
 
     ResponseBean findArticlesByAid(Integer aid);
 
@@ -28,6 +28,7 @@ public interface ArticlesService {
 
     ResponseBean addImg(HttpServletRequest req, MultipartFile image);
 
+    int findAid(Integer aid);
 
 
 }

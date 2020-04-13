@@ -9,15 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @create 2020-03-07-18:42
  */
 public interface UserService extends UserDetailsService {
-    ResponseBean findAll(Integer pageNum,Integer pageSize);
+//    ResponseBean findAll(Integer pageNum,Integer pageSize);
 
-    ResponseBean findByName(String username);
+    ResponseBean findByName(String searchName,Integer pageNum,Integer pageSize);
 
     ResponseBean addUser(User user);
 
     ResponseBean changeUserStatus(Integer status,Integer uid);
 
-    ResponseBean searchUser(String username,Integer pageNum,Integer pageSize);
+//    ResponseBean searchUser(String username,Integer pageNum,Integer pageSize);
 
     ResponseBean delUser(Integer uid);
 

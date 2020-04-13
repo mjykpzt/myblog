@@ -18,14 +18,14 @@ public class ItemCon {
     @Autowired
     private ItemService itemService;
 
-    @GetMapping()
-    public ResponseBean findAll(){
-        return itemService.findAll();
-    }
+//    @GetMapping()
+//    public ResponseBean findAll(){
+//        return itemService.findAll();
+//    }
 
-    @GetMapping("/{uid}")
-    public ResponseBean findByUid(@PathVariable Integer uid){
-        return itemService.findByUid(uid);
+    @GetMapping()
+    public ResponseBean findByUid(HttpServletRequest request){
+        return itemService.findByUid((Integer) request.getAttribute("uid"));
     }
 
     @PostMapping("/addItem/add")

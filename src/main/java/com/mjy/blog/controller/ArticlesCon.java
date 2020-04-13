@@ -5,6 +5,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.ArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,25 +22,33 @@ import java.util.List;
 public class ArticlesCon {
     @Autowired
     private ArticlesService articlesService;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-    @GetMapping()
-    public ResponseBean finaAll(HttpServletRequest request,
-                                @RequestParam(defaultValue = "1") Integer pageNum,
-                                @RequestParam(required = true) Integer pageSize) {
-        List<Role> roles = (List<Role>)request.getAttribute("role");
-        if (IsAdmin(roles)){
-            return articlesService.findAll(pageNum, pageSize);
-        }else {
-            return articlesService.findArticles((Integer)request.getAttribute("uid"),pageNum,pageSize);
-        }
 
-    }
-
-    @GetMapping(value = "/{uid}")
-    public ResponseBean findArticles(@PathVariable Integer uid,
+//    @GetMapping()
+//    @Secured("ROLE_ADMIN")
+//    public ResponseBean finaAll(HttpServletRequest request,
+//                                @RequestParam(defaultValue = "1") Integer pageNum,
+//                                @RequestParam(required = true) Integer pageSize) {
+//        List<Role> roles = (List<Role>)request.getAttribute("role");
+//            return articlesService.findAll(pageNum, pageSize);
+//
+//    }
+    @GetMapping("/findArticles")
+    public ResponseBean findArticles(HttpServletRequest request,
+                                     @RequestParam(required = false) Integer iid,
+                                     @RequestParam(required = false)String searchName,
                                      @RequestParam(defaultValue = "1") Integer pageNum,
                                      @RequestParam(defaultValue = "5") Integer pageSize) {
-        return articlesService.findArticles(uid,pageNum,pageSize);
+        if (!(searchName.length() > 0)){
+            searchName=null;
+        }else {
+            searchName="%"+searchName+"%";
+        }
+
+        if (IsAdmin(request)){
+            return articlesService.findArticles(null,iid,searchName,pageNum,pageSize);
+        }else {
+            return articlesService.findArticles((Integer)request.getAttribute("uid"),iid,searchName,pageNum,pageSize);
+        }
     }
 
     @PostMapping("/addArticles")
@@ -49,26 +58,40 @@ public class ArticlesCon {
     }
 
     @PostMapping("/changeArticles")
-    public ResponseBean changeArticles(Articles articles) {
-        return articlesService.changeArticles(articles);
+    public ResponseBean changeArticles(HttpServletRequest request,Articles articles) {
+        if ((Integer)request.getAttribute("uid")==articlesService.findAid(articles.getId())){
+            return articlesService.changeArticles(articles);
+        }
+        return ResponseBean.getFailResponse("权限不足");
     }
 
-    @GetMapping("/findArticlesByIid")
-    public ResponseBean findArticlesByIid(@RequestParam(required = true) Integer iid,
-                                          @RequestParam(defaultValue = "1") Integer pageNum,
-                                          @RequestParam(defaultValue = "5") Integer pageSize) {
-
-        return articlesService.findArticlesByIid(iid,pageNum,pageSize);
-    }
+//    @GetMapping("/findArticlesByIid")
+//    public ResponseBean findArticlesByIid(@RequestParam(required = true) Integer iid,
+//                                          @RequestParam(defaultValue = "1") Integer pageNum,
+//                                          @RequestParam(defaultValue = "5") Integer pageSize) {
+//
+//        return articlesService.findArticlesByIid(iid,pageNum,pageSize);
+//    }
 
     @GetMapping("/findArticlesByAid")
-    public ResponseBean findArticlesByAid(@RequestParam(required = true) Integer aid) {
-        return articlesService.findArticlesByAid(aid);
+    public ResponseBean findArticlesByAid(HttpServletRequest request,@RequestParam(required = true) Integer aid) {
+        if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
+            return articlesService.findArticlesByAid(aid);
+        }else {
+            return ResponseBean.getFailResponse("权限不足");
+
+        }
     }
 
     @PostMapping("/delArticle")
-    public ResponseBean delArticle(@RequestParam(required = true) Integer aid, @RequestParam(required = true) Integer iid) {
-        return articlesService.delArticle(aid, iid);
+    public ResponseBean delArticle(HttpServletRequest request,@RequestParam(required = true) Integer aid, @RequestParam(required = true) Integer iid) {
+        if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
+            return articlesService.delArticle(aid, iid);
+        }else {
+            return ResponseBean.getFailResponse("权限不足");
+
+        }
+
     }
 
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
@@ -77,8 +100,9 @@ public class ArticlesCon {
     }
 
 
-    private <T extends List<? extends Role>>Boolean IsAdmin(T t) {
-        for (Role r : t){
+    private Boolean IsAdmin(HttpServletRequest request) {
+        List<Role> roles = (List<Role>) request.getAttribute("role");
+        for (Role r : roles){
             String role_name = r.getRole_name();
             if (role_name.contains("ROLE_ADMIN")){
                 return true;

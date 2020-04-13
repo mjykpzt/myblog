@@ -23,8 +23,14 @@ public interface ArticlesDao {
             "<if test='uid != null'> " +
             "and a.create_user=#{uid} " +
             "</if> " +
+            "<if test='iid != null'> " +
+            "and a.item_id=#{iid} " +
+            "</if> " +
+            "<if test='searchName != null'> " +
+            "and a.title_name like #{searchName} " +
+            "</if> " +
             "</script>")
-    List<SysArticles> findArticles(@Param("uid") Integer uid);
+    List<SysArticles> findArticles(@Param("uid") Integer uid,@Param("iid")Integer iid,@Param("searchName")String searchName);
 
     //更新文章内容
     @Update("update articles set md_text=#{md_text},source_text=#{source_text}," +
@@ -37,13 +43,18 @@ public interface ArticlesDao {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int addArticles(Articles articles);
 
-    //根据模块ID查询文章
-    @Select("select" +
-            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
-            "u.username create_name,a.status,a.change_time,a.md_text,a.source_text,a.html_text,i.item_name" +
-            " from `user` u,articles a,items i " +
-            "where u.id=i.create_user and a.item_id=i.id and a.item_id=#{iid}")
-    List<SysArticles> findArticlesByIid(Integer iid);
+//    //根据模块ID查询文章
+//    @Select("<script> " +
+//            "select" +
+//            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
+//            "u.username create_name,a.status,a.change_time,a.md_text,a.source_text,a.html_text,i.item_name" +
+//            " from `user` u,articles a,items i " +
+//            "where u.id=i.create_user and a.item_id=i.id and a.item_id=#{iid}" +
+//            "<if test='uid != null'> " +
+//            "and a.create_user=#{uid} " +
+//            "</if> " +
+//            "</script>")
+//    List<SysArticles> findArticlesByIid(Integer iid);
 
     //根据文章ID查询文章
     @Select("select" +
@@ -60,6 +71,15 @@ public interface ArticlesDao {
     //记录图片链接
     @Insert("insert into img_url set url=#{url},uid=#{uid},date=now()")
     int addImUrl(@Param("url") String url,@Param("uid") Integer uid);
+
+    //根据文章查询用户
+    @Select("select create_user from articles where id=#{aid}")
+    int findAid(Integer aid);
+
+    //查询文章数量
+    @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid}")
+    int findArticlesNum(@Param("uid")Integer uid,@Param("iid")Integer iid);
+
 
 
 

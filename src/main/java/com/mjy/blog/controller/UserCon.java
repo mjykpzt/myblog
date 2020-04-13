@@ -12,16 +12,22 @@ import org.springframework.web.bind.annotation.*;
  * @create 2020-03-07-18:33
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @Secured("ROLE_ADMIN")
 public class UserCon {
     @Autowired
     private UserService userService;
 
-    @RequestMapping()
-    public ResponseBean findAll(@RequestParam(defaultValue = "1") Integer pageNum,
-                                @RequestParam(defaultValue = "5") Integer pageSize) {
-        return userService.findAll(pageNum, pageSize);
+    @GetMapping()
+    public ResponseBean findUsers(String searchName,
+                                  @RequestParam(defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5") Integer pageSize) {
+        if (!(searchName.length() > 0)) {
+            searchName = null;
+        }else {
+            searchName="%"+searchName+"%";
+        }
+        return userService.findByName(searchName, pageNum, pageSize);
     }
 
 //    @GetMapping("/searchname/{username}")
@@ -47,11 +53,11 @@ public class UserCon {
         return userService.changeUserStatus(userstatus, userid);
     }
 
-    @PostMapping("/searchUser")
-    public ResponseBean searchUser(@RequestParam(required = true) String str, @RequestParam(defaultValue = "1")
-            Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
-        return userService.searchUser(str, pageNum, pageSize);
-    }
+//    @PostMapping("/searchUser")
+//    public ResponseBean searchUser(@RequestParam(required = true) String str, @RequestParam(defaultValue = "1")
+//            Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+//        return userService.searchUser(str, pageNum, pageSize);
+//    }
 
     @PostMapping("/delUser")
     public ResponseBean delUser(@RequestParam(required = true) Integer uid) {
@@ -72,13 +78,13 @@ public class UserCon {
     }
 
     @RequestMapping("/updateRoles")
-    public ResponseBean updateRoles(@RequestParam(required = true) Integer[] roles,@RequestParam(required = true) Integer id) {
+    public ResponseBean updateRoles(@RequestParam(required = true) Integer[] roles, @RequestParam(required = true) Integer id) {
         return userService.updateRoles(id, roles);
 
     }
 
     @GetMapping("/findIsHasName")
-    public ResponseBean findIsHasName(@RequestParam(required = true)String username){
+    public ResponseBean findIsHasName(@RequestParam(required = true) String username) {
         return userService.findIsHasName(username);
     }
 }

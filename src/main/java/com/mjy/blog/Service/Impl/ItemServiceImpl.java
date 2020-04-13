@@ -23,14 +23,14 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemDao itemDao;
 
-    @Override
-    public ResponseBean findAll() {
-        List<SysItem> allItem = itemDao.findItem(null);
-        if (allItem != null) {
-            return ResponseBean.getSuccessResponse("查询成功", allItem);
-        }
-        return ResponseBean.getFailResponse("查询失败");
-    }
+//    @Override
+//    public ResponseBean findAll() {
+//        List<SysItem> allItem = itemDao.findItem(null);
+//        if (allItem != null) {
+//            return ResponseBean.getSuccessResponse("查询成功", allItem);
+//        }
+//        return ResponseBean.getFailResponse("查询失败");
+//    }
 
     @Override
     public ResponseBean findByUid(Integer uid) {

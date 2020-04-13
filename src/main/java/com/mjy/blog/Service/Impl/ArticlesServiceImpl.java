@@ -10,6 +10,7 @@ import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,32 +31,35 @@ import java.util.UUID;
 @Service
 @Transactional(isolation =Isolation.READ_COMMITTED)
 public class ArticlesServiceImpl implements ArticlesService {
+    @Value("${imgPath}")
+    private String imgFolderPath;
+
     @Autowired
     private ArticlesDao articlesDao;
 
     @Autowired
     private ItemDao itemDao;
 
-    @Override
-    @Transactional(readOnly = true)
-    public ResponseBean findAll(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<SysArticles> articles = articlesDao.findArticles(null);
-        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
-        if (articles != null){
-            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
-        }
-        return ResponseBean.getFailResponse("查询失败");
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public ResponseBean findAll(Integer pageNum,Integer pageSize) {
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<SysArticles> articles = articlesDao.findArticles(null,null);
+//        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
+//        if (articles != null){
+//            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
+//        }
+//        return ResponseBean.getFailResponse("查询失败");
+//    }
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseBean findArticles(Integer uid,Integer pageNum,Integer pageSize) {
+    public ResponseBean findArticles(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<SysArticles> articles = articlesDao.findArticles(uid);
+        List<SysArticles> articles = articlesDao.findArticles(uid,iid,searchName);
         PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
         if (articles != null){
-            return ResponseBean.getSuccessResponse("查询成功",articles);
+            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
         }
         return ResponseBean.getFailResponse("查询失败");
     }
@@ -91,17 +95,17 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ResponseBean.getFailResponse("添加文章失败");
     }
 
-    @Override
-    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
-    public ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<SysArticles> articles = articlesDao.findArticlesByIid(iid);
-        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
-        if (articles != null && articles.size()>0){
-            return ResponseBean.getSuccessResponse("查询成功",articles);
-        }
-        return ResponseBean.getFailResponse("查询失败");
-    }
+//    @Override
+//    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
+//    public ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize) {
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<SysArticles> articles = articlesDao.findArticlesByIid(iid);
+//        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
+//        if (articles != null && articles.size()>0){
+//            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
+//        }
+//        return ResponseBean.getFailResponse("查询失败");
+//    }
 
     @Override
     @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
@@ -126,7 +130,6 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Override
     public ResponseBean addImg(HttpServletRequest req, MultipartFile image) {
         StringBuffer url = new StringBuffer();
-        String imgFolderPath = "D:/imgsave/";
         String userpath=""+req.getAttribute("username");
         String path = imgFolderPath+userpath;
         File imgFolder = new File(path);
@@ -153,6 +156,10 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ResponseBean.getFailResponse("图片上传失败");
     }
 
+    @Override
+    public int findAid(Integer aid) {
+        return articlesDao.findAid(aid);
+    }
 
     public String stripHtml(String content) {
         content = content.replaceAll("<p .*?>", "");

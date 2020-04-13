@@ -11,32 +11,33 @@ import java.util.List;
  * @create 2020-03-08-16:05
  */
 public interface ItemDao {
-    //查询所有条目，或根据用户查询条目
-    @Select("<script> " +
-            "select" +
-            " i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
-            "i.status,i.change_time,i.articles_number " +
-            "from `user` u,items i " +
-            "where u.id=i.create_user ORDER BY id" +
-            "<if test='uid != null'> " +
-            "and i.create_user=#{uid} ORDER BY id" +
-            "</if> " +
-            "</script>")
-    @ResultType(SysItem.class)
-    List<SysItem> findItem(@Param("uid")Integer uid);
+    //根据用户查询条目
+    @Select(
+            "select " +
+                    "#{uid} as uid ,i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
+                    "i.status,i.change_time,i.articles_number " +
+                    "from `user` u,items i " +
+                    "where u.id=i.create_user")
+    @Results({
+            @Result(id = true, column = "id", property = "id"),
+            @Result(column = "{uid=uid,iid=id}", property = "articles_number_user",
+                    many = @Many(select = "com.mjy.blog.mapper.ArticlesDao.findArticlesNum")
+            )
+    })
+    List<SysItem> findItem(@Param("uid") Integer uid);
 
     //保存条目
     @Insert("insert into items " +
             "set item_name=#{item_name},item_des=#{item_des},create_user=#{uid},create_time=now(),change_time=now()")
-    int addItem(@Param("item_name")String name,@Param("item_des")String des,@Param("uid")Integer uid);
+    int addItem(@Param("item_name") String name, @Param("item_des") String des, @Param("uid") Integer uid);
 
     //更新条目状态（条目是否可用）
     @Update("update items set status =#{status},change_time=now() where id=#{id}")
-    int changeItemStatus(@Param("status")Short status,@Param("id")Integer id);
+    int changeItemStatus(@Param("status") Short status, @Param("id") Integer id);
 
     //更新条目（条目内容）
     @Update("update items set item_name =#{name},item_des=#{des},change_time=now() where id=#{id}")
-    int changeItem(@Param("name")String name,@Param("des")String des,@Param("id")Integer id);
+    int changeItem(@Param("name") String name, @Param("des") String des, @Param("id") Integer id);
 
     //查询条目根据条目ID
     @Select("select id,item_name,item_des from items where id=#{iid}")
@@ -44,7 +45,7 @@ public interface ItemDao {
 
     //查询是否存在相同的名字
     @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random}")
-    int findIsHasName(String name,double random);
+    int findIsHasName(String name, double random);
 
     //根据名字查询id
     @Select("select id from items where item_name=#{name}")

@@ -7,7 +7,7 @@ import com.mjy.blog.Bean.ResponseBean;
  * @create 2020-03-08-16:13
  */
 public interface ItemService {
-    ResponseBean findAll();
+//    ResponseBean findAll();
 
     ResponseBean findByUid(Integer uid);
 

@@ -1,6 +1,7 @@
 package com.mjy.blog.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
@@ -69,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 user.setUsername(principal.getUsername());
                 user.setRoles(principal.getRoles());
                 user.setId(principal.getId());
-                String token = JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 24 * 60);
+                String token = JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 24 * 60*7);
                 httpServletResponse.addHeader("Authorization", "Bearer " + token);
 
                 PrintWriter out = httpServletResponse.getWriter();
@@ -77,6 +78,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 map.put("status", "1");
                 map.put("msg", "登录成功");
                 map.put("username",user.getUsername());
+//                for (Role role:user.getRoles()){
+//                    role.getRole_name()
+//                }
                 out.write(new ObjectMapper().writeValueAsString(map));
                 out.flush();
                 out.close();
