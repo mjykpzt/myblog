@@ -30,10 +30,6 @@ public class UserCon {
         return userService.findByName(searchName, pageNum, pageSize);
     }
 
-//    @GetMapping("/searchname/{username}")
-//    public ResponseBean findByName(@PathVariable String username) {
-//        return userService.findByName(username);
-//    }
 
     @PostMapping(value = "/addUser")
     public ResponseBean addUser(@RequestParam(required = true) String username,
@@ -53,11 +49,7 @@ public class UserCon {
         return userService.changeUserStatus(userstatus, userid);
     }
 
-//    @PostMapping("/searchUser")
-//    public ResponseBean searchUser(@RequestParam(required = true) String str, @RequestParam(defaultValue = "1")
-//            Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
-//        return userService.searchUser(str, pageNum, pageSize);
-//    }
+
 
     @PostMapping("/delUser")
     public ResponseBean delUser(@RequestParam(required = true) Integer uid) {
