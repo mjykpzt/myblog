@@ -9,7 +9,6 @@ import com.mjy.blog.Bean.ResponseBean;
 public interface ItemService {
 //    ResponseBean findAll();
 
-    ResponseBean findByUid(Integer uid);
 
     ResponseBean addItem(String name,String des,Integer uid);
 
@@ -22,4 +21,6 @@ public interface ItemService {
     ResponseBean findIsHasName(String name);
 
     ResponseBean delItem(Integer iid);
+
+    ResponseBean findByUid(Integer uid, String searchName, Integer pageNum, Integer pageSize);
 }

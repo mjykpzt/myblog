@@ -1,6 +1,8 @@
 package com.mjy.blog.Service.Impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mjy.blog.Bean.Item;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.SysItem;
@@ -23,22 +25,15 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemDao itemDao;
 
-//    @Override
-//    public ResponseBean findAll() {
-//        List<SysItem> allItem = itemDao.findItem(null);
-//        if (allItem != null) {
-//            return ResponseBean.getSuccessResponse("查询成功", allItem);
-//        }
-//        return ResponseBean.getFailResponse("查询失败");
-//    }
 
     @Override
-    public ResponseBean findByUid(Integer uid) {
-        List<SysItem> allItem = itemDao.findItem(uid);
-        if (allItem != null) {
-            return ResponseBean.getSuccessResponse("查询成功", allItem);
-        }
-        return ResponseBean.getFailResponse("查询失败");
+    public ResponseBean findByUid(Integer uid, String searchName, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysItem> allItem = itemDao.findItem(uid, searchName);
+        PageInfo<SysItem> sysItemPageInfo = new PageInfo<>(allItem);
+
+        return ResponseBean.getSuccessResponse("查询成功", sysItemPageInfo);
+
     }
 
     @Override
@@ -78,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
                 synchronized (this) {
                     int isHasName = itemDao.findIsHasName(name, Math.random());
                     if (isHasName == 0) {
-                       return updateItem(name, des, id);
+                        return updateItem(name, des, id);
                     } else {
                         return ResponseBean.getFailResponse("名称重复");
                     }
@@ -92,7 +87,7 @@ public class ItemServiceImpl implements ItemService {
                         case 1:
                             int nameId = itemDao.findIdByName(name);
                             if (nameId == id) {
-                               return updateItem(name, des, id);
+                                return updateItem(name, des, id);
                             } else {
                                 return ResponseBean.getFailResponse("名称重复");
                             }
@@ -132,13 +127,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ResponseBean delItem(Integer iid) {
         int articleNumber = itemDao.findArticleNumber(iid);
-        if (articleNumber!=0){
+        if (articleNumber != 0) {
             return ResponseBean.getFailResponse("删除失败，请删除条目下文章再试");
-        }else {
+        } else {
             int i = itemDao.delItem(iid);
-            if (i>0){
+            if (i > 0) {
                 return ResponseBean.getSuccessResponse("删除成功");
-            }else {
+            } else {
                 return ResponseBean.getFailResponse("删除失败");
             }
         }

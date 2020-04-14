@@ -40,17 +40,6 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Autowired
     private ItemDao itemDao;
 
-//    @Override
-//    @Transactional(readOnly = true)
-//    public ResponseBean findAll(Integer pageNum,Integer pageSize) {
-//        PageHelper.startPage(pageNum,pageSize);
-//        List<SysArticles> articles = articlesDao.findArticles(null,null);
-//        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
-//        if (articles != null){
-//            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
-//        }
-//        return ResponseBean.getFailResponse("查询失败");
-//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -58,10 +47,7 @@ public class ArticlesServiceImpl implements ArticlesService {
         PageHelper.startPage(pageNum,pageSize);
         List<SysArticles> articles = articlesDao.findArticles(uid,iid,searchName);
         PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
-        if (articles != null){
-            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
-        }
-        return ResponseBean.getFailResponse("查询失败");
+        return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
     }
 
     @Override
@@ -95,17 +81,6 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ResponseBean.getFailResponse("添加文章失败");
     }
 
-//    @Override
-//    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
-//    public ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize) {
-//        PageHelper.startPage(pageNum,pageSize);
-//        List<SysArticles> articles = articlesDao.findArticlesByIid(iid);
-//        PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
-//        if (articles != null && articles.size()>0){
-//            return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
-//        }
-//        return ResponseBean.getFailResponse("查询失败");
-//    }
 
     @Override
     @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
@@ -129,7 +104,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public ResponseBean addImg(HttpServletRequest req, MultipartFile image) {
-        StringBuffer url = new StringBuffer();
+        StringBuilder url = new StringBuilder();
         String userpath=""+req.getAttribute("username");
         String path = imgFolderPath+userpath;
         File imgFolder = new File(path);

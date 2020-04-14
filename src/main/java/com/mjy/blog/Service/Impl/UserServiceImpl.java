@@ -28,23 +28,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Transactional(readOnly = true)
-//    @Override
-//    public ResponseBean findAll(Integer pageNum, Integer pageSize) {
-//        PageHelper.startPage(pageNum, pageSize);
-//        List<User> userList = userDao.findAll();
-//        PageInfo<User> pageInfo = new PageInfo<>(userList);
-//        return ResponseBean.getSuccessResponse("查询成功", pageInfo);
-//
-//    }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseBean addUser(User user) {
-        int isHas = userDao.findIsHasName(user.getUsername(),Math.random());
-        if ( isHas== 0) {
+        int isHas = userDao.findIsHasName(user.getUsername(), Math.random());
+        if (isHas == 0) {
             synchronized (this) {
-                int isHasName = userDao.findIsHasName(user.getUsername(),Math.random());
+                int isHasName = userDao.findIsHasName(user.getUsername(), Math.random());
                 if (isHasName == 0) {
                     String password = user.getPassword();
                     user.setPassword(bCryptPasswordEncoder.encode(password));
@@ -66,15 +57,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResponseBean findByName(String searchName,Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public ResponseBean findByName(String searchName, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<User> userList = userDao.findUserByName(searchName);
         PageInfo<User> pageInfo = new PageInfo<>(userList);
-        if (userList.size() != 0) {
-            return ResponseBean.getSuccessResponse("查询成功",pageInfo);
-        }
+        return ResponseBean.getSuccessResponse("查询成功", pageInfo);
 
-        return ResponseBean.getFailResponse("查询失败或未查询到数据");
+
     }
 
     @Override
@@ -89,18 +78,6 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("改变用户账号状态失败");
     }
 
-//    @Override
-//    public ResponseBean searchUser(String username, Integer pageNum, Integer pageSize) {
-//        String name = "%" + username + "%";
-//        PageHelper.startPage(pageNum, pageSize);
-//        List<User> userList = userDao.findUserByName(name, true);
-//        PageInfo<User> pageInfo = new PageInfo<>(userList);
-//        if (pageInfo != null) {
-//            return ResponseBean.getSuccessResponse("查询成功", pageInfo);
-//        }
-//
-//        return ResponseBean.getFailResponse("查询失败或未查询到数据");
-//    }
 
     @Override
     public ResponseBean delUser(Integer uid) {
@@ -152,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBean findIsHasName(String name) {
-        int isHas = userDao.findIsHasName(name,Math.random());
+        int isHas = userDao.findIsHasName(name, Math.random());
         if (isHas > 0) {
             return ResponseBean.getFailResponse("名称重复");
         }

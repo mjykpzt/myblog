@@ -12,19 +12,23 @@ import java.util.List;
  */
 public interface ItemDao {
     //根据用户查询条目
-    @Select(
+    @Select("<script> " +
             "select " +
-                    "#{uid} as uid ,i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
-                    "i.status,i.change_time,i.articles_number " +
-                    "from `user` u,items i " +
-                    "where u.id=i.create_user")
+            "#{uid} as uid ,i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
+            "i.status,i.change_time,i.articles_number " +
+            "from `user` u,items i " +
+            "where u.id=i.create_user " +
+            "<if test='searchName != null'> " +
+            "and i.item_name like #{searchName} " +
+            "</if> " +
+            "</script>")
     @Results({
             @Result(id = true, column = "id", property = "id"),
             @Result(column = "{uid=uid,iid=id}", property = "articles_number_user",
                     many = @Many(select = "com.mjy.blog.mapper.ArticlesDao.findArticlesNum")
             )
     })
-    List<SysItem> findItem(@Param("uid") Integer uid);
+    List<SysItem> findItem(@Param("uid") Integer uid, @Param("searchName") String searchName);
 
     //保存条目
     @Insert("insert into items " +

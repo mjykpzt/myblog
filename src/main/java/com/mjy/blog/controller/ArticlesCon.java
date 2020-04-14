@@ -23,15 +23,7 @@ public class ArticlesCon {
     @Autowired
     private ArticlesService articlesService;
 
-//    @GetMapping()
-//    @Secured("ROLE_ADMIN")
-//    public ResponseBean finaAll(HttpServletRequest request,
-//                                @RequestParam(defaultValue = "1") Integer pageNum,
-//                                @RequestParam(required = true) Integer pageSize) {
-//        List<Role> roles = (List<Role>)request.getAttribute("role");
-//            return articlesService.findAll(pageNum, pageSize);
-//
-//    }
+
     @GetMapping("/findArticles")
     public ResponseBean findArticles(HttpServletRequest request,
                                      @RequestParam(required = false) Integer iid,
@@ -65,13 +57,6 @@ public class ArticlesCon {
         return ResponseBean.getFailResponse("权限不足");
     }
 
-//    @GetMapping("/findArticlesByIid")
-//    public ResponseBean findArticlesByIid(@RequestParam(required = true) Integer iid,
-//                                          @RequestParam(defaultValue = "1") Integer pageNum,
-//                                          @RequestParam(defaultValue = "5") Integer pageSize) {
-//
-//        return articlesService.findArticlesByIid(iid,pageNum,pageSize);
-//    }
 
     @GetMapping("/findArticlesByAid")
     public ResponseBean findArticlesByAid(HttpServletRequest request,@RequestParam(required = true) Integer aid) {

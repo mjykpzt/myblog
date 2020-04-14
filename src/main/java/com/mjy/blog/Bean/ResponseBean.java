@@ -7,12 +7,12 @@ import lombok.Data;
  * @create 2020-03-07-18:35
  */
 @Data
-public class ResponseBean<T> {
+public class ResponseBean {
     private Integer status;
     private String msg;
-    private T data;
+    private Object data;
 
-    public ResponseBean(Integer status, String msg, T data) {
+    public ResponseBean(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -23,7 +23,7 @@ public class ResponseBean<T> {
         this.msg = msg;
     }
 
-    public static <T>ResponseBean getSuccessResponse(String msg, T data){
+    public static ResponseBean getSuccessResponse(String msg, Object data){
         return new ResponseBean(1,msg,data);
     }
 

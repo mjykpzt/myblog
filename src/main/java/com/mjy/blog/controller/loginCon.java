@@ -13,15 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class loginCon {
-    @RequestMapping("/login_error")
-    public ResponseBean loginError(){
-        return ResponseBean.getFailResponse("登陆失败");
-    }
-
-    @RequestMapping("/login_success")
-    public ResponseBean loginSuccess(){
-        return ResponseBean.getSuccessResponse("登录成功");
-    }
 
     @RequestMapping("/login_page")
     public ResponseBean loginPage(){
