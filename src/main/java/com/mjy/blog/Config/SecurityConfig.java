@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
                 .antMatchers("/**")
                 .hasAnyRole("USER", "ADMIN", "TEST")
                 .anyRequest().authenticated()
@@ -72,15 +72,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 user.setId(principal.getId());
                 String token = JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 24 * 60*7);
                 httpServletResponse.addHeader("Authorization", "Bearer " + token);
+                Cookie cookie = new Cookie("flushtoken", "mjygdsh");
+                cookie.setPath("/webapp");
+                cookie.setHttpOnly(true);
+                httpServletResponse.addCookie(cookie);
 
                 PrintWriter out = httpServletResponse.getWriter();
                 HashMap map = new HashMap<>();
                 map.put("status", "1");
                 map.put("msg", "登录成功");
                 map.put("username",user.getUsername());
-//                for (Role role:user.getRoles()){
-//                    role.getRole_name()
-//                }
                 out.write(new ObjectMapper().writeValueAsString(map));
                 out.flush();
                 out.close();
@@ -97,9 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 out.close();
             }
         })
-//                .and().
-//                rememberMe().userDetailsService(userService).
-//                tokenRepository(persistentTokenRepository()).tokenValiditySeconds(120)
 
                 .and()
                 .csrf().disable().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
@@ -109,28 +107,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/imgsave/**",
-                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","web/**");
-//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","/druid/**");
 
     }
 
-//    @Bean
-//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-//        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
-//        firewall.setAllowUrlEncodedSlash(true);
-//        return firewall;
-//    }
-//    @Bean
-//    public AuthenticationAccessDeniedHandler MyAccessHandler(){return  new AuthenticationAccessDeniedHandler();}
-
-
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-//        tokenRepository.setDataSource(dataSource); // 设置数据源
-////        tokenRepository.setCreateTableOnStartup(true); // 启动创建表，创建成功后注释掉
-//        return tokenRepository;
-//    }
 }
 
 

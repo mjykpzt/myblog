@@ -83,10 +83,11 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 
     @Override
-    @Transactional(readOnly = true,isolation = Isolation.READ_COMMITTED )
+    @Transactional(isolation = Isolation.READ_COMMITTED )
     public ResponseBean findArticlesByAid(Integer aid) {
         SysArticles articles = articlesDao.findArticlesByAid(aid);
         if (articles != null){
+            articlesDao.addReadNums(aid);
             return ResponseBean.getSuccessResponse("查询成功",articles);
         }
         return ResponseBean.getFailResponse("查询失败");

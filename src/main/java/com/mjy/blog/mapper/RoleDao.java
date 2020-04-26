@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface RoleDao {
     //查询所有角色
-    @Select("select * from role")
+    @Select("select * from role where delete_flag=0")
     List<Role> findAllRoles();
 
     //根据用户ID查询该用户的角色

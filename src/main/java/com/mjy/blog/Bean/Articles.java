@@ -26,4 +26,5 @@ public class Articles implements Serializable {
     private Integer create_user;
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date change_time;
+    private Integer read_numbers;
 }

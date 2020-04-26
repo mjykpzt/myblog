@@ -25,6 +25,11 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemDao itemDao;
 
+    @Override
+    public ResponseBean findSimpleItems() {
+        List<Item> simpleItems = itemDao.findSimpleItems();
+        return ResponseBean.getSuccessResponse("查询成功",simpleItems);
+    }
 
     @Override
     public ResponseBean findByUid(Integer uid, String searchName, Integer pageNum, Integer pageSize) {

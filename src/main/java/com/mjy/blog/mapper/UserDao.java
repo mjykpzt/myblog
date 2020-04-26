@@ -10,18 +10,14 @@ import java.util.List;
  * @create 2020-03-07-18:31
  */
 public interface UserDao {
-//    //查询所有用户
-//    @Select("select * from user where isdel=0")
-//    @ResultMap("t1")
-//    List<User> findAll();
 
     //通过id查找用户
-    @Select("select * from user where id=#{uid} and isdel=0")
+    @Select("select * from user where id=#{uid} and delete_flag=0")
     @ResultMap("t1")
     User findById(Integer uid);
 
     //通过用户名查找用户
-    @Select("<script>" + "select * from user where isdel=0 " +
+    @Select("<script>" + "select * from user where delete_flag=0 " +
             "<if test='searchName!=null'> " +
             "and username like #{searchName} " +
             "</if> " +
@@ -52,7 +48,7 @@ public interface UserDao {
     int changeUserStatus(@Param("status") Integer status, @Param("uid") Integer uid);
 
     //删除用户
-    @Update("update user set isdel=1 where id=#{uid}")
+    @Update("update user set delete_flag=1 where id=#{uid}")
     int delUser(Integer id);
 
     //修改用户

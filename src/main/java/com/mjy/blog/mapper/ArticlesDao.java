@@ -17,9 +17,9 @@ public interface ArticlesDao {
     @Select("<script> " +
             "select" +
             " a.id,a.item_id,a.title_name,a.create_time,a.create_user,u.username create_name, " +
-            "a.status,a.change_time,a.md_text,a.source_text,i.item_name,a.html_text " +
+            "a.status,a.change_time,a.md_text,a.source_text,i.item_name,a.html_text,a.read_numbers " +
             "from `user` u,articles a,items i " +
-            "where u.id=a.create_user and a.item_id=i.id" +
+            "where u.id=a.create_user and a.item_id=i.id and a.delete_flag=0" +
             "<if test='uid != null'> " +
             "and a.create_user=#{uid} " +
             "</if> " +
@@ -43,29 +43,16 @@ public interface ArticlesDao {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int addArticles(Articles articles);
 
-//    //根据模块ID查询文章
-//    @Select("<script> " +
-//            "select" +
-//            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
-//            "u.username create_name,a.status,a.change_time,a.md_text,a.source_text,a.html_text,i.item_name" +
-//            " from `user` u,articles a,items i " +
-//            "where u.id=i.create_user and a.item_id=i.id and a.item_id=#{iid}" +
-//            "<if test='uid != null'> " +
-//            "and a.create_user=#{uid} " +
-//            "</if> " +
-//            "</script>")
-//    List<SysArticles> findArticlesByIid(Integer iid);
-
     //根据文章ID查询文章
     @Select("select" +
-            " a.id,a.item_id,a.title_name,a.create_time,a.create_user," +
+            " a.id,a.item_id,a.title_name,a.create_time,a.create_user,a.read_numbers, " +
             "u.username create_name,a.status,a.change_time,a.md_text,a.source_text,a.html_text,i.item_name" +
             " from `user` u,articles a,items i " +
             "where u.id=i.create_user and a.item_id=i.id and a.id=#{aid}")
     SysArticles findArticlesByAid(Integer aid);
 
     //删除文章
-    @Delete("delete from articles where id=#{aid}")
+    @Update("Update articles set delete_flag=1 where id=#{aid}")
     int delArticle(Integer aid);
 
     //记录图片链接
@@ -77,8 +64,12 @@ public interface ArticlesDao {
     int findAid(Integer aid);
 
     //查询文章数量
-    @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid}")
+    @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid} and delete_flag=0")
     int findArticlesNum(@Param("uid")Integer uid,@Param("iid")Integer iid);
+
+    //阅读次数增加
+    @Update("update articles set read_numbers=read_numbers+1 where id=#{aid}")
+    void addReadNums(Integer aid);
 
 
 

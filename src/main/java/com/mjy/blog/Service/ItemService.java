@@ -7,8 +7,7 @@ import com.mjy.blog.Bean.ResponseBean;
  * @create 2020-03-08-16:13
  */
 public interface ItemService {
-//    ResponseBean findAll();
-
+    ResponseBean findSimpleItems();
 
     ResponseBean addItem(String name,String des,Integer uid);
 

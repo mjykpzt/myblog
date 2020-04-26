@@ -17,7 +17,7 @@ public interface ItemDao {
             "#{uid} as uid ,i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
             "i.status,i.change_time,i.articles_number " +
             "from `user` u,items i " +
-            "where u.id=i.create_user " +
+            "where u.id=i.create_user and delete_flag=0 " +
             "<if test='searchName != null'> " +
             "and i.item_name like #{searchName} " +
             "</if> " +
@@ -48,7 +48,7 @@ public interface ItemDao {
     Item findItemByIid(Integer iid);
 
     //查询是否存在相同的名字
-    @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random}")
+    @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random} and delete_flag=0")
     int findIsHasName(String name, double random);
 
     //根据名字查询id
@@ -60,7 +60,7 @@ public interface ItemDao {
     Boolean isCanUse(Integer iid);
 
     //删除条目
-    @Delete("delete from items where id=#{iid}")
+    @Update("update items set delete_flag=1 where id=#{iid}")
     int delItem(Integer iid);
 
     //文章数加一
@@ -72,7 +72,11 @@ public interface ItemDao {
     int subNumber(Integer iid);
 
     //查询条目下文章数目
-    @Select("select articles_number from items where id=#{iid}")
+    @Select("select articles_number from items where id=#{iid} and delete_flag=0")
     int findArticleNumber(Integer iid);
+
+    //查询条目
+    @Select("select id,item_name from items where delete_flag=0")
+    List<Item> findSimpleItems();
 
 }

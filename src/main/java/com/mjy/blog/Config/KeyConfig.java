@@ -39,35 +39,4 @@ public class KeyConfig {
         }
     }
 
-//    public String getPu_key() {
-//        return pu_key;
-//    }
-//
-//    public void setPu_key(String pu_key) {
-//        this.pu_key = pu_key;
-//    }
-//
-//    public String getPr_key() {
-//        return pr_key;
-//    }
-//
-//    public void setPr_key(String pr_key) {
-//        this.pr_key = pr_key;
-//    }
-//
-//    public PublicKey getPublicKey() {
-//        return publicKey;
-//    }
-//
-//    public void setPublicKey(PublicKey publicKey) {
-//        this.publicKey = publicKey;
-//    }
-//
-//    public PrivateKey getPrivateKey() {
-//        return privateKey;
-//    }
-//
-//    public void setPrivateKey(PrivateKey privateKey) {
-//        this.privateKey = privateKey;
-//    }
 }

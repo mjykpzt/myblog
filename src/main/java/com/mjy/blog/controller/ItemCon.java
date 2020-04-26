@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author mjy
@@ -18,17 +20,21 @@ public class ItemCon {
     @Autowired
     private ItemService itemService;
 
+    @GetMapping("/simpleItems")
+    public ResponseBean findSimpleItems(){
+        return itemService.findSimpleItems();
+    }
 
     @GetMapping()
-    public ResponseBean findByUid(HttpServletRequest request, String searchName,
+    public ResponseBean findByUid(HttpServletRequest request, String searchName,HttpServletResponse response,
                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                   @RequestParam(defaultValue = "5") Integer pageSize) {
         if (!(searchName.length() > 0)) {
             searchName = null;
-        }else {
-            searchName="%"+searchName+"%";
+        } else {
+            searchName = "%" + searchName + "%";
         }
-        return itemService.findByUid((Integer) request.getAttribute("uid"),searchName, pageNum, pageSize);
+        return itemService.findByUid((Integer) request.getAttribute("uid"), searchName, pageNum, pageSize);
     }
 
     @PostMapping("/addItem/add")
