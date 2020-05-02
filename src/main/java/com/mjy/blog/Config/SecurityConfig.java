@@ -1,12 +1,10 @@
 package com.mjy.blog.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mjy.blog.Bean.Role;
-import com.mjy.blog.Bean.User;
 import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
-import com.mjy.blog.Utils.JwtUtils;
+import com.mjy.blog.Utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -65,23 +63,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 HttpServletResponse httpServletResponse,
                                                 Authentication authentication) throws IOException, ServletException {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
-                User principal = (User) authentication.getPrincipal();
-                User user = new User();
-                user.setUsername(principal.getUsername());
-                user.setRoles(principal.getRoles());
-                user.setId(principal.getId());
-                String token = JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 24 * 60*7);
-                httpServletResponse.addHeader("Authorization", "Bearer " + token);
-                Cookie cookie = new Cookie("flushtoken", "mjygdsh");
-                cookie.setPath("/webapp");
-                cookie.setHttpOnly(true);
-                httpServletResponse.addCookie(cookie);
+//                String token1 = TokenUtils.createToken(authentication, keyConfig,false);
+//                httpServletResponse.addHeader("Authorization", "Bearer " + token1);
+
+
+                String flushToken = TokenUtils.createToken(authentication,keyConfig,true);
+                httpServletResponse.addHeader("Set-Cookie", "flushToken="+flushToken+ ";HttpOnly; SameSite=Lax");
+//                Cookie cookie = new Cookie("flushToken", flushToken);
+//                cookie.setPath("/");
+//                cookie.setHttpOnly(true);
+//                httpServletResponse.addCookie(cookie);
 
                 PrintWriter out = httpServletResponse.getWriter();
                 HashMap map = new HashMap<>();
                 map.put("status", "1");
                 map.put("msg", "登录成功");
-                map.put("username",user.getUsername());
+                map.put("username",authentication.getName());
                 out.write(new ObjectMapper().writeValueAsString(map));
                 out.flush();
                 out.close();
@@ -107,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/imgsave/**",
-                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","/druid/**");
+                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","/druid/**","/getToken/**");
 
     }
 

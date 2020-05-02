@@ -43,9 +43,9 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseBean findArticles(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize) {
+    public ResponseBean findArticlesInformation(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<SysArticles> articles = articlesDao.findArticles(uid,iid,searchName);
+        List<SysArticles> articles = articlesDao.findArticlesInformation(uid,iid,searchName);
         PageInfo<SysArticles> sysArticlesPageInfo = new PageInfo<>(articles);
         return ResponseBean.getSuccessResponse("查询成功",sysArticlesPageInfo);
     }
@@ -55,11 +55,17 @@ public class ArticlesServiceImpl implements ArticlesService {
         if (!itemDao.isCanUse(articles.getItem_id())){
             return ResponseBean.getFailResponse("该条目已被禁用");
         }
+        int OldIid = articlesDao.findIid(articles.getId());
+        if (OldIid!=articles.getItem_id()){
+            itemDao.addNumber(articles.getItem_id());
+            itemDao.subNumber(OldIid);
+        }
         String s = stripHtml(articles.getHtml_text());
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
 
-        int i = articlesDao.changeArticles(articles);
-        if (i>0){
+        int i = articlesDao.changeArticleInformation(articles);
+        int i1 = articlesDao.changeArticleText(articles);
+        if (i>0&&i1>0){
             return ResponseBean.getSuccessResponse("改变成功");
         }
         return ResponseBean.getFailResponse("改变失败");
@@ -72,10 +78,11 @@ public class ArticlesServiceImpl implements ArticlesService {
         }
         String s = stripHtml(articles.getHtml_text());
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
-        int i = articlesDao.addArticles(articles);
+        int i = articlesDao.addArticleInformation(articles);
+        int i1 = articlesDao.addArticleText(articles);
         Integer id = articles.getItem_id();
         itemDao.addNumber(id);
-        if (i>0){
+        if (i>0&&i1>0){
             return ResponseBean.getSuccessResponse("添加文章成功");
         }
         return ResponseBean.getFailResponse("添加文章失败");
@@ -87,7 +94,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     public ResponseBean findArticlesByAid(Integer aid) {
         SysArticles articles = articlesDao.findArticlesByAid(aid);
         if (articles != null){
-            articlesDao.addReadNums(aid);
+            articlesDao.ChangeReadNums(aid,1);
             return ResponseBean.getSuccessResponse("查询成功",articles);
         }
         return ResponseBean.getFailResponse("查询失败");

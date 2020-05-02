@@ -24,6 +24,7 @@ public class User implements UserDetails {
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date create_time;
     private List<Role> roles;
+    private Boolean flushTokenFlag;
 
 
     @Override

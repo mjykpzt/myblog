@@ -5,12 +5,10 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.ArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -37,9 +35,9 @@ public class ArticlesCon {
         }
 
         if (IsAdmin(request)){
-            return articlesService.findArticles(null,iid,searchName,pageNum,pageSize);
+            return articlesService.findArticlesInformation(null,iid,searchName,pageNum,pageSize);
         }else {
-            return articlesService.findArticles((Integer)request.getAttribute("uid"),iid,searchName,pageNum,pageSize);
+            return articlesService.findArticlesInformation((Integer)request.getAttribute("uid"),iid,searchName,pageNum,pageSize);
         }
     }
 

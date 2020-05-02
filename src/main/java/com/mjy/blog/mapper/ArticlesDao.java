@@ -13,13 +13,14 @@ import java.util.List;
 public interface ArticlesDao {
 
 
-    //查询所有文章，或根据用户查询文章
+    //查询所有文章信息，或根据用户查询文章信息
     @Select("<script> " +
             "select" +
-            " a.id,a.item_id,a.title_name,a.create_time,a.create_user,u.username create_name, " +
-            "a.status,a.change_time,a.md_text,a.source_text,i.item_name,a.html_text,a.read_numbers " +
-            "from `user` u,articles a,items i " +
-            "where u.id=a.create_user and a.item_id=i.id and a.delete_flag=0" +
+            " a.item_id,a.id,a.create_time,a.title_name,a.read_numbers,a.change_time,a.source_text, " +
+            "i.item_name,u.username create_name " +
+            "from articles a inner join items i on a.item_id=i.id " +
+            "LEFT JOIN `user` u on u.id=a.create_user " +
+            "WHERE a.delete_flag=0 " +
             "<if test='uid != null'> " +
             "and a.create_user=#{uid} " +
             "</if> " +
@@ -29,29 +30,45 @@ public interface ArticlesDao {
             "<if test='searchName != null'> " +
             "and a.title_name like #{searchName} " +
             "</if> " +
+            "order by a.item_id,a.create_user " +
             "</script>")
-    List<SysArticles> findArticles(@Param("uid") Integer uid,@Param("iid")Integer iid,@Param("searchName")String searchName);
+    List<SysArticles> findArticlesInformation(@Param("uid") Integer uid,@Param("iid")Integer iid,@Param("searchName")String searchName);
+
+    //更新文章信息
+    @Update("update articles set source_text=#{source_text}," +
+            "item_id=#{item_id},title_name=#{title_name},change_time=now() where id=#{id}")
+    int changeArticleInformation(Articles articles);
 
     //更新文章内容
-    @Update("update articles set md_text=#{md_text},source_text=#{source_text}," +
-            "item_id=#{item_id},html_text=#{html_text},title_name=#{title_name},change_time=now() where id=#{id}")
-    int changeArticles(Articles articles);
+    @Update("update articles_main set md_text=#{md_text},html_text=#{html_text}")
+    int changeArticleText(Articles articles);
 
-    //保存文章
-    @Insert("insert into articles set md_text=#{md_text},source_text=#{source_text},html_text=#{html_text},item_id=#{item_id}, " +
+    //保存文章信息
+    @Insert("insert into articles set source_text=#{source_text},item_id=#{item_id}, " +
             "create_user=#{create_user},title_name=#{title_name},change_time=now(),create_time=now()")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    int addArticles(Articles articles);
+    int addArticleInformation(Articles articles);
+
+    //保存文章内容
+    @Insert("insert into articles_main set md_text=#{md_text},html_text=#{html_text},aid=#{id}")
+    int addArticleText(Articles articles);
 
     //根据文章ID查询文章
     @Select("select" +
-            " a.id,a.item_id,a.title_name,a.create_time,a.create_user,a.read_numbers, " +
-            "u.username create_name,a.status,a.change_time,a.md_text,a.source_text,a.html_text,i.item_name" +
-            " from `user` u,articles a,items i " +
-            "where u.id=i.create_user and a.item_id=i.id and a.id=#{aid}")
+            " a.id,a.item_id,a.title_name,a.create_user,a.read_numbers, " +
+            "u.username create_name,a.change_time,am.md_text,am.html_text" +
+            " from articles a inner join articles_main am on a.id=#{aid} and am.aid=#{aid} " +
+            "left join `user` u on u.id=a.create_user " +
+            "WHERE a.delete_flag =0")
     SysArticles findArticlesByAid(Integer aid);
 
-    //删除文章
+    /**
+     * @param aid 文章id
+     * @return: int
+     * @author: 0205
+     *
+     * 通过文章id逻辑上删除文章
+     */
     @Update("Update articles set delete_flag=1 where id=#{aid}")
     int delArticle(Integer aid);
 
@@ -63,13 +80,18 @@ public interface ArticlesDao {
     @Select("select create_user from articles where id=#{aid}")
     int findAid(Integer aid);
 
+    //根据文章ID查询所属条目ID
+    @Select("select item_id from articles where id=#{aid}")
+    int findIid(Integer aid);
+
     //查询文章数量
     @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid} and delete_flag=0")
     int findArticlesNum(@Param("uid")Integer uid,@Param("iid")Integer iid);
 
-    //阅读次数增加
-    @Update("update articles set read_numbers=read_numbers+1 where id=#{aid}")
-    void addReadNums(Integer aid);
+    //阅读次数改变
+    @Update("update articles set read_numbers=read_numbers+#{num} where id=#{aid}")
+    void ChangeReadNums(@Param("aid") Integer aid,@Param("num") Integer num);
+
 
 
 

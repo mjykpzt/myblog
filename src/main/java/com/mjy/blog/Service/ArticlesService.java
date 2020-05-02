@@ -12,15 +12,11 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2020-03-08-22:30
  */
 public interface ArticlesService {
-    ResponseBean findArticles(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize);
+    ResponseBean findArticlesInformation(Integer uid,Integer iid,String searchName,Integer pageNum,Integer pageSize);
 
     ResponseBean changeArticles(Articles articles);
 
     ResponseBean addArticles(Articles articles);
-
-//    ResponseBean findAll(Integer pageNum,Integer pageSize);
-
-//    ResponseBean findArticlesByIid(Integer iid,Integer pageNum,Integer pageSize);
 
     ResponseBean findArticlesByAid(Integer aid);
 

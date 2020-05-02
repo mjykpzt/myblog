@@ -30,7 +30,7 @@ public class DruidConfig {
         initParams.put("loginUsername", "admin");
         initParams.put("loginPassword", "123456");
         initParams.put("allow", "");
-        /*initParams.put("deny", "192.168.1.20");*/
+        /*initParams.put("deny", "192.168.1.2000");*/
 
         /** 设置初始化参数*/
         bean.setInitParameters(initParams);

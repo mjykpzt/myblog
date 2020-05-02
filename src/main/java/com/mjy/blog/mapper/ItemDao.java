@@ -17,7 +17,7 @@ public interface ItemDao {
             "#{uid} as uid ,i.id,i.item_name,i.item_des,i.create_time,i.create_user,u.username create_name," +
             "i.status,i.change_time,i.articles_number " +
             "from `user` u,items i " +
-            "where u.id=i.create_user and delete_flag=0 " +
+            "where u.id=i.create_user and i.delete_flag=0 " +
             "<if test='searchName != null'> " +
             "and i.item_name like #{searchName} " +
             "</if> " +
