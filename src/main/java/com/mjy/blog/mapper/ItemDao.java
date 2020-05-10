@@ -25,7 +25,7 @@ public interface ItemDao {
     @Results({
             @Result(id = true, column = "id", property = "id"),
             @Result(column = "{uid=uid,iid=id}", property = "articles_number_user",
-                    many = @Many(select = "com.mjy.blog.mapper.ArticlesDao.findArticlesNum")
+                    one = @One(select = "com.mjy.blog.mapper.ArticlesDao.findArticlesNum")
             )
     })
     List<SysItem> findItem(@Param("uid") Integer uid, @Param("searchName") String searchName);

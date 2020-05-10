@@ -15,7 +15,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String getToken(User user, KeyConfig keyConfig) {
-        return TokenUtils.createToken(user, keyConfig);
+        return TokenUtils.createToken(user, keyConfig,30);
 
     }
 }

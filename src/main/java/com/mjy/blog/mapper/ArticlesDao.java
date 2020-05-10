@@ -40,7 +40,7 @@ public interface ArticlesDao {
     int changeArticleInformation(Articles articles);
 
     //更新文章内容
-    @Update("update articles_main set md_text=#{md_text},html_text=#{html_text}")
+    @Update("update articles_main set md_text=#{md_text},html_text=#{html_text} where aid=#{id}")
     int changeArticleText(Articles articles);
 
     //保存文章信息

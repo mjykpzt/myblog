@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -63,16 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 HttpServletResponse httpServletResponse,
                                                 Authentication authentication) throws IOException, ServletException {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
-//                String token1 = TokenUtils.createToken(authentication, keyConfig,false);
-//                httpServletResponse.addHeader("Authorization", "Bearer " + token1);
 
 
-                String flushToken = TokenUtils.createToken(authentication,keyConfig,true);
+                String flushToken = TokenUtils.createToken(authentication,keyConfig,true,60*24*3);
                 httpServletResponse.addHeader("Set-Cookie", "flushToken="+flushToken+ ";HttpOnly; SameSite=Lax");
-//                Cookie cookie = new Cookie("flushToken", flushToken);
-//                cookie.setPath("/");
-//                cookie.setHttpOnly(true);
-//                httpServletResponse.addCookie(cookie);
 
                 PrintWriter out = httpServletResponse.getWriter();
                 HashMap map = new HashMap<>();

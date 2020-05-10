@@ -12,23 +12,28 @@ import java.util.List;
 public interface UserDao {
 
     //通过id查找用户
-    @Select("select * from user where id=#{uid} and delete_flag=0")
-    @ResultMap("t1")
+    @Select("select id,username,email,status,create_time from user where id=#{uid} and delete_flag=0")
+    @ResultMap("findRole")
     User findById(Integer uid);
 
     //通过用户名查找用户
-    @Select("<script>" + "select * from user where delete_flag=0 " +
+    @Select("<script>" + "select id,username,email,status,create_time from user where delete_flag=0 " +
             "<if test='searchName!=null'> " +
             "and username like #{searchName} " +
             "</if> " +
             "</script>")
-    @Results(id = "t1", value = {
+    @Results(id = "findRole", value = {
             @Result(id = true, column = "id", property = "id"),
             @Result(column = "id", property = "roles", javaType = java.util.List.class,
                     many = @Many(select = "com.mjy.blog.mapper.RoleDao.findRoleNameByUid")
             )
     })
     List<User> findUserByName(@Param("searchName") String username);
+
+    //用户名查找
+    @Select("select id,username,password,status from user where delete_flag=0 and username=#{username}")
+    @ResultMap("findRole")
+    User findUserByNameLoad(@Param("username") String username);
 
     //添加用户
     @Insert("insert into user " +

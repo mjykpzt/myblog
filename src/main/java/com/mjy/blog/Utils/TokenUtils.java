@@ -17,17 +17,17 @@ public class TokenUtils {
      * @return: java.lang.String
      * @author: 0205
      */
-    public static String createToken(Authentication authentication, KeyConfig keyConfig, Boolean flag) {
+    public static String createToken(Authentication authentication, KeyConfig keyConfig, Boolean flag,Integer TokenLifeTime) {
         User principal = (User) authentication.getPrincipal();
         User user = new User();
         user.setFlushTokenFlag(flag);
         user.setUsername(principal.getUsername());
         user.setRoles(principal.getRoles());
         user.setId(principal.getId());
-        return createToken(user,keyConfig);
+        return createToken(user,keyConfig,TokenLifeTime);
     }
 
-    public static String createToken(User user, KeyConfig keyConfig){
-        return JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), 30);
+    public static String createToken(User user, KeyConfig keyConfig,Integer TokenLifeTime){
+        return JwtUtils.generateTokenExpireInMinutes(user, keyConfig.getPrivateKey(), TokenLifeTime);
     }
 }

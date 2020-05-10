@@ -6,6 +6,7 @@ import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.SysArticles;
 import com.mjy.blog.Service.ArticlesService;
+import com.mjy.blog.Utils.TextXssUtils;
 import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
 import org.apache.commons.io.IOUtils;
@@ -60,7 +61,10 @@ public class ArticlesServiceImpl implements ArticlesService {
             itemDao.addNumber(articles.getItem_id());
             itemDao.subNumber(OldIid);
         }
-        String s = stripHtml(articles.getHtml_text());
+
+        Articles articles1 = articlesXss(articles);
+
+        String s = stripHtml(articles1.getHtml_text());
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
 
         int i = articlesDao.changeArticleInformation(articles);
@@ -76,7 +80,10 @@ public class ArticlesServiceImpl implements ArticlesService {
         if (!itemDao.isCanUse(articles.getItem_id())){
             return ResponseBean.getFailResponse("该条目已被禁用");
         }
-        String s = stripHtml(articles.getHtml_text());
+
+        Articles articles1 = articlesXss(articles);
+
+        String s = stripHtml(articles1.getHtml_text());
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
         int i = articlesDao.addArticleInformation(articles);
         int i1 = articlesDao.addArticleText(articles);
@@ -149,6 +156,22 @@ public class ArticlesServiceImpl implements ArticlesService {
         content = content.replaceAll("<br\\s*/?>", "");
         content = content.replaceAll("\\<.*?>", "");
         return content;
+    }
+
+    private Articles articlesXss(Articles articles){
+        //过滤html，防止xss
+        String unsafe_html_text = articles.getHtml_text();
+        String html_text = TextXssUtils.FilterXss(unsafe_html_text);
+        articles.setHtml_text(html_text);
+
+        String unsafe_md_text = articles.getMd_text();
+        String md_text = TextXssUtils.FilterXss(unsafe_md_text);
+        System.out.println(md_text);
+        articles.setMd_text(md_text);
+        System.out.println("*********************************************************");
+        System.out.println(articles.getMd_text());
+
+        return articles;
     }
 
 

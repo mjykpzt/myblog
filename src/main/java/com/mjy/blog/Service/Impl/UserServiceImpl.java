@@ -21,7 +21,6 @@ import java.util.List;
  * @create 2020-03-07-18:43
  */
 @Service
-//@Transactional(isolation = Isolation.READ_COMMITTED)
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
@@ -122,8 +121,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userDao.findUserByName(s).get(0);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userDao.findUserByNameLoad(username);
     }
 
 
