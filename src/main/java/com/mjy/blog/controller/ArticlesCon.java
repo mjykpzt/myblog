@@ -5,6 +5,7 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.ArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/articles")
+//@Validated
 public class ArticlesCon {
     @Autowired
     private ArticlesService articlesService;
@@ -42,13 +44,13 @@ public class ArticlesCon {
     }
 
     @PostMapping("/addArticles")
-    public ResponseBean addArticles(HttpServletRequest request, Articles articles) {
+    public ResponseBean addArticles(HttpServletRequest request,@Validated Articles articles) {
         articles.setCreate_user((Integer) request.getAttribute("uid"));
         return articlesService.addArticles(articles);
     }
 
     @PostMapping("/changeArticles")
-    public ResponseBean changeArticles(HttpServletRequest request,Articles articles) {
+    public ResponseBean changeArticles(HttpServletRequest request,@Validated Articles articles) {
         if ((Integer)request.getAttribute("uid")==articlesService.findAid(articles.getId())){
             return articlesService.changeArticles(articles);
         }

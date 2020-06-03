@@ -5,6 +5,7 @@ import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,14 +33,7 @@ public class UserCon {
 
 
     @PostMapping(value = "/addUser")
-    public ResponseBean addUser(@RequestParam(required = true) String username,
-                                @RequestParam(required = true) String password,
-                                @RequestParam(required = true) String email
-    ) {
-        User user = new User();
-        user.setPassword(password);
-        user.setUsername(username);
-        user.setEmail(email);
+    public ResponseBean addUser(@Validated User user) {
         return userService.addUser(user);
     }
 
