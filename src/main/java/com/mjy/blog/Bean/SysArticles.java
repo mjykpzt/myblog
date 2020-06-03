@@ -1,6 +1,6 @@
 package com.mjy.blog.Bean;
 
-import lombok.Data;
+
 
 /**
  * @author mjy

@@ -1,11 +1,8 @@
 package com.mjy.blog.Bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;

@@ -1,7 +1,6 @@
 package com.mjy.blog.Bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
