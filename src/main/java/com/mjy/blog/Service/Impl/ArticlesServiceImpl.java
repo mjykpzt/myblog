@@ -124,7 +124,10 @@ public class ArticlesServiceImpl implements ArticlesService {
         String path = imgFolderPath + userpath;
         File imgFolder = new File(path);
         if (!imgFolder.exists()) {
-            imgFolder.mkdirs();
+            boolean mkdirs = imgFolder.mkdirs();
+            if (!mkdirs){
+                return ResponseBean.getFailResponse("创建文件夹失败");
+            }
         }
         url.append(req.getScheme())
                 .append("://")

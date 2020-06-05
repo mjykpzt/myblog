@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserWebSocket {
+    /**
+     * @param msg
+     * @return: java.lang.String
+     * @author: 0205
+     *
+     * SendTo 发送至 Broker 下的指定订阅路径
+     */
 
     @MessageMapping("/massRequest/user")
-    //SendTo 发送至 Broker 下的指定订阅路径
     @SendTo("/admin/user/getResponse")
     public String mass(String msg){
         return "flush";
