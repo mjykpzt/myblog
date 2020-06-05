@@ -84,7 +84,14 @@ public interface ArticlesDao {
     @Select("select item_id from articles where id=#{aid}")
     int findIid(Integer aid);
 
-    //查询文章数量
+    /**
+     * @param uid
+     * @param iid
+     * @return: int
+     * @author: 0205
+     *
+     * 查询用户在该条目的文章数目
+     */
     @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid} and delete_flag=0")
     int findArticlesNum(@Param("uid")Integer uid,@Param("iid")Integer iid);
 

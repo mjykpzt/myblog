@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Created by sang on 2017/12/22.
- */
+
 @Component
 public class AuthenticationAccessDeniedHandler implements AccessDeniedHandler {
     @Override

@@ -7,7 +7,7 @@ package com.mjy.blog.Bean;
  * @create 2020-03-08-21:22
  *
  *
- * 该类将创造者的id和该文章所属条目的id转换为创造者名称和条目名称
+ * 该类将文章作者的id和该文章所属条目的id转换为作者名称和条目名称
  */
 
 public class SysArticles extends Articles {
