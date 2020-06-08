@@ -12,12 +12,12 @@ import java.util.List;
 public interface UserDao {
 
     //通过id查找用户
-    @Select("select id,username,email,status,create_time from user where id=#{uid} and delete_flag=0")
+    @Select("select id,username,email,status,create_time,last_login_time from user where id=#{uid} and delete_flag=0")
     @ResultMap("findRole")
     User findById(Integer uid);
 
     //通过用户名查找用户
-    @Select("<script>" + "select id,username,email,status,create_time from user where delete_flag=0 " +
+    @Select("<script>" + "select id,username,email,status,create_time,last_login_time from user where delete_flag=0 " +
             "<if test='searchName!=null'> " +
             "and username like #{searchName} " +
             "</if> " +
@@ -42,8 +42,10 @@ public interface UserDao {
     int addUser(User user);
 
     //添加用户的角色
-    @Insert("<script>" + "insert into role_and_user(uid,rid) " +
-            "values <foreach collection='rids' item='rid'  separator=',' >(#{uid},#{rid})" +
+    @Insert("<script>" +
+            "insert into role_and_user(uid,rid) " +
+            "values " +
+            "<foreach collection='rids' item='rid'  separator=',' >(#{uid},#{rid})" +
             "</foreach></script>")
     int setUserRoles(@Param("uid") Integer uid, @Param("rids") Integer[] rids);
 
@@ -67,4 +69,14 @@ public interface UserDao {
     //查找是否存在该用户名
     @Select("select COUNT(*) from user where username=#{name} and #{random}=#{random}")
     int findIsHasName(String name,double random);
+
+    /**
+     * @param uid 用户id
+     * @return: int
+     * @author: 0205
+     *
+     * 更改用户登录时间
+     */
+    @Update("update `user` set last_login_time=now() where id=#{uid}")
+    int updateUserLoginTime(Integer uid);
 }

@@ -29,6 +29,16 @@ public class User implements UserDetails {
     private Date create_time;
     private List<Role> roles;
     private Boolean flushTokenFlag;
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
+    private Date last_login_time;
+
+    public Date getLast_login_time() {
+        return last_login_time;
+    }
+
+    public void setLast_login_time(Date last_login_time) {
+        this.last_login_time = last_login_time;
+    }
 
     public Integer getId() {
         return id;

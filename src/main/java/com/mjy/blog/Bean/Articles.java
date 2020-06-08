@@ -17,7 +17,7 @@ import java.util.Date;
 public class Articles implements Serializable {
     private Integer id;
     private Integer item_id;
-    @Size(min = 1, max = 15, message = "文章标题长度为1-15个字符")
+    @Size(min = 1, max = 32, message = "文章标题长度为1-32个字符")
     private String title_name;
     private String md_text;
     private String source_text;

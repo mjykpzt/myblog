@@ -28,5 +28,7 @@ public interface UserService extends UserDetailsService {
     ResponseBean updateRoles(Integer uid,Integer[] roles);
 
     ResponseBean findIsHasName(String name);
+
+    Boolean updateUserLoginTime(Integer uid);
 }
 

@@ -19,7 +19,7 @@ public interface ArticlesDao {
             " a.item_id,a.id,a.create_time,a.title_name,a.read_numbers,a.change_time,a.source_text, " +
             "i.item_name,u.username create_name " +
             "from articles a inner join items i on a.item_id=i.id " +
-            "LEFT JOIN `user` u on u.id=a.create_user " +
+            "INNER JOIN `user` u on u.id=a.create_user " +
             "WHERE a.delete_flag=0 " +
             "<if test='uid != null'> " +
             "and a.create_user=#{uid} " +
@@ -56,11 +56,14 @@ public interface ArticlesDao {
     //根据文章ID查询文章
     @Select("select" +
             " a.id,a.item_id,a.title_name,a.create_user,a.read_numbers, " +
-            "u.username create_name,a.change_time,am.md_text,am.html_text" +
-            " from articles a inner join articles_main am on a.id=#{aid} and am.aid=#{aid} " +
-            "left join `user` u on u.id=a.create_user " +
+            "u.username create_name,a.change_time,am.md_text,am.html_text " +
+            "from articles a inner join articles_main am on a.id=#{aid} and am.aid=#{aid} " +
+            "inner join `user` u on u.id=a.create_user " +
             "WHERE a.delete_flag =0")
     SysArticles findArticlesByAid(Integer aid);
+
+
+
 
     /**
      * @param aid 文章id
@@ -72,7 +75,7 @@ public interface ArticlesDao {
     @Update("Update articles set delete_flag=1 where id=#{aid}")
     int delArticle(Integer aid);
 
-    //记录图片链接
+
     @Insert("insert into img_url set url=#{url},uid=#{uid},date=now()")
     int addImUrl(@Param("url") String url,@Param("uid") Integer uid);
 
@@ -85,17 +88,24 @@ public interface ArticlesDao {
     int findIid(Integer aid);
 
     /**
-     * @param uid
-     * @param iid
+     * @param uid  用户ID
+     * @param iid  条目ID
      * @return: int
      * @author: 0205
      *
      * 查询用户在该条目的文章数目
      */
-    @Select("select count(id) as a_num from articles where create_user=#{uid} and item_id=#{iid} and delete_flag=0")
+    @Select("select count(*) as a_num from articles where create_user=#{uid} and item_id=#{iid} and delete_flag=0")
     int findArticlesNum(@Param("uid")Integer uid,@Param("iid")Integer iid);
 
-    //阅读次数改变
+    /**
+     * @param aid 文章ID
+     * @param num 文章阅读次数增加数目
+     * @return: void
+     * @author: 0205
+     *
+     * 改变文章阅读次数
+     */
     @Update("update articles set read_numbers=read_numbers+#{num} where id=#{aid}")
     void ChangeReadNums(@Param("aid") Integer aid,@Param("num") Integer num);
 

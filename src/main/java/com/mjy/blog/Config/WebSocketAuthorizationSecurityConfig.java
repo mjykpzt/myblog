@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 public class WebSocketAuthorizationSecurityConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
     @Override
     protected void configureInbound(final MessageSecurityMetadataSourceRegistry messages) {
-        messages.simpDestMatchers("/user/**").hasAnyRole("ADMIN","USER")
+        messages.simpDestMatchers("/user/**").hasAnyRole("ADMIN","USER").anyMessage().authenticated()
                 .simpDestMatchers("/admin/**").hasAnyRole("ADMIN").anyMessage().authenticated();
     }
 

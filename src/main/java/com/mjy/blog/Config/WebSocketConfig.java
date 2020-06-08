@@ -62,7 +62,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                     User user = infoFromToken.getUserInfo();
                     UsernamePasswordAuthenticationToken t1
                             = new UsernamePasswordAuthenticationToken
-                            (user.getUsername(),null, (List<Role>) user.getAuthorities());
+                            (user.getUsername(),null, (List<Role>)user.getAuthorities());
                     accessor.setUser(t1);
                 }
                 return message;

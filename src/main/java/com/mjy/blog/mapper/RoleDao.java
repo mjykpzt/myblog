@@ -1,7 +1,10 @@
 package com.mjy.blog.mapper;
 
 import com.mjy.blog.Bean.Role;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,7 +21,6 @@ public interface RoleDao {
     @Select("select r.id,r.role_name,r.role_des " +
             "from role_and_user ru,role r " +
             "where ru.uid=#{uid} and r.id=ru.rid")
-    @ResultType(Role.class)
     List<Role> findRoleNameByUid(Integer uid);
 
     //添加角色

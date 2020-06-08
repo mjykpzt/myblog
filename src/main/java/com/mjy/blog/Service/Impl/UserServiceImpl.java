@@ -134,4 +134,10 @@ public class UserServiceImpl implements UserService {
         }
         return ResponseBean.getSuccessResponse("ok");
     }
+
+    @Override
+    public Boolean updateUserLoginTime(Integer uid) {
+        int i = userDao.updateUserLoginTime(uid);
+        return i > 0;
+    }
 }

@@ -12,13 +12,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author mjy
@@ -36,7 +34,6 @@ public class TokenFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String authorization;
-        Cookie[] cookies = request.getCookies();
         authorization = request.getHeader("Authorization");
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.replace("Bearer ", "");
@@ -63,7 +60,7 @@ public class TokenFilter extends BasicAuthenticationFilter {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         PrintWriter out = response.getWriter();
-        Map resultMap = new HashMap();
+        HashMap<String,String> resultMap = new HashMap<>();
         resultMap.put("status", "0");
         resultMap.put("msg", msg);
         out.write(new ObjectMapper().writeValueAsString(resultMap));

@@ -1,6 +1,7 @@
 package com.mjy.blog.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mjy.blog.Bean.User;
 import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
@@ -66,12 +67,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 String flushToken = TokenUtils.createToken(authentication,keyConfig,true,60*24*3);
                 httpServletResponse.addHeader("Set-Cookie", "flushToken="+flushToken+ ";HttpOnly; SameSite=Lax");
-
+                User user = (User) authentication.getPrincipal();
+                userService.updateUserLoginTime(user.getId());
                 PrintWriter out = httpServletResponse.getWriter();
-                HashMap map = new HashMap<>();
+                HashMap<String,String> map = new HashMap<>();
                 map.put("status", "1");
                 map.put("msg", "登录成功");
-                map.put("username",authentication.getName());
+                map.put("username",user.getUsername());
                 out.write(new ObjectMapper().writeValueAsString(map));
                 out.flush();
                 out.close();

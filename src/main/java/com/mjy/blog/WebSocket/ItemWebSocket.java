@@ -1,6 +1,5 @@
 package com.mjy.blog.WebSocket;
 
-import com.alibaba.druid.support.logging.Log4jImpl;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
