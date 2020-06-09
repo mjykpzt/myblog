@@ -11,8 +11,8 @@ import org.springframework.security.core.Authentication;
 public class TokenUtils {
 
     /**
-     * @param authentication
-     * @param keyConfig
+     * @param authentication 用户信息
+     * @param keyConfig 秘钥
      * @param flag  是否生成刷新token;如果为true，则生成刷新token，否则生成请求token
      * @return: java.lang.String
      * @author: 0205

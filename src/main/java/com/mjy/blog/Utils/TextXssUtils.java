@@ -18,29 +18,27 @@ public class TextXssUtils {
     private static Whitelist wlist;
 
     static {
-        Whitelist relaxed = Whitelist.relaxed();
-        relaxed.addAttributes("code","class");
-        relaxed.addAttributes("span","class");
-        relaxed.addAttributes("div","class");
-        relaxed.addTags("hr");
-        wlist=relaxed;
+        wlist = Whitelist.relaxed();
+        wlist.addAttributes("code","class");
+        wlist.addAttributes("span","class");
+        wlist.addAttributes("div","class");
+        wlist.addTags("hr");
     }
 
-    public static String FilterXss(String text){
-        HashMap<String, String> stringStringMap = new HashMap<String, String>();
+    public static String FilterXss(String sourceText){
+        HashMap<String, String> stringStringMap = new HashMap<>();
         Pattern compile = Pattern.compile("```[\\s\\S]*?```");
-        Matcher matcher = compile.matcher(text);
+        Matcher matcher = compile.matcher(sourceText);
         while (matcher.find()){
-            String group = matcher.group();
-            String s = group.hashCode() + "" + UUID.randomUUID();
-            String replace = text.replace(group, s);
-            text=replace;
-            stringStringMap.put(s,group);
+            String ProtectedText = matcher.group();
+            String textHashId = ProtectedText.hashCode() + "" + UUID.randomUUID();
+            sourceText = sourceText.replace(ProtectedText, textHashId);
+            stringStringMap.put(textHashId,ProtectedText);
         }
-        String clean = Jsoup.clean(text,"", wlist,new Document.OutputSettings().prettyPrint(false));
+        String clean = Jsoup.clean(sourceText,"", wlist,new Document.OutputSettings().prettyPrint(false));
         for (String key:stringStringMap.keySet()){
-            String replace = clean.replace(key, "\n"+stringStringMap.get(key)+"\n");
-            clean=replace;
+            clean = clean.replace(key, "\n"+stringStringMap.get(key)+"\n");
+
         }
         return clean;
     }
