@@ -18,7 +18,7 @@ public class RoleCon {
     private RoleService roleService;
 
     @PostMapping(value = "/addRole")
-    public ResponseBean addRole(@RequestParam(required = true)String name, @RequestParam(required = true)String desc) {
+    public ResponseBean addRole(@RequestParam()String name, @RequestParam()String desc) {
         return roleService.addRole(name, desc);
     }
 
@@ -33,14 +33,14 @@ public class RoleCon {
     }
 
     @GetMapping("/findRoleById")
-    public  ResponseBean findRoleById(@RequestParam(required = true) Integer rid){
+    public  ResponseBean findRoleById(@RequestParam() Integer rid){
         return roleService.findByRid(rid);
     }
 
     @PostMapping("/updateRole")
-    public  ResponseBean updateRole(@RequestParam(required = true)String role_name,
-                                    @RequestParam(required = true)String role_des,
-                                    @RequestParam(required = true)Integer rid){
+    public  ResponseBean updateRole(@RequestParam()String role_name,
+                                    @RequestParam()String role_des,
+                                    @RequestParam()Integer rid){
         return roleService.updateRole(role_name, role_des, rid);
     }
 }

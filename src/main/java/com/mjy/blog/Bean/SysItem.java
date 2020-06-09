@@ -17,4 +17,11 @@ public class SysItem extends Item {
     public void setCreate_name(String create_name) {
         this.create_name = create_name;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"SysItem{" +
+                "create_name='" + create_name + '\'' +
+                '}';
+    }
 }

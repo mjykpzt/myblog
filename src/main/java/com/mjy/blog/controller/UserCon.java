@@ -25,8 +25,8 @@ public class UserCon {
                                   @RequestParam(defaultValue = "5") Integer pageSize) {
         if (!(searchName.length() > 0)) {
             searchName = null;
-        }else {
-            searchName="%"+searchName+"%";
+        } else {
+            searchName = "%" + searchName + "%";
         }
         return userService.findByName(searchName, pageNum, pageSize);
     }
@@ -38,39 +38,38 @@ public class UserCon {
     }
 
     @PostMapping("/changeUserStatus")
-    public ResponseBean changeUserStatus(@RequestParam(required = true) Integer userid,
-                                         @RequestParam(required = true) Integer userstatus) {
+    public ResponseBean changeUserStatus(@RequestParam() Integer userid,
+                                         @RequestParam() Integer userstatus) {
         return userService.changeUserStatus(userstatus, userid);
     }
 
 
-
     @PostMapping("/delUser")
-    public ResponseBean delUser(@RequestParam(required = true) Integer uid) {
+    public ResponseBean delUser(@RequestParam() Integer uid) {
         return userService.delUser(uid);
     }
 
     @PostMapping("/updateUser")
-    public ResponseBean updateUser(@RequestParam(required = true) String password,
-                                   @RequestParam(required = true) String email,
-                                   @RequestParam(required = true) Integer uid
+    public ResponseBean updateUser(@RequestParam() String password,
+                                   @RequestParam() String email,
+                                   @RequestParam() Integer uid
     ) {
         return userService.updateUser(password, email, uid);
     }
 
     @GetMapping("/findById")
-    public ResponseBean findById(@RequestParam(required = true) Integer uid) {
+    public ResponseBean findById(@RequestParam() Integer uid) {
         return userService.findById(uid);
     }
 
     @RequestMapping("/updateRoles")
-    public ResponseBean updateRoles(@RequestParam(required = true) Integer[] roles, @RequestParam(required = true) Integer id) {
+    public ResponseBean updateRoles(@RequestParam() Integer[] roles, @RequestParam(required = true) Integer id) {
         return userService.updateRoles(id, roles);
 
     }
 
     @GetMapping("/findIsHasName")
-    public ResponseBean findIsHasName(@RequestParam(required = true) String username) {
+    public ResponseBean findIsHasName(@RequestParam() String username) {
         return userService.findIsHasName(username);
     }
 }

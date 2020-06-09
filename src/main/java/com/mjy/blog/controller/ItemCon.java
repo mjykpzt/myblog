@@ -37,21 +37,21 @@ public class ItemCon {
 
     @PostMapping("/addItem/add")
     @Secured("ROLE_ADMIN")
-    public ResponseBean addItem(HttpServletRequest request, @RequestParam(required = true) String item_name, @RequestParam(required = true) String item_des) {
+    public ResponseBean addItem(HttpServletRequest request, @RequestParam() String item_name, @RequestParam() String item_des) {
         return itemService.addItem(item_name, item_des, (Integer) request.getAttribute("uid"));
     }
 
     @PostMapping("/changeStatus")
     @Secured("ROLE_ADMIN")
-    public ResponseBean changeStatus(@RequestParam(required = true) Short status,
-                                     @RequestParam(required = true) Integer id) {
+    public ResponseBean changeStatus(@RequestParam() Short status,
+                                     @RequestParam() Integer id) {
         return itemService.changeStatus(status, id);
     }
 
     @PostMapping("/changeItem")
     @Secured("ROLE_ADMIN")
-    public ResponseBean changeItem(@RequestParam(required = true) String item_name, @RequestParam(required = true) String item_des,
-                                   @RequestParam(required = true) Integer id) {
+    public ResponseBean changeItem(@RequestParam() String item_name, @RequestParam(required = true) String item_des,
+                                   @RequestParam() Integer id) {
         return itemService.changeItem(item_name, item_des, id);
     }
 
@@ -62,13 +62,13 @@ public class ItemCon {
 
 
     @GetMapping("/item/isHas")
-    public ResponseBean ishas(String name) {
+    public ResponseBean isHasName(String name) {
         return itemService.findIsHasName(name);
     }
 
     @PostMapping("/delItem")
     @Secured("ROLE_ADMIN")
-    public ResponseBean delItem(Integer iid) {
+    public ResponseBean delItem(@RequestParam() Integer iid) {
         return itemService.delItem(iid);
     }
 }

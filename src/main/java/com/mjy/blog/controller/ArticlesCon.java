@@ -59,7 +59,7 @@ public class ArticlesCon {
 
 
     @GetMapping("/findArticlesByAid")
-    public ResponseBean findArticlesByAid(HttpServletRequest request,@RequestParam(required = true) Integer aid) {
+    public ResponseBean findArticlesByAid(HttpServletRequest request,@RequestParam() Integer aid) {
         if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
             return articlesService.findArticlesByAid(aid);
         }else {
@@ -69,7 +69,7 @@ public class ArticlesCon {
     }
 
     @PostMapping("/delArticle")
-    public ResponseBean delArticle(HttpServletRequest request,@RequestParam(required = true) Integer aid, @RequestParam(required = true) Integer iid) {
+    public ResponseBean delArticle(HttpServletRequest request,@RequestParam() Integer aid, @RequestParam() Integer iid) {
         if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
             return articlesService.delArticle(aid, iid);
         }else {

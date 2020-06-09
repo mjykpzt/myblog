@@ -29,4 +29,12 @@ public class SysArticles extends Articles {
     public void setItem_name(String item_name) {
         this.item_name = item_name;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"SysArticles{" +
+                "create_name='" + create_name + '\'' +
+                ", item_name='" + item_name + '\'' +
+                '}';
+    }
 }
