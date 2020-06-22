@@ -56,39 +56,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new TokenFilter(super.authenticationManager(), keyConfig))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin().successHandler(new AuthenticationSuccessHandler() {
-
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-                                                HttpServletResponse httpServletResponse,
-                                                Authentication authentication) throws IOException, ServletException {
-                httpServletResponse.setContentType("application/json;charset=utf-8");
+                .formLogin().successHandler((httpServletRequest, httpServletResponse, authentication) -> {
+            httpServletResponse.setContentType("application/json;charset=utf-8");
 
 
-                String flushToken = TokenUtils.createToken(authentication,keyConfig,true,60*24*3);
-                httpServletResponse.addHeader("Set-Cookie", "flushToken="+flushToken+ ";HttpOnly; SameSite=Lax");
-                User user = (User) authentication.getPrincipal();
-                userService.updateUserLoginTime(user.getId());
-                PrintWriter out = httpServletResponse.getWriter();
-                HashMap<String,String> map = new HashMap<>();
-                map.put("status", "1");
-                map.put("msg", "登录成功");
-                map.put("username",user.getUsername());
-                out.write(new ObjectMapper().writeValueAsString(map));
-                out.flush();
-                out.close();
-            }
-        }).failureHandler(new AuthenticationFailureHandler() {
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
-                                                HttpServletResponse httpServletResponse,
-                                                AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.setContentType("application/json;charset=utf-8");
-                PrintWriter out = httpServletResponse.getWriter();
-                out.write("{\"status\":\"0\",\"msg\":\"登录失败\"}");
-                out.flush();
-                out.close();
-            }
+            String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24 * 3);
+            httpServletResponse.addHeader("Set-Cookie", "flushToken=" + flushToken + ";HttpOnly; SameSite=Lax");
+            User user = (User) authentication.getPrincipal();
+            userService.updateUserLoginTime(user.getId());
+            PrintWriter out = httpServletResponse.getWriter();
+            HashMap<String, String> map = new HashMap<>();
+            map.put("status", "1");
+            map.put("msg", "登录成功");
+            map.put("username", user.getUsername());
+            out.write(new ObjectMapper().writeValueAsString(map));
+            out.flush();
+            out.close();
+        }).failureHandler((httpServletRequest, httpServletResponse, e) -> {
+            httpServletResponse.setContentType("application/json;charset=utf-8");
+            PrintWriter out = httpServletResponse.getWriter();
+            out.write("{\"status\":\"0\",\"msg\":\"登录失败\"}");
+            out.flush();
+            out.close();
         })
 
                 .and()
@@ -97,9 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/imgsave/**",
-                "/RoleWebSocket/**","/mass","/UserWebSocket/**","/ItemWebSocket/**","/druid/**","/getToken/**");
+                "/RoleWebSocket/**", "/mass", "/UserWebSocket/**", "/ItemWebSocket/**", "/druid/**", "/getToken/**");
 
     }
 
