@@ -3,7 +3,6 @@ package com.mjy.blog.mapper;
 import com.mjy.blog.Bean.Item;
 import com.mjy.blog.Bean.SysItem;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.executor.BatchResult;
 
 import java.util.List;
 
@@ -68,11 +67,11 @@ public interface ItemDao {
 
     //文章数加一
     @Update("update items set articles_number=articles_number+1 where id=#{iid}")
-    int addNumber(Integer iid);
+    void addNumber(Integer iid);
 
     //文章数减一
     @Update("update items set articles_number=articles_number-1 where id=#{iid}")
-    int subNumber(Integer iid);
+    void subNumber(Integer iid);
 
     //查询条目下文章数目
     @Select("select articles_number from items where id=#{iid} and delete_flag=0")

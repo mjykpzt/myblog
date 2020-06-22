@@ -5,7 +5,6 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.RoleService;
 import com.mjy.blog.mapper.RoleDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 @Service
 public class RoleServiceImpl implements RoleService {
-    @Autowired
+    @Resource
     private RoleDao roleDao;
 
 

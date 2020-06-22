@@ -4,7 +4,6 @@ import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Utils.JwtUtils;
 import com.mjy.blog.Utils.Payload;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -31,7 +30,7 @@ import java.util.List;
 @EnableWebSocketMessageBroker
 @Order(Ordered.HIGHEST_PRECEDENCE + 99)
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    @Autowired
+    @Resource
     private KeyConfig keyConfig;
 
     @Override

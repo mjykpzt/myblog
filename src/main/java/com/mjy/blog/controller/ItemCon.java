@@ -2,7 +2,6 @@ package com.mjy.blog.controller;
 
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/items")
 public class ItemCon {
-    @Autowired
+    @Resource
     private ItemService itemService;
 
     @GetMapping("/simpleItems")

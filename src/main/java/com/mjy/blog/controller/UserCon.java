@@ -3,10 +3,11 @@ package com.mjy.blog.controller;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author mjy
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @Secured("ROLE_ADMIN")
 public class UserCon {
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping()

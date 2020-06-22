@@ -8,11 +8,11 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.SysItem;
 import com.mjy.blog.Service.ItemService;
 import com.mjy.blog.mapper.ItemDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,7 +22,8 @@ import java.util.List;
 @Service
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class ItemServiceImpl implements ItemService {
-    @Autowired
+
+    @Resource
     private ItemDao itemDao;
 
     @Override

@@ -4,7 +4,6 @@ import com.mjy.blog.Bean.Articles;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.Role;
 import com.mjy.blog.Service.ArticlesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +19,7 @@ import java.util.List;
 @RequestMapping("/articles")
 //@Validated
 public class ArticlesCon {
-    @Autowired
+    @Resource
     private ArticlesService articlesService;
 
 

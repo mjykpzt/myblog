@@ -10,13 +10,13 @@ import com.mjy.blog.Utils.TextXssUtils;
 import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,10 +35,10 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Value("${imgPath}")
     private String imgFolderPath;
 
-    @Autowired
+    @Resource
     private ArticlesDao articlesDao;
 
-    @Autowired
+    @Resource
     private ItemDao itemDao;
 
 
@@ -97,7 +97,6 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseBean findArticlesByAid(Integer aid) {
         SysArticles articles = articlesDao.findArticlesByAid(aid);
         if (articles != null) {
@@ -156,7 +155,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 
     /**
-     * @param articles
+     * @param articles  文章POJO对象
      * @return: com.mjy.blog.Bean.Articles
      * @author: 0205
      * <p>

@@ -6,7 +6,6 @@ import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.mapper.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,9 +21,9 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
-    @Autowired
+    @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 

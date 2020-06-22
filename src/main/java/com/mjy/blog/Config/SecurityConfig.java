@@ -6,7 +6,6 @@ import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.Utils.TokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,13 +31,13 @@ import java.util.HashMap;
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
+    @Resource
     private KeyConfig keyConfig;
-    @Autowired
+    @Resource
     private AuthenticationAccessDeniedHandler accessDeniedHandler;
 
     @Override

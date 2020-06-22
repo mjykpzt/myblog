@@ -6,7 +6,6 @@ import com.mjy.blog.Config.KeyConfig;
 import com.mjy.blog.Service.TokenService;
 import com.mjy.blog.Utils.JwtUtils;
 import com.mjy.blog.Utils.Payload;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 public class TokenCon {
-    @Autowired
+    @Resource
     private KeyConfig keyConfig;
-    @Autowired
+    @Resource
     private TokenService tokenService;
 
     @PostMapping("/getToken")
