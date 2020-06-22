@@ -3,6 +3,7 @@ package com.mjy.blog.mapper;
 import com.mjy.blog.Bean.Item;
 import com.mjy.blog.Bean.SysItem;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.executor.BatchResult;
 
 import java.util.List;
 
@@ -48,8 +49,10 @@ public interface ItemDao {
     Item findItemByIid(Integer iid);
 
     //查询是否存在相同的名字
-    @Select("select COUNT(*) from items where item_name=#{name} and #{random}= #{random} and delete_flag=0")
-    int findIsHasName(String name, double random);
+    @Options(flushCache= Options.FlushCachePolicy.TRUE)
+    @Select("select COUNT(*) from items where item_name=#{name} and delete_flag=0")
+    int findIsHasName(String name);
+
 
     //根据名字查询id
     @Select("select id from items where item_name=#{name}")
