@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.Filter.TokenFilter;
+import com.mjy.blog.Service.RedisService;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.Utils.TokenUtils;
 import org.springframework.context.annotation.Configuration;
@@ -12,17 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -40,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private KeyConfig keyConfig;
     @Resource
     private AuthenticationAccessDeniedHandler accessDeniedHandler;
+    @Resource
+    private RedisService redisService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,17 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("USER", "ADMIN", "TEST")
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new TokenFilter(super.authenticationManager(), keyConfig))
+                .addFilter(new TokenFilter(super.authenticationManager(), keyConfig,redisService))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().successHandler((httpServletRequest, httpServletResponse, authentication) -> {
             httpServletResponse.setContentType("application/json;charset=utf-8");
 
 
-            String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24 * 3);
+            String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24);
             httpServletResponse.addHeader("Set-Cookie", "flushToken=" + flushToken + ";HttpOnly; SameSite=Lax");
             User user = (User) authentication.getPrincipal();
             userService.updateUserLoginTime(user.getId());
+            redisService.setWhite(user.getId(),"flushToken",flushToken, 60 * 24);
             PrintWriter out = httpServletResponse.getWriter();
             HashMap<String, String> map = new HashMap<>();
             map.put("status", "1");

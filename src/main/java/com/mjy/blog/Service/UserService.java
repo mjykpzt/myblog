@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @create 2020-03-07-18:42
  */
 public interface UserService extends UserDetailsService {
-//    ResponseBean findAll(Integer pageNum,Integer pageSize);
 
     ResponseBean findByName(String searchName,Integer pageNum,Integer pageSize);
 
@@ -17,11 +16,11 @@ public interface UserService extends UserDetailsService {
 
     ResponseBean changeUserStatus(Integer status,Integer uid);
 
-//    ResponseBean searchUser(String username,Integer pageNum,Integer pageSize);
-
     ResponseBean delUser(Integer uid);
 
-    ResponseBean updateUser(String password,String email,Integer uid);
+    ResponseBean updateUserInformation(String email,Integer uid);
+
+    ResponseBean updateUserPassword(String password,Integer uid);
 
     ResponseBean findById(Integer id);
 
@@ -29,6 +28,6 @@ public interface UserService extends UserDetailsService {
 
     ResponseBean findIsHasName(String name);
 
-    Boolean updateUserLoginTime(Integer uid);
+    void updateUserLoginTime(Integer uid);
 }
 

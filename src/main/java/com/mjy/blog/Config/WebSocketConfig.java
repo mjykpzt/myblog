@@ -20,6 +20,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -55,6 +56,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if (accessor!=null&&StompCommand.CONNECT == accessor.getCommand()) {
                     List<String> authorization = accessor.getNativeHeader("Authorization");
+                    assert authorization != null;
                     String token =authorization.get(0);
                     token = token.replace("Bearer ", "");
                     Payload<User> infoFromToken = JwtUtils.getInfoFromToken(token, keyConfig.getPublicKey(), User.class);

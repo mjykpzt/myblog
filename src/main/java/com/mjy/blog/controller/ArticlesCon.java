@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -42,11 +43,13 @@ public class ArticlesCon {
         }
     }
 
+
     @PostMapping("/addArticles")
     public ResponseBean addArticles(HttpServletRequest request,@Validated Articles articles) {
         articles.setCreate_user((Integer) request.getAttribute("uid"));
         return articlesService.addArticles(articles);
     }
+
 
     @PostMapping("/changeArticles")
     public ResponseBean changeArticles(HttpServletRequest request,@Validated Articles articles) {
@@ -67,6 +70,7 @@ public class ArticlesCon {
         }
     }
 
+
     @PostMapping("/delArticle")
     public ResponseBean delArticle(HttpServletRequest request,@RequestParam() Integer aid, @RequestParam() Integer iid) {
         if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
@@ -77,6 +81,7 @@ public class ArticlesCon {
         }
 
     }
+
 
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     public ResponseBean uploadImg(HttpServletRequest req, MultipartFile image) {

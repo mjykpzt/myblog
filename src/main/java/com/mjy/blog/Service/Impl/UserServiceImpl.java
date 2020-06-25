@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
+import com.mjy.blog.Service.RedisService;
 import com.mjy.blog.Service.UserService;
 import com.mjy.blog.mapper.UserDao;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Resource
+    private RedisService redisService;
 
 
     @Override
@@ -87,14 +92,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseBean updateUser(String password, String email, Integer uid) {
-        String encodePassword = bCryptPasswordEncoder.encode(password);
-        int statusCode = userDao.updateUser(encodePassword, email, uid);
+    public ResponseBean updateUserInformation(String email, Integer uid) {
+        int statusCode = userDao.updateUserInformation(email, uid);
         if (statusCode > 0) {
             return ResponseBean.getSuccessResponse("修改成功");
         }
         return ResponseBean.getFailResponse("修改失败");
     }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Override
+    public ResponseBean updateUserPassword(String password, Integer uid) {
+        String encodePassword = bCryptPasswordEncoder.encode(password);
+        int statusCode = userDao.updateUserPassword(encodePassword,uid);
+        if (statusCode > 0) {
+            if (redisService.WhiteToBlackTokens(uid,"flushToken","Authorization")){
+                return ResponseBean.getSuccessResponse("修改成功");
+            }
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+
+        }
+        return ResponseBean.getFailResponse("修改失败");
+    }
+
 
     @Transactional(readOnly = true)
     @Override
@@ -107,6 +127,7 @@ public class UserServiceImpl implements UserService {
         return ResponseBean.getFailResponse("查询失败或未查询到数据");
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ResponseBean updateRoles(Integer uid, Integer[] roles) {
         int s1 = userDao.delRolesFromUser(uid);
@@ -135,8 +156,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateUserLoginTime(Integer uid) {
+    public void updateUserLoginTime(Integer uid) {
         int i = userDao.updateUserLoginTime(uid);
-        return i > 0;
     }
 }

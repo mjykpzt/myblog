@@ -58,9 +58,21 @@ public interface UserDao {
     @Update("update user set delete_flag=1 where id=#{uid}")
     int delUser(Integer id);
 
-    //修改用户
-    @Update("update user set password=#{password},email=#{email} where id=#{uid}")
-    int updateUser(@Param("password") String password, @Param("email") String email, @Param("uid") Integer uid);
+    /**
+     * 修改用户信息
+     *
+     * @param email  用户邮箱
+     * @param uid    用户ID
+     * @return: int
+     * @author: 0205
+     */
+    @Update("update user set email=#{email} where id=#{uid}")
+    int updateUserInformation(@Param("email") String email, @Param("uid") Integer uid);
+
+
+    @Update("update user set password =#{password} where id = #{uid}")
+    int updateUserPassword(@Param("password")String password,@Param("uid") Integer uid);
+
 
     //解绑用户与角色
     @Delete("delete from role_and_user where uid=#{uid}")

@@ -2,12 +2,20 @@ package com.mjy.blog.controller;
 
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
+import com.mjy.blog.Config.KeyConfig;
+import com.mjy.blog.Service.RedisService;
 import com.mjy.blog.Service.UserService;
+import com.mjy.blog.Utils.JwtUtils;
+import com.mjy.blog.Utils.Payload;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author mjy
@@ -19,6 +27,7 @@ import javax.annotation.Resource;
 public class UserCon {
     @Resource
     private UserService userService;
+
 
     @GetMapping()
     public ResponseBean findUsers(String searchName,
@@ -38,6 +47,7 @@ public class UserCon {
         return userService.addUser(user);
     }
 
+
     @PostMapping("/changeUserStatus")
     public ResponseBean changeUserStatus(@RequestParam() Integer userid,
                                          @RequestParam() Integer userstatus) {
@@ -50,27 +60,34 @@ public class UserCon {
         return userService.delUser(uid);
     }
 
-    @PostMapping("/updateUser")
-    public ResponseBean updateUser(@RequestParam() String password,
-                                   @RequestParam() String email,
-                                   @RequestParam() Integer uid
-    ) {
-        return userService.updateUser(password, email, uid);
+
+    @PostMapping("/updateUserInformation")
+    public ResponseBean updateUser(@RequestParam() String email, @RequestParam() Integer uid) {
+        return userService.updateUserInformation(email, uid);
     }
+
 
     @GetMapping("/findById")
     public ResponseBean findById(@RequestParam() Integer uid) {
         return userService.findById(uid);
     }
 
+
     @RequestMapping("/updateRoles")
-    public ResponseBean updateRoles(@RequestParam() Integer[] roles, @RequestParam(required = true) Integer id) {
+    public ResponseBean updateRoles(@RequestParam() Integer[] roles, @RequestParam() Integer id) {
         return userService.updateRoles(id, roles);
 
     }
 
+
     @GetMapping("/findIsHasName")
     public ResponseBean findIsHasName(@RequestParam() String username) {
         return userService.findIsHasName(username);
+    }
+
+
+    @PostMapping("/updatePassword")
+    public ResponseBean updatePassword(@RequestParam() String password, @RequestParam() Integer uid) {
+        return userService.updateUserPassword(password, uid);
     }
 }

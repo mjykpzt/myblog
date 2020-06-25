@@ -7,6 +7,7 @@ import com.mjy.blog.Service.RoleService;
 import com.mjy.blog.mapper.RoleDao;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
