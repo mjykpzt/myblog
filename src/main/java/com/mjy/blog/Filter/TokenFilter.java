@@ -3,6 +3,7 @@ package com.mjy.blog.Filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Config.KeyConfig;
+import com.mjy.blog.Exception.AccessException;
 import com.mjy.blog.Service.RedisService;
 import com.mjy.blog.Utils.JwtUtils;
 import com.mjy.blog.Utils.Payload;
@@ -33,12 +34,12 @@ public class TokenFilter extends BasicAuthenticationFilter {
     private RedisService redisService;
 
 
-
-    public TokenFilter(AuthenticationManager authenticationManager, KeyConfig keyConfig,RedisService redisService) {
+    public TokenFilter(AuthenticationManager authenticationManager, KeyConfig keyConfig, RedisService redisService) {
         super(authenticationManager);
         this.keyConfig = keyConfig;
         this.redisService = redisService;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -50,12 +51,12 @@ public class TokenFilter extends BasicAuthenticationFilter {
             Payload<User> infoFromToken = JwtUtils.getInfoFromToken(token, keyConfig.getPublicKey(), User.class);
             User user = infoFromToken.getUserInfo();
             if (user != null) {
-                if (redisService.findTokenInBlack(user.getId(),token)){
+                if (redisService.findTokenInBlack(user.getId(), token)) {
                     FailMsg(request, response, chain, "token无效");
                 }
-                request.setAttribute("uid",user.getId());
-                request.setAttribute("role",user.getAuthorities());
-                request.setAttribute("username",user.getUsername());
+                request.setAttribute("uid", user.getId());
+                request.setAttribute("role", user.getAuthorities());
+                request.setAttribute("username", user.getUsername());
                 UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authResult);
                 chain.doFilter(request, response);
@@ -70,9 +71,9 @@ public class TokenFilter extends BasicAuthenticationFilter {
     private void FailMsg(HttpServletRequest request, HttpServletResponse response, FilterChain chain, String msg)
             throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         PrintWriter out = response.getWriter();
-        HashMap<String,String> resultMap = new HashMap<>();
+        HashMap<String, String> resultMap = new HashMap<>();
         resultMap.put("status", "0");
         resultMap.put("msg", msg);
         out.write(new ObjectMapper().writeValueAsString(resultMap));

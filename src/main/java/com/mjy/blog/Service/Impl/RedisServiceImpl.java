@@ -76,10 +76,10 @@ public class RedisServiceImpl implements RedisService {
             re = stringRedisTemplate.hasKey(key);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return re;
     }
+
 
     @Override
     public String getValue(Integer uid, String key) {
@@ -91,10 +91,12 @@ public class RedisServiceImpl implements RedisService {
         }
     }
 
+
     @Override
     public Set<String> getSet(String key) {
         return stringRedisTemplate.opsForSet().members(key);
     }
+
 
     @Override
     public Boolean delValue(Integer uid,String key) {
@@ -107,36 +109,36 @@ public class RedisServiceImpl implements RedisService {
         return delete;
     }
 
+
     /**
      * 将白名单中的token移除，并加入黑名单
      *
      * @param uid 用户ID
-     * @param key1 token
-     * @param key2 token
+     * @param keyName1 token
+     * @param keyName2 token
      * @return: boolean
      * @author: 0205
      */
     @Override
-    public Boolean WhiteToBlackTokens(Integer uid,String key1,String key2) {
+    public Boolean WhiteToBlackTokens(Integer uid,String keyName1,String keyName2) {
         try {
-//            stringRedisTemplate.multi();
-            String value1 = getValue(uid, key1);
-            String s = stringRedisTemplate.opsForValue().get(uid + key1);
-            String value2 = getValue(uid, key2);
+            String value1 = getValue(uid, keyName1);
+            String value2 = getValue(uid, keyName2);
             if (value1 !=null&&value2 != null){
-                delValue(uid,key1);
-                delValue(uid,key2);
                 setBlack(uid,60*24,value1,value2);
+            }else if (value1 !=null){
+                setBlack(uid,60*24,value1);
+            }else if (value2!=null){
+                setBlack(uid,60*24,value2);
             }
-//            stringRedisTemplate.exec();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-//            stringRedisTemplate.discard();
             return false;
         }
 
     }
+
 
     /**
      * 查询黑名单上是否存在该ID
@@ -149,9 +151,9 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Boolean findTokenInBlackSimply(String key,String token) {
         Set<String> set = getSet(key);
-        if (set !=null) return set.contains(token);
-        return false;
+        return set != null && set.contains(token);
     }
+
 
     @Override
     public Boolean findTokenInBlack(Integer uid,String token){

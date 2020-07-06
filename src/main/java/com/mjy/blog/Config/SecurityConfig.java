@@ -54,10 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().successHandler((httpServletRequest, httpServletResponse, authentication) -> {
             httpServletResponse.setContentType("application/json;charset=utf-8");
 
-
-            String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24);
-            httpServletResponse.addHeader("Set-Cookie", "flushToken=" + flushToken + ";HttpOnly; SameSite=Lax");
             User user = (User) authentication.getPrincipal();
+            String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24);
+            redisService.WhiteToBlackTokens(user.getId(),"flushToken","Authorization");
+            httpServletResponse.addHeader("Set-Cookie", "flushToken=" + flushToken + ";HttpOnly; SameSite=Lax");
             userService.updateUserLoginTime(user.getId());
             redisService.setWhite(user.getId(),"flushToken",flushToken, 60 * 24);
             PrintWriter out = httpServletResponse.getWriter();

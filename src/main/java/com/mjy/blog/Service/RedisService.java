@@ -19,7 +19,7 @@ public interface RedisService {
 
     Boolean delValue(Integer uid,String key);
 
-    Boolean WhiteToBlackTokens(Integer uid,String key1,String key2);
+    Boolean WhiteToBlackTokens(Integer uid,String keyName1,String keyName2 );
 
     Boolean findTokenInBlackSimply(String key,String token);
 

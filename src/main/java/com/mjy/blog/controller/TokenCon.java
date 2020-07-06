@@ -3,6 +3,7 @@ package com.mjy.blog.controller;
 import com.mjy.blog.Bean.ResponseBean;
 import com.mjy.blog.Bean.User;
 import com.mjy.blog.Config.KeyConfig;
+import com.mjy.blog.Exception.AccessException;
 import com.mjy.blog.Service.RedisService;
 import com.mjy.blog.Service.TokenService;
 import com.mjy.blog.Utils.JwtUtils;
@@ -30,18 +31,20 @@ public class TokenCon {
     private RedisService redisService;
 
     @PostMapping("/getToken")
-    public ResponseBean getToken(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseBean getToken(HttpServletRequest request, HttpServletResponse response) throws AccessException {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if ("flushToken".equals(cookie.getName())) {
-                String value = cookie.getValue();
-                Payload<User> infoFromToken = JwtUtils.getInfoFromToken(value, keyConfig.getPublicKey(), User.class);
-                User userInfo = infoFromToken.getUserInfo();
-                if (userInfo != null && userInfo.getFlushTokenFlag()) {
-                    if (redisService.findTokenInBlack(userInfo.getId(),value)){
+
+                String flushToken = cookie.getValue();
+                Payload<User> infoFromToken = JwtUtils.getInfoFromToken(flushToken, keyConfig.getPublicKey(), User.class);
+                User user = infoFromToken.getUserInfo();
+                if (user != null && user.getFlushTokenFlag()) {
+                    if (redisService.findTokenInBlack(user.getId(),flushToken)){
                         return ResponseBean.getFailResponse("token无效");
+//                        throw new AccessException(401,"请重新登陆","-------------------");
                     }
-                    String token = tokenService.getToken(userInfo, keyConfig);
+                    String token = tokenService.getToken(user, keyConfig);
                     response.setContentType("application/json;charset=utf-8");
                     response.addHeader("Authorization", "Bearer " + token);
                     return ResponseBean.getSuccessResponse("成功");

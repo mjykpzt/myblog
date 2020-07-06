@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author mjy
@@ -134,4 +135,5 @@ public class Articles implements Serializable {
                 ", read_numbers=" + read_numbers +
                 '}';
     }
+
 }
