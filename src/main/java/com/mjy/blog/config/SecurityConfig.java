@@ -1,6 +1,7 @@
 package com.mjy.blog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.filter.AuthenticationAccessDeniedHandler;
 import com.mjy.blog.filter.TokenFilter;

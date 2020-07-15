@@ -1,5 +1,6 @@
 package com.mjy.blog.service.Impl;
 
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.config.KeyConfig;
 import com.mjy.blog.service.RedisService;

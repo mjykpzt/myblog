@@ -1,6 +1,7 @@
 package com.mjy.blog.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.config.KeyConfig;
 import com.mjy.blog.service.RedisService;
