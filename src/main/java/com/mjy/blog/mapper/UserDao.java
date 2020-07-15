@@ -1,6 +1,6 @@
 package com.mjy.blog.mapper;
 
-import com.mjy.blog.Bean.User;
+import com.mjy.blog.bean.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.mjy.blog.mapper;
 
-import com.mjy.blog.Bean.Item;
-import com.mjy.blog.Bean.SysItem;
+import com.mjy.blog.bean.Item;
+import com.mjy.blog.bean.SysItem;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

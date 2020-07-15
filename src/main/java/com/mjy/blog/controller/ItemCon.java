@@ -1,7 +1,7 @@
 package com.mjy.blog.controller;
 
-import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Service.ItemService;
+import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.service.ItemService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class ItemCon {
     public ResponseBean findByUid(HttpServletRequest request, String searchName,
                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                   @RequestParam(defaultValue = "5") Integer pageSize) {
-        if (!(searchName.length() > 0)) {
+        if ((searchName.length() <= 0)) {
             searchName = null;
         } else {
             searchName = "%" + searchName + "%";

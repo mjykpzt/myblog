@@ -1,7 +1,7 @@
 package com.mjy.blog.mapper;
 
-import com.mjy.blog.Bean.Articles;
-import com.mjy.blog.Bean.SysArticles;
+import com.mjy.blog.bean.Articles;
+import com.mjy.blog.bean.SysArticles;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -13,7 +13,16 @@ import java.util.List;
 public interface ArticlesDao {
 
 
-    //查询所有文章信息，或根据用户查询文章信息
+    /**
+     *查询所有文章信息，或根据用户查询文章信息
+     *
+     * @param uid
+     * @param iid
+     * @param searchName
+     * @return: java.util.List<com.mjy.blog.Bean.SysArticles>
+     * @author: 0205
+     */
+
     @Select("<script> " +
             "select" +
             " a.item_id,a.id,a.create_time,a.title_name,a.read_numbers,a.change_time,a.source_text, " +

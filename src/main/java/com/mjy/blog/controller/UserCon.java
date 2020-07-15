@@ -1,21 +1,13 @@
 package com.mjy.blog.controller;
 
-import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Bean.User;
-import com.mjy.blog.Config.KeyConfig;
-import com.mjy.blog.Service.RedisService;
-import com.mjy.blog.Service.UserService;
-import com.mjy.blog.Utils.JwtUtils;
-import com.mjy.blog.Utils.Payload;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.bean.User;
+import com.mjy.blog.service.UserService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author mjy
@@ -33,7 +25,7 @@ public class UserCon {
     public ResponseBean findUsers(String searchName,
                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                   @RequestParam(defaultValue = "5") Integer pageSize) {
-        if (!(searchName.length() > 0)) {
+        if ((searchName.length() <= 0)) {
             searchName = null;
         } else {
             searchName = "%" + searchName + "%";

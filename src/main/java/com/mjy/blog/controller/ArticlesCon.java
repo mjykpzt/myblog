@@ -1,9 +1,9 @@
 package com.mjy.blog.controller;
 
-import com.mjy.blog.Bean.Articles;
-import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Bean.Role;
-import com.mjy.blog.Service.ArticlesService;
+import com.mjy.blog.bean.Articles;
+import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.bean.Role;
+import com.mjy.blog.service.ArticlesService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,10 +18,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/articles")
-//@Validated
 public class ArticlesCon {
     @Resource
     private ArticlesService articlesService;
+
+    private static final String USER_ID = "uid";
 
 
     @GetMapping("/findArticles")
@@ -30,7 +31,7 @@ public class ArticlesCon {
                                      @RequestParam(required = false)String searchName,
                                      @RequestParam(defaultValue = "1") Integer pageNum,
                                      @RequestParam(defaultValue = "5") Integer pageSize) {
-        if (!(searchName.length() > 0)){
+        if ((searchName.length() <= 0)){
             searchName=null;
         }else {
             searchName="%"+searchName+"%";
@@ -53,7 +54,7 @@ public class ArticlesCon {
 
     @PostMapping("/changeArticles")
     public ResponseBean changeArticles(HttpServletRequest request,@Validated Articles articles) {
-        if ((Integer)request.getAttribute("uid")==articlesService.findAid(articles.getId())){
+        if ((Integer)request.getAttribute(USER_ID)==articlesService.findAid(articles.getId())){
             return articlesService.changeArticles(articles);
         }
         return ResponseBean.getFailResponse("权限不足");
@@ -62,7 +63,7 @@ public class ArticlesCon {
 
     @GetMapping("/findArticlesByAid")
     public ResponseBean findArticlesByAid(HttpServletRequest request,@RequestParam() Integer aid) {
-        if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
+        if (IsAdmin(request)||(Integer)request.getAttribute(USER_ID)==articlesService.findAid(aid)){
             return articlesService.findArticlesByAid(aid);
         }else {
             return ResponseBean.getFailResponse("权限不足");
@@ -73,7 +74,7 @@ public class ArticlesCon {
 
     @PostMapping("/delArticle")
     public ResponseBean delArticle(HttpServletRequest request,@RequestParam() Integer aid, @RequestParam() Integer iid) {
-        if (IsAdmin(request)||(Integer)request.getAttribute("uid")==articlesService.findAid(aid)){
+        if (IsAdmin(request)||(Integer)request.getAttribute(USER_ID)==articlesService.findAid(aid)){
             return articlesService.delArticle(aid, iid);
         }else {
             return ResponseBean.getFailResponse("权限不足");

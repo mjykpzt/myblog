@@ -1,14 +1,13 @@
 package com.mjy.blog.controller;
 
-import com.mjy.blog.Bean.ResponseBean;
-import com.mjy.blog.Bean.User;
-import com.mjy.blog.Config.KeyConfig;
-import com.mjy.blog.Exception.AccessException;
-import com.mjy.blog.Service.RedisService;
-import com.mjy.blog.Service.TokenService;
-import com.mjy.blog.Utils.JwtUtils;
-import com.mjy.blog.Utils.Payload;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.bean.User;
+import com.mjy.blog.config.KeyConfig;
+import com.mjy.blog.exception.AccessException;
+import com.mjy.blog.service.RedisService;
+import com.mjy.blog.service.TokenService;
+import com.mjy.blog.utils.JwtUtils;
+import com.mjy.blog.utils.Payload;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
