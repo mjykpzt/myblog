@@ -2,14 +2,15 @@ package com.mjy.blog.controller;
 
 import com.mjy.blog.bean.ResponseBean;
 import com.mjy.blog.service.QiNiuYunService;
-import com.qiniu.util.Auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-
+/**
+ *@author mjy
+ *@date 2020/7/19
+ */
 @RestController
 @RequestMapping("/uploadImg")
 public class QiNiuYunCon {
@@ -17,9 +18,10 @@ public class QiNiuYunCon {
     private QiNiuYunService qiNiuYunService;
 
     @RequestMapping("/GetUploadToken")
-    public ResponseBean Upload(String filename){
+    public ResponseBean upload(String filename){
         return qiNiuYunService.uploadToken(filename);
     }
+
 
     @RequestMapping("/callback")
     public ResponseBean callback(HttpServletRequest request){

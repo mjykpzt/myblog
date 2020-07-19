@@ -1,6 +1,5 @@
 package com.mjy.blog.service.Impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mjy.blog.bean.ResponseBean;
 import com.mjy.blog.mapper.ImgDao;
 import com.mjy.blog.service.QiNiuYunService;
@@ -25,7 +24,8 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     private String bucket;
     @Value("${QiNiuYun.callbackUrl}")
     private String callbackUrl;
-
+    @Value("${QiNiuYun.baseUrl}")
+    private String baseUrl;
     private String callbackBodyType = "application/json";
 
     @Resource
@@ -44,7 +44,6 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     }
 
     @Override
-    //TODO 完成回调
     public ResponseBean callback(HttpServletRequest request) {
         String callbackAuthHeader = request.getHeader("Authorization");
         //通过读取回调POST请求体获得，不要设置为null
@@ -63,12 +62,18 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
         if (validCallback){
             try {
                 imgJson jsonBodyObject = GetJsonImg.getJsonBodyObject(callbackBodyStr, imgJson.class);
-                int i = imgDao.addImgInformation(jsonBodyObject);
+                if (jsonBodyObject!=null){
+                    int i = imgDao.addImgInformation(jsonBodyObject);
+                    if (i>0){
+                        String url = baseUrl+jsonBodyObject.getKey();
+                        return ResponseBean.getSuccessResponse("上传成功",url);
+                    }
+                }
 
             }catch (IOException ioe){
                 ioe.printStackTrace();
             }
         }
-        return ResponseBean.getSuccessResponse("success00000");
+        return ResponseBean.getSuccessResponse("上传失败");
     }
 }

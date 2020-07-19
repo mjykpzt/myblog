@@ -1,6 +1,5 @@
 package com.mjy.blog.config;
 
-import com.mjy.blog.bean.Role;
 import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.utils.JwtUtils;

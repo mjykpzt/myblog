@@ -3,8 +3,8 @@ package com.mjy.blog.service.Impl;
 
 import com.mjy.blog.bean.ResponseBean;
 import com.mjy.blog.bean.Role;
-import com.mjy.blog.service.RoleService;
 import com.mjy.blog.mapper.RoleDao;
+import com.mjy.blog.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

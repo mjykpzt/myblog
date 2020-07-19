@@ -13,8 +13,6 @@ import java.security.PublicKey;
  * @author mjy
  * @create 2020-03-05-17:03
  */
-
-
 @Component
 public class KeyConfig {
 

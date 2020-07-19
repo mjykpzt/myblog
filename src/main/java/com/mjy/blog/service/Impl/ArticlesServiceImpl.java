@@ -5,25 +5,17 @@ import com.github.pagehelper.PageInfo;
 import com.mjy.blog.bean.Articles;
 import com.mjy.blog.bean.ResponseBean;
 import com.mjy.blog.bean.SysArticles;
-import com.mjy.blog.service.ArticlesService;
-import com.mjy.blog.utils.TextXssUtils;
 import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
-import org.apache.commons.io.IOUtils;
+import com.mjy.blog.service.ArticlesService;
+import com.mjy.blog.utils.TextXssUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * @author mjy
