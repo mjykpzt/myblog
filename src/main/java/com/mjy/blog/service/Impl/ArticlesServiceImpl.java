@@ -116,38 +116,6 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ResponseBean.getFailResponse("删除失败");
     }
 
-    @Override
-    @Deprecated
-    public ResponseBean addImg(HttpServletRequest req, MultipartFile image) {
-        StringBuilder url = new StringBuilder();
-        String userpath = "" + req.getAttribute("username");
-        String path = imgFolderPath + userpath;
-        File imgFolder = new File(path);
-        if (!imgFolder.exists()) {
-            boolean mkdirs = imgFolder.mkdirs();
-            if (!mkdirs){
-                return ResponseBean.getFailResponse("创建文件夹失败");
-            }
-        }
-        url.append(req.getScheme())
-                .append("://")
-                .append(req.getServerName())
-                .append(":")
-                .append(req.getServerPort())
-                .append(req.getContextPath())
-                .append("/imgsave/")
-                .append(userpath);
-        String imgName = UUID.randomUUID() + "_" + Objects.requireNonNull(image.getOriginalFilename()).replaceAll(" ", "");
-        articlesDao.addImUrl(path + "/" + imgName, (Integer) req.getAttribute("uid"));
-        try {
-            IOUtils.write(image.getBytes(), new FileOutputStream(new File(imgFolder, imgName)));
-            url.append("/").append(imgName);
-            return ResponseBean.getSuccessResponse("图片上传成功", url.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ResponseBean.getFailResponse("图片上传失败");
-    }
 
     @Override
     public int findAid(Integer aid) {

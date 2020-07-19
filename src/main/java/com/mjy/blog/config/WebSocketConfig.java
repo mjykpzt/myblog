@@ -1,6 +1,7 @@
 package com.mjy.blog.config;
 
 import com.mjy.blog.bean.Role;
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.utils.JwtUtils;
 import com.mjy.blog.utils.Payload;
@@ -55,15 +56,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if (accessor!=null&&StompCommand.CONNECT == accessor.getCommand()) {
-                    List<String> authorization = accessor.getNativeHeader("Authorization");
+                    List<String> authorization = accessor.getNativeHeader(TokenEnum.AUTHORIZATION_TOKEN_HEADER);
                     assert authorization != null;
                     String token =authorization.get(0);
-                    token = token.replace("Bearer ", "");
+                    token = token.replace(TokenEnum.AUTHORIZATION_TOKEN_FLAG, "");
                     Payload<User> infoFromToken = JwtUtils.getInfoFromToken(token, keyConfig.getPublicKey(), User.class);
                     User user = infoFromToken.getUserInfo();
                     UsernamePasswordAuthenticationToken t1
                             = new UsernamePasswordAuthenticationToken
-                            (user.getUsername(),null, (List<Role>)user.getAuthorities());
+                            (user.getUsername(),null, user.getAuthorities());
                     accessor.setUser(t1);
                 }
                 return message;

@@ -42,7 +42,7 @@ public class TokenFilter extends BasicAuthenticationFilter {
             throws IOException, ServletException {
         String authorization;
         authorization = request.getHeader(TokenEnum.AUTHORIZATION_TOKEN_HEADER);
-        if (authorization != null && authorization.startsWith(TokenEnum.AUTHORIZATION_TOKEN_HEADER)) {
+        if (authorization != null && authorization.startsWith(TokenEnum.AUTHORIZATION_TOKEN_FLAG)) {
             String token = authorization.replace(TokenEnum.AUTHORIZATION_TOKEN_FLAG, "");
             Payload<User> infoFromToken = JwtUtils.getInfoFromToken(token, keyConfig.getPublicKey(), User.class);
             User user = infoFromToken.getUserInfo();

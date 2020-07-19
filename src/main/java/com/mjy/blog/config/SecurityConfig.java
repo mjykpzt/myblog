@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/imgsave/**",
+        web.ignoring().antMatchers("/imgsave/**","/uploadImg//callback",
                 "/RoleWebSocket/**", "/mass", "/UserWebSocket/**", "/ItemWebSocket/**", "/druid/**", "/getToken/**");
 
     }

@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 
 /**

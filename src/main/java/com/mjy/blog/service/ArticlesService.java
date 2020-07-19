@@ -22,8 +22,6 @@ public interface ArticlesService {
 
     ResponseBean delArticle(Integer aid,Integer iid);
 
-    ResponseBean addImg(HttpServletRequest req, MultipartFile image);
-
     int findAid(Integer aid);
 
 

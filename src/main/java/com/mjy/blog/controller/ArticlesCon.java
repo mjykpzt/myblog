@@ -84,10 +84,6 @@ public class ArticlesCon {
     }
 
 
-    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
-    public ResponseBean uploadImg(HttpServletRequest req, MultipartFile image) {
-        return articlesService.addImg(req, image);
-    }
 
 
     private Boolean IsAdmin(HttpServletRequest request) {

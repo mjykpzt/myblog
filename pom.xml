@@ -168,6 +168,14 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.2.0, 7.2.99]</version>
+        </dependency>
+
+
+
 
     </dependencies>
 
@@ -179,8 +187,6 @@
             </plugin>
 
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
 <!--                <version>2.0.2</version>-->
