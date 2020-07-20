@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 public interface ImgDao {
     @Insert("insert into img_information (img_name,hash,size,bucket,upload_time) " +
-            "values (#{key},#{hash},#{fsize},#(bucket),now())")
+            "values (#{key},#{hash},#{fsize},#{bucket},now())")
     int addImgInformation(imgJson imgJson);
 
 

@@ -7,6 +7,7 @@ import com.mjy.blog.utils.GetJsonImg;
 import com.mjy.blog.utils.imgJson;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     @Value("${QiNiuYun.baseUrl}")
     private String baseUrl;
     private String callbackBodyType = "application/json";
+    private Logger logger1 = Logger.getLogger("console");
 
     @Resource
     private ImgDao imgDao;
@@ -40,6 +42,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
         putPolicy.put("callbackBodyType", callbackBodyType);
         long expireSeconds = 3600;
         String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
+        logger1.debug(upToken);
         return ResponseBean.getSuccessResponse("成功", upToken);
     }
 
@@ -59,11 +62,15 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
         Auth auth = Auth.create(accessKey, secretKey);
         //检查是否为七牛合法的回调请求
         boolean validCallback = auth.isValidCallback(callbackAuthHeader, callbackUrl, callbackBody, callbackBodyType);
+        logger1.debug(validCallback);
         if (validCallback){
             try {
                 imgJson jsonBodyObject = GetJsonImg.getJsonBodyObject(callbackBodyStr, imgJson.class);
+                logger1.debug(callbackBodyStr);
+                logger1.debug(jsonBodyObject);
                 if (jsonBodyObject!=null){
                     int i = imgDao.addImgInformation(jsonBodyObject);
+                    logger1.debug("影响行数"+i);
                     if (i>0){
                         String url = baseUrl+jsonBodyObject.getKey();
                         return ResponseBean.getSuccessResponse("上传成功",url);

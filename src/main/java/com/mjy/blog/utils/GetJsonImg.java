@@ -30,9 +30,9 @@ public class GetJsonImg {
     }
 
     public static <T> T getJsonBodyObject(String jsonString, Class<T> tClass) throws IOException {
-        String jsonBodyString = getJsonBodyString(jsonString);
-        if (jsonBodyString!=null){
-            return objectmapper.readValue(jsonBodyString, tClass);
+//        String jsonBodyString = getJsonBodyString(jsonString);
+        if (jsonString!=null){
+            return objectmapper.readValue(jsonString, tClass);
         }
         return null;
     }

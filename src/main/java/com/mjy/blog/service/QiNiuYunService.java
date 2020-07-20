@@ -3,7 +3,10 @@ package com.mjy.blog.service;
 import com.mjy.blog.bean.ResponseBean;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ *@author mjy
+ *@date 2020/7/19
+ */
 public interface QiNiuYunService {
     /**
      *
