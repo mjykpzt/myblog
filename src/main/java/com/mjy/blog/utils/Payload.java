@@ -5,7 +5,10 @@ package com.mjy.blog.utils;
 import java.util.Date;
 
 
-
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 public class Payload<T> {
     private String id;
     private T userInfo;

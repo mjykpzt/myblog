@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 public class GetJsonImg {
     private final static Pattern COMPILE = Pattern.compile("\"callback_body\":\"?(\\{.*?})");
     private final static ObjectMapper objectmapper = new ObjectMapper();

@@ -10,6 +10,10 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 @Configuration
 public class RedisConfig {
     @Value("${redis.host}")

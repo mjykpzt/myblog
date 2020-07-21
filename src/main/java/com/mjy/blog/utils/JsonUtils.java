@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 public class JsonUtils {
 
     public static final ObjectMapper MAPPER = new ObjectMapper();

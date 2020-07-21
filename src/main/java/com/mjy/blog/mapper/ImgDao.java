@@ -3,6 +3,10 @@ package com.mjy.blog.mapper;
 import com.mjy.blog.utils.imgJson;
 import org.apache.ibatis.annotations.*;
 
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 public interface ImgDao {
     @Insert("insert into img_information (img_name,hash,size,bucket,upload_time) " +
             "values (#{key},#{hash},#{fsize},#{bucket},now())")

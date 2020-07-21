@@ -18,7 +18,7 @@ import java.util.HashMap;
 @ControllerAdvice
 public class GlobalDefultExceptionHandler {
     @ExceptionHandler(SQLException.class)
-    public void defultExcepitonHandler(HttpServletRequest request, HttpServletResponse resp , Exception ex) throws IOException {
+    public void defaultExcepitonHandler(HttpServletRequest request, HttpServletResponse resp , Exception ex) throws IOException {
         resp.setContentType("application/json;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
         PrintWriter out = resp.getWriter();

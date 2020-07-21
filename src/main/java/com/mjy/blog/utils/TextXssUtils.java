@@ -29,7 +29,7 @@ public class TextXssUtils {
     }
 
     public static String FilterXss(String sourceText){
-        HashMap<String, String> stringStringMap = new HashMap<>();
+        HashMap<String, String> stringStringMap = new HashMap<>(8);
         Matcher matcher = COMPILE.matcher(sourceText);
         while (matcher.find()){
             String ProtectedText = matcher.group();
