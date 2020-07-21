@@ -1,8 +1,9 @@
-package com.mjy.blog.service.Impl;
+package com.mjy.blog.service.impl;
 
 import com.mjy.blog.bean.ResponseBean;
 import com.mjy.blog.mapper.ImgDao;
 import com.mjy.blog.service.QiNiuYunService;
+import com.mjy.blog.service.RedisService;
 import com.mjy.blog.utils.GetJsonImg;
 import com.mjy.blog.utils.imgJson;
 import com.qiniu.util.Auth;
@@ -15,6 +16,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ *@author mjy
+ *@date 2020/7/21
+ */
 @Service
 public class QiNiuYunServiceImpl implements QiNiuYunService {
     @Value("${QiNiuYun.accessKey}")
@@ -29,18 +34,28 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     private String baseUrl;
     private String callbackBodyType = "application/json";
     private Logger logger1 = Logger.getLogger("console");
+    private Long sizeMax = 1024*1024*1024L;
 
     @Resource
     private ImgDao imgDao;
 
+    @Resource
+    private RedisService redisService;
+
     @Override
-    public ResponseBean uploadToken(String filename) {
+    public ResponseBean uploadToken(String filename,Integer uid,Integer size) {
+        Long totalSize = redisService.setImgSize(uid, size);
+        if (totalSize>sizeMax){
+            return ResponseBean.getFailResponse("今日文件上传已经达到上限");
+        }
         Auth auth = Auth.create(accessKey, secretKey);
         StringMap putPolicy = new StringMap();
         putPolicy.put("callbackUrl", callbackUrl);
-        putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+        putPolicy.put("callbackBody", "{\"userId\":"+uid+",\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         putPolicy.put("callbackBodyType", callbackBodyType);
-        long expireSeconds = 3600;
+        putPolicy.put("mimeLimit","image/*");
+        putPolicy.put("fsizeLimit",size+1);
+        long expireSeconds = 300;
         String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
         logger1.debug(upToken);
         return ResponseBean.getSuccessResponse("成功", upToken);
@@ -67,7 +82,6 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
             try {
                 imgJson jsonBodyObject = GetJsonImg.getJsonBodyObject(callbackBodyStr, imgJson.class);
                 logger1.debug(callbackBodyStr);
-                logger1.debug(jsonBodyObject);
                 if (jsonBodyObject!=null){
                     int i = imgDao.addImgInformation(jsonBodyObject);
                     logger1.debug("影响行数"+i);

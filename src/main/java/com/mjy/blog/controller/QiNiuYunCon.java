@@ -19,7 +19,7 @@ public class QiNiuYunCon {
 
     @RequestMapping("/GetUploadToken")
     public ResponseBean upload(String filename){
-        return qiNiuYunService.uploadToken(filename);
+        return qiNiuYunService.uploadToken(filename,1);
     }
 
 

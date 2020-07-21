@@ -1,4 +1,4 @@
-package com.mjy.blog.service.Impl;
+package com.mjy.blog.service.impl;
 
 
 import com.mjy.blog.service.RedisService;
@@ -20,7 +20,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisServiceImpl implements RedisService {
     @Resource
-    private StringRedisTemplate stringRedisTemplate;
+    private StringRedisTemplate stringRedisTemplateForToken;
+    @Resource
+    private StringRedisTemplate stringRedisTemplateForImg;
+
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("-yyyyMMdd", Locale.CHINA);
 
 
@@ -38,8 +41,7 @@ public class RedisServiceImpl implements RedisService {
     public Boolean setWhite(Integer uid, String key, String value, Integer time) {
         boolean re = false;
         try {
-            stringRedisTemplate.opsForValue().set(uid + key, value, time * 60 * 1000, TimeUnit.SECONDS);
-            String s = stringRedisTemplate.opsForValue().get(uid + key);
+            stringRedisTemplateForToken.opsForValue().set(uid + key, value, time * 60 * 1000, TimeUnit.SECONDS);
             re = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,8 +61,8 @@ public class RedisServiceImpl implements RedisService {
         boolean re = false;
         String format = dateTimeFormatter.format(ZonedDateTime.now());
         try {
-            stringRedisTemplate.opsForSet().add(uid + format, value);
-            stringRedisTemplate.expire(uid + format, time * 60 * 1000, TimeUnit.SECONDS);
+            stringRedisTemplateForToken.opsForSet().add(uid + format, value);
+            stringRedisTemplateForToken.expire(uid + format, time * 60 * 1000, TimeUnit.SECONDS);
             re = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +75,7 @@ public class RedisServiceImpl implements RedisService {
     public Boolean isHasKey(String key) {
         Boolean re = true;
         try {
-            re = stringRedisTemplate.hasKey(key);
+            re = stringRedisTemplateForToken.hasKey(key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,7 +86,7 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public String getValue(Integer uid, String key) {
         try {
-            return stringRedisTemplate.opsForValue().get(uid + key);
+            return stringRedisTemplateForToken.opsForValue().get(uid + key);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -94,7 +96,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public Set<String> getSet(String key) {
-        return stringRedisTemplate.opsForSet().members(key);
+        return stringRedisTemplateForToken.opsForSet().members(key);
     }
 
 
@@ -102,7 +104,7 @@ public class RedisServiceImpl implements RedisService {
     public Boolean delValue(Integer uid,String key) {
         Boolean delete = false;
         try {
-            delete = stringRedisTemplate.delete(uid + key);
+            delete = stringRedisTemplateForToken.delete(uid + key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,5 +165,28 @@ public class RedisServiceImpl implements RedisService {
         return  findTokenInBlackSimply(uid+today,token)||findTokenInBlackSimply(uid+yesterday,token);
     }
 
+    @Override
+    public Long setImgSize(Integer uid, Integer size) {
+        String format = dateTimeFormatter.format(ZonedDateTime.now());
+        String key = uid+format;
+        try {
+            Long increment = stringRedisTemplateForImg.opsForValue().increment(key, size);
+            stringRedisTemplateForImg.expire(key, 24*60 * 60 * 1000, TimeUnit.SECONDS);
+            return increment;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    @Override
+    public int getImgSize(Integer uid) {
+        String format = dateTimeFormatter.format(ZonedDateTime.now());
+        String key = uid+format;
+        String s = stringRedisTemplateForImg.opsForValue().get(key);
+        if (s ==null || "".equals(s)){
+            return 0;
+        }
+        return Integer.parseInt(s);
+    }
 }

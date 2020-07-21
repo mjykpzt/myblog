@@ -16,7 +16,7 @@ public interface QiNiuYunService {
      * @return: com.mjy.blog.bean.ResponseBean
      * @author: 0205
      */
-    ResponseBean uploadToken(String filename);
+    ResponseBean uploadToken(String filename,Integer uid,Integer size);
 
 
     /**

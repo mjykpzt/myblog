@@ -84,12 +84,13 @@ public class ArticlesCon {
 
 
 
-
+    @SuppressWarnings("unchecked")
     private Boolean IsAdmin(HttpServletRequest request) {
+
         List<Role> roles = (List<Role>) request.getAttribute("role");
         for (Role r : roles){
-            String role_name = r.getRole_name();
-            if (role_name.contains("ROLE_ADMIN")){
+            String roleName = r.getRole_name();
+            if (roleName.contains("ROLE_ADMIN")){
                 return true;
             }
         }

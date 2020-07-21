@@ -16,7 +16,14 @@ public interface UserDao {
     @ResultMap("findRole")
     User findById(Integer uid);
 
-    //通过用户名查找用户
+    /**
+     *
+     *通过模糊用户名查找用户，如果模糊用户名为空，则查找所有的用户
+     *
+     * @param username 模糊用户名
+     * @return: java.util.List<com.mjy.blog.bean.User>
+     * @author: 0205
+     */
     @Select("<script>" + "select id,username,email,status,create_time,last_login_time from user where delete_flag=0 " +
             "<if test='searchName!=null'> " +
             "and username like #{searchName} " +
@@ -30,7 +37,14 @@ public interface UserDao {
     })
     List<User> findUserByName(@Param("searchName") String username);
 
-    //用户名查找
+    /**
+     *
+     *通过准确用户名查找用户
+     *
+     * @param username 准确用户名
+     * @return: com.mjy.blog.bean.User
+     * @author: 0205
+     */
     @Select("select id,username,password,status from user where delete_flag=0 and username=#{username}")
     @ResultMap("findRole")
     User findUserByNameLoad(@Param("username") String username);
@@ -54,15 +68,23 @@ public interface UserDao {
     @Update("update user set status =#{status} where id=#{uid}")
     int changeUserStatus(@Param("status") Integer status, @Param("uid") Integer uid);
 
-    //删除用户
-    @Update("update user set delete_flag=1 where id=#{uid}")
-    int delUser(Integer id);
+    /**
+     *
+     *删除用户
+     *
+     * @param uid 用户id
+     * @param username 处理后的用户名
+     * @return: int
+     * @author: 0205
+     */
+    @Update("update user set delete_flag=1 and username=#{username} where id=#{uid}")
+    int delUser(Integer uid, @Param("username") String username);
 
     /**
      * 修改用户信息
      *
-     * @param email  用户邮箱
-     * @param uid    用户ID
+     * @param email 用户邮箱
+     * @param uid   用户ID
      * @return: int
      * @author: 0205
      */
@@ -71,7 +93,7 @@ public interface UserDao {
 
 
     @Update("update user set password =#{password} where id = #{uid}")
-    int updateUserPassword(@Param("password")String password,@Param("uid") Integer uid);
+    int updateUserPassword(@Param("password") String password, @Param("uid") Integer uid);
 
 
     //解绑用户与角色
@@ -80,15 +102,26 @@ public interface UserDao {
 
     //查找是否存在该用户名
     @Select("select COUNT(*) from user where username=#{name} and #{random}=#{random}")
-    int findIsHasName(String name,double random);
+    int findIsHasName(String name, double random);
 
     /**
      * @param uid 用户id
      * @return: int
      * @author: 0205
-     *
+     * <p>
      * 更改用户登录时间
      */
     @Update("update `user` set last_login_time=now() where id=#{uid}")
     int updateUserLoginTime(Integer uid);
+
+    /**
+     *
+     *通过用户id查找用户名
+     *
+     * @param uid 用户id
+     * @return: java.lang.String
+     * @author: 0205
+     */
+    @Select("select username from user where id=#{uid}")
+    String findUsernameByUid(Integer uid);
 }

@@ -62,8 +62,8 @@ public interface ItemDao {
     Boolean isCanUse(Integer iid);
 
     //删除条目
-    @Update("update items set delete_flag=1 where id=#{iid}")
-    int delItem(Integer iid);
+    @Update("update items set delete_flag=1,item_name=#{item_name} where id=#{iid}")
+    int delItem(Integer iid,@Param("item_name") String name);
 
     //文章数加一
     @Update("update items set articles_number=articles_number+1 where id=#{iid}")
@@ -80,5 +80,17 @@ public interface ItemDao {
     //查询条目
     @Select("select id,item_name from items where delete_flag=0")
     List<Item> findSimpleItems();
+
+
+    /**
+     *
+     *通过条目id查找条目名
+     *
+     * @param iid 条目ID
+     * @return: java.lang.String
+     * @author: 0205
+     */
+    @Select("select item_name from items where id=#{id}")
+    String findItemNameByIid(Integer iid);
 
 }

@@ -1,4 +1,4 @@
-package com.mjy.blog.service.Impl;
+package com.mjy.blog.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author mjy
@@ -144,7 +145,9 @@ public class ItemServiceImpl implements ItemService {
         if (articleNumber != 0) {
             return ResponseBean.getFailResponse("删除失败，请删除条目下文章再试");
         } else {
-            int i = itemDao.delItem(iid);
+            String itemNameByIid = itemDao.findItemNameByIid(iid);
+            String name = itemNameByIid+"-"+ UUID.randomUUID().toString().replace("-","");
+            int i = itemDao.delItem(iid,name);
             if (i > 0) {
                 return ResponseBean.getSuccessResponse("删除成功");
             } else {

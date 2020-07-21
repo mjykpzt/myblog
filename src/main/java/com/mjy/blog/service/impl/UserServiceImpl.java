@@ -1,4 +1,4 @@
-package com.mjy.blog.service.Impl;
+package com.mjy.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,6 +18,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author mjy
@@ -85,7 +86,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBean delUser(Integer uid) {
-        int statusCode = userDao.delUser(uid);
+        String usernameByUid = userDao.findUsernameByUid(uid);
+        String name = usernameByUid+"-"+ UUID.randomUUID().toString().replace("-","");
+        int statusCode = userDao.delUser(uid,name);
         if (statusCode > 0) {
             return ResponseBean.getSuccessResponse("删除成功");
         }

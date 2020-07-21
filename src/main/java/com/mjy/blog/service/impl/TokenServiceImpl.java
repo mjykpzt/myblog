@@ -1,4 +1,4 @@
-package com.mjy.blog.service.Impl;
+package com.mjy.blog.service.impl;
 
 import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;

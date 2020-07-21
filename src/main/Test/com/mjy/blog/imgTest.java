@@ -1,6 +1,8 @@
 package com.mjy.blog;
 
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.mapper.ImgDao;
+import com.mjy.blog.service.RedisService;
 import com.mjy.blog.utils.GetJsonImg;
 import com.mjy.blog.utils.imgJson;
 import org.apache.log4j.Logger;
@@ -16,6 +18,9 @@ import javax.annotation.Resource;
 public class imgTest {
     @Resource
     private ImgDao imgDao;
+
+    @Resource
+    private RedisService redisService;
 
     Logger logger1 = Logger.getLogger("console");
 
@@ -37,5 +42,12 @@ public class imgTest {
         String a = "{\"key\":\"Fp2ZmohuFLoeFZygcsk51Hf0pZXf\",\"hash\":\"Fp2ZmohuFLoeFZygcsk51Hf0pZXf\",\"bucket\":\"mjy\",\"fsize\":182779}";
         imgJson jsonBodyObject = GetJsonImg.getJsonBodyObject(a, imgJson.class);
         System.out.println(jsonBodyObject);
+    }
+
+    @Test
+    public void testredis(){
+        redisService.setWhite(1, TokenEnum.FLUSH_TOKEN_HEADER,"dsjkiosjskojfdivnfidj",1);
+        redisService.setImgSize(1,20);
+        redisService.setImgSize(1,70);
     }
 }
