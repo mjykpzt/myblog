@@ -10,13 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 public interface QiNiuYunService {
     /**
      *
-     *返回上传七牛云的token
+     *返回七牛云上传凭证
      *
      * @param filename 文件名
+     * @param size 文件大小
+     * @param uid 用户id
      * @return: com.mjy.blog.bean.ResponseBean
      * @author: 0205
      */
-    ResponseBean uploadToken(String filename,Integer uid,Integer size);
+    ResponseBean uploadToken(String filename,Integer size,Integer uid);
 
 
     /**

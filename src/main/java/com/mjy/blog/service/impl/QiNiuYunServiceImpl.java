@@ -43,7 +43,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     private RedisService redisService;
 
     @Override
-    public ResponseBean uploadToken(String filename,Integer uid,Integer size) {
+    public ResponseBean uploadToken(String filename,Integer size,Integer uid) {
         Long totalSize = redisService.setImgSize(uid, size);
         if (totalSize>sizeMax){
             return ResponseBean.getFailResponse("今日文件上传已经达到上限");
@@ -51,7 +51,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
         Auth auth = Auth.create(accessKey, secretKey);
         StringMap putPolicy = new StringMap();
         putPolicy.put("callbackUrl", callbackUrl);
-        putPolicy.put("callbackBody", "{\"userId\":"+uid+",\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+        putPolicy.put("callbackBody", "{\"user_id\":"+uid+",\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         putPolicy.put("callbackBodyType", callbackBodyType);
         putPolicy.put("mimeLimit","image/*");
         putPolicy.put("fsizeLimit",size+1);

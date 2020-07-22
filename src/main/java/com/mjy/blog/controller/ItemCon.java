@@ -40,7 +40,8 @@ public class ItemCon {
 
     @PostMapping("/addItem/add")
     @Secured("ROLE_ADMIN")
-    public ResponseBean addItem(HttpServletRequest request, @RequestParam() String item_name, @RequestParam() String item_des) {
+    public ResponseBean addItem(HttpServletRequest request, @RequestParam() String item_name,
+                                @RequestParam() String item_des) {
         return itemService.addItem(item_name, item_des, (Integer) request.getAttribute("uid"));
     }
 
@@ -55,7 +56,7 @@ public class ItemCon {
 
     @PostMapping("/changeItem")
     @Secured("ROLE_ADMIN")
-    public ResponseBean changeItem(@RequestParam() String item_name, @RequestParam(required = true) String item_des,
+    public ResponseBean changeItem(@RequestParam() String item_name, @RequestParam() String item_des,
                                    @RequestParam() Integer id) {
         return itemService.changeItem(item_name, item_des, id);
     }

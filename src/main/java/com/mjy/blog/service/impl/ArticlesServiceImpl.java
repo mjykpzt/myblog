@@ -8,8 +8,7 @@ import com.mjy.blog.bean.SysArticles;
 import com.mjy.blog.mapper.ArticlesDao;
 import com.mjy.blog.mapper.ItemDao;
 import com.mjy.blog.service.ArticlesService;
-import com.mjy.blog.utils.TextXssUtils;
-import org.springframework.beans.factory.annotation.Value;
+import com.mjy.blog.utils.ArticlesXssFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +23,6 @@ import java.util.List;
 @Service
 @Transactional(isolation = Isolation.READ_COMMITTED,rollbackFor =Exception.class )
 public class ArticlesServiceImpl implements ArticlesService {
-    @Value("${imgPath}")
-    private String imgFolderPath;
 
     @Resource
     private ArticlesDao articlesDao;
@@ -35,7 +32,6 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 
     @Override
-    @Transactional(readOnly = true)
     public ResponseBean findArticlesInformation(Integer uid, Integer iid, String searchName, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<SysArticles> articles = articlesDao.findArticlesInformation(uid, iid, searchName);
@@ -54,7 +50,7 @@ public class ArticlesServiceImpl implements ArticlesService {
             itemDao.subNumber(OldIid);
         }
 
-        Articles articles_safe = articlesXss(articles);
+        Articles articles_safe =  ArticlesXssFilter.ArticlesXss(articles);
 
         String s = articles_safe.getHtml_text();
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
@@ -73,7 +69,7 @@ public class ArticlesServiceImpl implements ArticlesService {
             return ResponseBean.getFailResponse("该条目已被禁用");
         }
 
-        Articles articles_safe = articlesXss(articles);
+        Articles articles_safe = ArticlesXssFilter.ArticlesXss(articles);
 
         String s = articles_safe.getHtml_text();
         articles.setSource_text(s.substring(0, Math.min(s.length(), 50)));
@@ -113,27 +109,5 @@ public class ArticlesServiceImpl implements ArticlesService {
     public int findAid(Integer aid) {
         return articlesDao.findAid(aid);
     }
-
-
-    /**
-     * @param articles  文章POJO对象
-     * @return: com.mjy.blog.Bean.Articles
-     * @author: 0205
-     * <p>
-     * 过滤html，防止xss
-     */
-    private Articles articlesXss(Articles articles) {
-
-        String unsafe_html_text = articles.getHtml_text();
-        String html_text = TextXssUtils.FilterXss(unsafe_html_text);
-        articles.setHtml_text(html_text);
-
-        String unsafe_md_text = articles.getMd_text();
-        String md_text = TextXssUtils.FilterXss(unsafe_md_text);
-        articles.setMd_text(md_text);
-
-        return articles;
-    }
-
 
 }

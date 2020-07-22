@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.*;
  *@date 2020/7/21
  */
 public interface ImgDao {
-    @Insert("insert into img_information (img_name,hash,size,bucket,upload_time) " +
-            "values (#{key},#{hash},#{fsize},#{bucket},now())")
+    @Insert("insert into img_information (img_name,hash,size,bucket,upload_time,user_id) " +
+            "values (#{key},#{hash},#{fsize},#{bucket},now(),#{user_id})")
     int addImgInformation(imgJson imgJson);
 
 
@@ -18,7 +18,8 @@ public interface ImgDao {
             @Result(column = "hash",property = "hash"),
             @Result(column = "size",property = "fsize"),
             @Result(column = "upload_time",property ="upload_time" ),
-            @Result(column = "bucket",property = "bucket")
+            @Result(column = "bucket",property = "bucket"),
+            @Result(column = "user_id",property = "user_id")
     })
     @Select("select img_name,hash,size,bucket,upload_time from img_information where hash=#{hash}")
     imgJson findImgInformationByHash(String  hash);

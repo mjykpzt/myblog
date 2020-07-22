@@ -9,8 +9,17 @@ public class imgJson {
     private String hash;
     private String bucket;
     private int fsize;
+    private Integer user_id;
 
     public imgJson() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getKey() {
@@ -45,13 +54,23 @@ public class imgJson {
         this.fsize = fsize;
     }
 
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
         return "imgJson{" +
-                "key='" + key + '\'' +
+                "id=" + id +
+                ", key='" + key + '\'' +
                 ", hash='" + hash + '\'' +
                 ", bucket='" + bucket + '\'' +
                 ", fsize=" + fsize +
+                ", user_id=" + user_id +
                 '}';
     }
 }
