@@ -9,7 +9,6 @@ package com.mjy.blog.bean;
  *
  * 该类将文章作者的id和该文章所属条目的id转换为作者名称和条目名称
  */
-
 public class SysArticles extends Articles {
     private String create_name;
     private String item_name;

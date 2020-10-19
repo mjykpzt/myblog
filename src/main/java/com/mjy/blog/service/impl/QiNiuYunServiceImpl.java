@@ -1,6 +1,7 @@
 package com.mjy.blog.service.impl;
 
 import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.mapper.ImgDao;
 import com.mjy.blog.service.QiNiuYunService;
 import com.mjy.blog.service.RedisService;
@@ -34,7 +35,6 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     private String baseUrl;
     private String callbackBodyType = "application/json";
     private Logger logger1 = Logger.getLogger("console");
-    private Long sizeMax = 1024*1024*1024L;
 
     @Resource
     private ImgDao imgDao;
@@ -43,9 +43,14 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
     private RedisService redisService;
 
     @Override
-    public ResponseBean uploadToken(String filename,Integer size,Integer uid) {
+    public ResponseBean uploadToken(String filename,Integer size,Integer uid,String hash) {
+        int num = imgDao.isHasImg(hash);
+        if (num>0){
+            return ResponseBean.getSuccessResponse("文件重复",baseUrl+hash);
+        }
         Long totalSize = redisService.setImgSize(uid, size);
-        if (totalSize>sizeMax){
+        int sizeMax = 1024 * 1024 * 1024;
+        if (totalSize> sizeMax){
             return ResponseBean.getFailResponse("今日文件上传已经达到上限");
         }
         Auth auth = Auth.create(accessKey, secretKey);
@@ -63,7 +68,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
 
     @Override
     public ResponseBean callback(HttpServletRequest request) {
-        String callbackAuthHeader = request.getHeader("Authorization");
+        String callbackAuthHeader = request.getHeader(TokenEnum.AUTHORIZATION_TOKEN_HEADER);
         //通过读取回调POST请求体获得，不要设置为null
         byte[] callbackBody = new byte[1024];
         try {

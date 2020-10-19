@@ -19,13 +19,5 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/imgsave/**").addResourceLocations("file:" + path);
     }
 
-//    @Bean
-//    public TomcatContextCustomizer sameSiteCookiesConfig() {
-//        return context -> {
-//            final Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
-//            cookieProcessor.setSameSiteCookies(SameSiteCookies.LAX.getValue());
-//            context.setCookieProcessor(cookieProcessor);
-//        };
-//    }
 }
 

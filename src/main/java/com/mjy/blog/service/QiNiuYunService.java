@@ -15,10 +15,11 @@ public interface QiNiuYunService {
      * @param filename 文件名
      * @param size 文件大小
      * @param uid 用户id
+     * @param hash 文件hash值
      * @return: com.mjy.blog.bean.ResponseBean
      * @author: 0205
      */
-    ResponseBean uploadToken(String filename,Integer size,Integer uid);
+    ResponseBean uploadToken(String filename,Integer size,Integer uid,String hash);
 
 
     /**

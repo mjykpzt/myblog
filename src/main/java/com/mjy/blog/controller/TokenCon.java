@@ -1,9 +1,9 @@
 package com.mjy.blog.controller;
 
 import com.mjy.blog.bean.ResponseBean;
+import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.bean.User;
 import com.mjy.blog.config.KeyConfig;
-import com.mjy.blog.exception.AccessException;
 import com.mjy.blog.service.RedisService;
 import com.mjy.blog.service.TokenService;
 import com.mjy.blog.utils.JwtUtils;
@@ -30,26 +30,25 @@ public class TokenCon {
     private RedisService redisService;
 
     @PostMapping("/getToken")
-    public ResponseBean getToken(HttpServletRequest request, HttpServletResponse response) throws AccessException {
+    public ResponseBean getToken(HttpServletRequest request, HttpServletResponse response){
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if ("flushToken".equals(cookie.getName())) {
+            if (TokenEnum.FLUSH_TOKEN_HEADER.equals(cookie.getName())) {
 
                 String flushToken = cookie.getValue();
                 Payload<User> infoFromToken = JwtUtils.getInfoFromToken(flushToken, keyConfig.getPublicKey(), User.class);
                 User user = infoFromToken.getUserInfo();
                 if (user != null && user.getFlushTokenFlag()) {
                     if (redisService.findTokenInBlack(user.getId(),flushToken)){
-                        return ResponseBean.getFailResponse("token无效");
-//                        throw new AccessException(401,"请重新登陆","-------------------");
+                        return ResponseBean.getFailResponse("flushToken无效");
                     }
                     String token = tokenService.getToken(user, keyConfig);
                     response.setContentType("application/json;charset=utf-8");
-                    response.addHeader("Authorization", "Bearer " + token);
-                    return ResponseBean.getSuccessResponse("成功");
+                    response.addHeader(TokenEnum.AUTHORIZATION_TOKEN_HEADER, TokenEnum.AUTHORIZATION_TOKEN_FLAG+ token);
+                    return ResponseBean.getSuccessResponse("获取\"验证token\"成功");
                 }
             }
         }
-        return ResponseBean.getFailResponse("获取失败");
+        return ResponseBean.getFailResponse("获取\"验证token\"失败");
     }
 }

@@ -21,9 +21,10 @@ public class QiNiuYunCon {
     private final static String USER_ID="uid";
 
     @RequestMapping("/GetUploadToken")
-    public ResponseBean upload(HttpServletRequest request,String filename,@RequestParam Integer size){
+    public ResponseBean upload(HttpServletRequest request,String filename,
+                               @RequestParam Integer size,@RequestParam  String hash){
         Integer uid = (Integer)request.getAttribute(USER_ID);
-        return qiNiuYunService.uploadToken(filename,size,uid);
+        return qiNiuYunService.uploadToken(filename,size,uid,hash);
     }
 
 

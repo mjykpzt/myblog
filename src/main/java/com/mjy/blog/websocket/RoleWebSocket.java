@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleWebSocket{
 
     /**
-     * @param msg
+     * @param msg 客户端发来的信息
      * @return: java.lang.String
      * @author: 0205
      *

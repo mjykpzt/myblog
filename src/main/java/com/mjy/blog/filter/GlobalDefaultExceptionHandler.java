@@ -16,7 +16,10 @@ import java.util.HashMap;
  * @create 2020-06-29-21:00
  */
 @ControllerAdvice
-public class GlobalDefultExceptionHandler {
+public class GlobalDefaultExceptionHandler {
+
+
+
     @ExceptionHandler(SQLException.class)
     public void defaultExcepitonHandler(HttpServletRequest request, HttpServletResponse resp , Exception ex) throws IOException {
         resp.setContentType("application/json;charset=utf-8");

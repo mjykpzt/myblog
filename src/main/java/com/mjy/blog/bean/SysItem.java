@@ -8,12 +8,15 @@ package com.mjy.blog.bean;
  */
 
 public class SysItem extends Item {
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     private String create_name;
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public String getCreate_name() {
         return create_name;
     }
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     public void setCreate_name(String create_name) {
         this.create_name = create_name;
     }

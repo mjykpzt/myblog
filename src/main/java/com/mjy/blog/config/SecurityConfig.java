@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.annotation.Resource;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author mjy
@@ -57,12 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             User user = (User) authentication.getPrincipal();
             String flushToken = TokenUtils.createToken(authentication, keyConfig, true, 60 * 24);
-            redisService.WhiteToBlackTokens(user.getId(), "flushToken", "Authorization");
+            redisService.WhiteToBlackTokens(user.getId(), TokenEnum.FLUSH_TOKEN_HEADER, TokenEnum.AUTHORIZATION_TOKEN_HEADER);
             httpServletResponse.addHeader("Set-Cookie", TokenEnum.FLUSH_TOKEN_HEADER +"=" + flushToken + ";HttpOnly; SameSite=Lax");
             userService.updateUserLoginTime(user.getId());
             redisService.setWhite(user.getId(), TokenEnum.FLUSH_TOKEN_HEADER, flushToken, 60 * 24);
             PrintWriter out = httpServletResponse.getWriter();
-            HashMap<String, String> map = new HashMap<>(3);
+            Map<String, String> map = new HashMap<>(3);
             map.put("status", "1");
             map.put("msg", "登录成功");
             map.put("username", user.getUsername());

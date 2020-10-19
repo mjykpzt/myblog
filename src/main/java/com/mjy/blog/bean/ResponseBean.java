@@ -6,7 +6,7 @@ package com.mjy.blog.bean;
  * @author mjy
  * @create 2020-03-07-18:35
  */
-
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 public class ResponseBean {
     private Integer status;
     private String msg;

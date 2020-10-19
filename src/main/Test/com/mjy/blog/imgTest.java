@@ -1,7 +1,7 @@
 package com.mjy.blog;
 
-import com.mjy.blog.bean.TokenEnum;
 import com.mjy.blog.mapper.ImgDao;
+import com.mjy.blog.mapper.ItemDao;
 import com.mjy.blog.service.RedisService;
 import com.mjy.blog.utils.GetJsonImg;
 import com.mjy.blog.utils.imgJson;
@@ -21,6 +21,9 @@ public class imgTest {
 
     @Resource
     private RedisService redisService;
+
+    @Resource
+    private ItemDao itemDao;
 
     Logger logger1 = Logger.getLogger("console");
 
@@ -46,8 +49,13 @@ public class imgTest {
 
     @Test
     public void testredis(){
-        redisService.setWhite(1, TokenEnum.FLUSH_TOKEN_HEADER,"dsjkiosjskojfdivnfidj",1);
-        redisService.setImgSize(1,20);
-        redisService.setImgSize(1,70);
+//        redisService.setWhite(1, TokenEnum.FLUSH_TOKEN_HEADER,"dsjkiosjskojfdivnfidj",1);
+//        redisService.setImgSize(1,20);
+//        redisService.setImgSize(1,70);
+//        int a = imgDao.isHasImg("1dsjfdfdfsfdsfds");
+//        System.out.println(a);
+        int dnks = itemDao.findIsHasName("dnks");
+        System.out.println(dnks);
+
     }
 }

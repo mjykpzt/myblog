@@ -91,7 +91,15 @@ public interface UserDao {
     @Update("update user set email=#{email} where id=#{uid}")
     int updateUserInformation(@Param("email") String email, @Param("uid") Integer uid);
 
-
+    /**
+     *
+     *更新用户密码
+     *
+     * @param password  更新后的密码
+     * @param uid 用户id
+     * @return: int
+     * @author: 0205
+     */
     @Update("update user set password =#{password} where id = #{uid}")
     int updateUserPassword(@Param("password") String password, @Param("uid") Integer uid);
 
@@ -101,7 +109,7 @@ public interface UserDao {
     int delRolesFromUser(Integer uid);
 
     //查找是否存在该用户名
-    @Select("select COUNT(*) from user where username=#{name} and #{random}=#{random}")
+    @Select("SELECT EXISTS(select 1 from user where username=#{name} and #{random}=#{random})")
     int findIsHasName(String name, double random);
 
     /**

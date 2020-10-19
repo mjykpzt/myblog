@@ -10,6 +10,7 @@ import java.util.List;
  * @author mjy
  * @create 2020-03-08-16:05
  */
+
 public interface ItemDao {
     //根据用户查询条目
     @Select("<script> " +
@@ -49,7 +50,7 @@ public interface ItemDao {
 
     //查询是否存在相同的名字
     @Options(flushCache= Options.FlushCachePolicy.TRUE)
-    @Select("select COUNT(*) from items where item_name=#{name} and delete_flag=0")
+    @Select("SELECT EXISTS(select 1 from items where item_name=#{name} and delete_flag=0)")
     int findIsHasName(String name);
 
 

@@ -22,7 +22,6 @@ public interface ArticlesDao {
      * @return: java.util.List<com.mjy.blog.Bean.SysArticles>
      * @author: 0205
      */
-
     @Select("<script> " +
             "select" +
             " a.item_id,a.id,a.create_time,a.title_name,a.read_numbers,a.change_time,a.source_text, " +
@@ -41,12 +40,14 @@ public interface ArticlesDao {
             "</if> " +
             "order by a.item_id,a.create_user " +
             "</script>")
-    List<SysArticles> findArticlesInformation(@Param("uid") Integer uid,@Param("iid")Integer iid,@Param("searchName")String searchName);
+    List<SysArticles> findArticlesInformation(@Param("uid") Integer uid, @Param("iid")Integer iid, @Param("searchName")String searchName);
+
 
     //更新文章信息
     @Update("update articles set source_text=#{source_text}," +
             "item_id=#{item_id},title_name=#{title_name},change_time=now() where id=#{id}")
     int changeArticleInformation(Articles articles);
+
 
     //更新文章内容
     @Update("update articles_main set md_text=#{md_text},html_text=#{html_text} where aid=#{id}")
@@ -62,7 +63,14 @@ public interface ArticlesDao {
     @Insert("insert into articles_main set md_text=#{md_text},html_text=#{html_text},aid=#{id}")
     int addArticleText(Articles articles);
 
-    //根据文章ID查询文章
+    /**
+     * @description  根据文章ID查询文章
+     * @author mjy
+     * @param: aid
+     * @updateTime 2020/10/19 0:29
+     * @return: com.mjy.blog.bean.SysArticles
+     * @throws
+     */
     @Select("select" +
             " a.id,a.item_id,a.title_name,a.create_user,a.read_numbers, " +
             "u.username create_name,a.change_time,am.md_text,am.html_text " +

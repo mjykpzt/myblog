@@ -33,6 +33,14 @@ public class GetJsonImg {
         return null;
     }
 
+
+    /**
+     * @param jsonString
+     * @param tClass
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
     public static <T> T getJsonBodyObject(String jsonString, Class<T> tClass) throws IOException {
 //        String jsonBodyString = getJsonBodyString(jsonString);
         if (jsonString!=null){

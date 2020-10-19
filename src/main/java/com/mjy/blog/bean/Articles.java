@@ -11,8 +11,7 @@ import java.util.Date;
  * @author mjy
  * @create 2020-03-08-21:20
  */
-
-
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 @Validated
 public class Articles implements Serializable {
     private Integer id;
@@ -30,12 +29,15 @@ public class Articles implements Serializable {
     private Date change_time;
     private Integer read_numbers;
 
+
     public Integer getId() {
         return id;
     }
 
+
     public Integer getItem_id() {
         return item_id;
+
     }
 
     public String getTitle_name() {
@@ -134,5 +136,6 @@ public class Articles implements Serializable {
                 ", read_numbers=" + read_numbers +
                 '}';
     }
+
 
 }

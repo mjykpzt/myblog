@@ -29,15 +29,20 @@ public class TextXssUtils {
     }
 
     public static String FilterXss(String sourceText){
+        //保存随机数和代码段，用于过滤后的还原
         HashMap<String, String> stringStringMap = new HashMap<>(8);
         Matcher matcher = COMPILE.matcher(sourceText);
         while (matcher.find()){
+            //获得代码段
             String ProtectedText = matcher.group();
+            //生成一个随机数，用来替换代码段，防止代码段被过滤
             String textHashId = ProtectedText.hashCode() + "" + UUID.randomUUID();
             sourceText = sourceText.replace(ProtectedText, textHashId);
             stringStringMap.put(textHashId,ProtectedText);
         }
+        //过滤文本
         String clean = Jsoup.clean(sourceText,"", wlist,new Document.OutputSettings().prettyPrint(false));
+        //还原代码段
         for (String key:stringStringMap.keySet()){
             clean = clean.replace(key, "\n"+stringStringMap.get(key)+"\n");
 

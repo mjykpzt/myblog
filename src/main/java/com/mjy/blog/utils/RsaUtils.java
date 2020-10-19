@@ -9,7 +9,10 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-
+/**
+ *@author mjy
+ *@date 2020/7/25
+ */
 public class RsaUtils {
 
     private static final int DEFAULT_KEY_SIZE = 2048;

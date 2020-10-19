@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @create 2020-03-07-22:01
  */
 
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 public class Role implements GrantedAuthority {
     private Integer id;
     private String role_name;

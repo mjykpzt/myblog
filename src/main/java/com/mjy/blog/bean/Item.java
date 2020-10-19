@@ -10,6 +10,7 @@ import java.util.Date;
  * @create 2020-03-08-15:59
  */
 
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 public class Item implements Serializable {
     private Integer id;
     private String item_name;
